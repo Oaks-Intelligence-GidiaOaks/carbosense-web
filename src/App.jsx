@@ -1,34 +1,49 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { NumberInput, TextInput } from "./components/ui";
+import DropDownMenu from "./components/ui/DropDownMenu";
+import PasswordInput from "./components/ui/PasswordInput";
+import Button from "./components/ui/Button";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [textvalue, setTextValue] = useState("");
+  const [password, setPassword] = useState("");
+  const [numberValue, setNumberValue] = useState("");
+  const [dropDownValue, setDropDownValue] = useState(null);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p className="text-yellow-500">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="h-screen flex flex-col gap-5 items-center justify-center">
+      <TextInput
+        label={"Text Input"}
+        bgColor={"white"}
+        value={textvalue}
+        valueSetter={setTextValue}
+      />
+      <PasswordInput
+        label={"Password Input"}
+        bgColor={"white"}
+        value={password}
+        valueSetter={setPassword}
+      />
+      <NumberInput
+        label={"Number Input"}
+        bgColor={"white"}
+        value={numberValue}
+        valueSetter={setNumberValue}
+      />
+      <DropDownMenu
+        label={"Dropdown Input"}
+        bgColor={"white"}
+        value={dropDownValue}
+        valueSetter={setDropDownValue}
+        options={[
+          { label: "Real Madrid", value: "real_madrid" },
+          { label: "Manchester City", value: "manchester_city" },
+          { label: "Tottenham Hotspur", value: "tottenham_hotspur" },
+          { label: "Bayern Munich", value: "bayern_munich" },
+        ]}
+        // allowFiltering={true}
+      />
+      <Button content={"Button"} />
+    </div>
   );
 }
 
