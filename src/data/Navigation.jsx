@@ -2,12 +2,12 @@
 export const sidebarLinks = [
     {
         imgPath: "/assets/icons/dashboard.svg",
-        route: "/",
+        route: "/admin",
         label: "Dashboard",
     },
     {
         imgPath: "/assets/icons/emissions.svg",
-        route: "/emissions",
+        route: "/admin/emissions",
         label: "Emissions",
     },
     {
@@ -32,7 +32,7 @@ export const bottombarLink = [
 
     {
         imgPath: "/assets/icons/dashboard.svg",
-        route: "/",
+        route: "/admin",
         label: "Dashboard",
     },
     {
@@ -42,7 +42,7 @@ export const bottombarLink = [
     },
     {
         imgPath: "/assets/icons/emissions.svg",
-        route: "/emissions",
+        route: "/admin/emissions",
         label: "Emissions",
     },
 

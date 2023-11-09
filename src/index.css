@@ -65,3 +65,11 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.topbar {
+  @apply sticky top-0 z-50 md:hidden bg-bg-ca-light-gray w-full;
+}
+
+.leftsidebar {
+  @apply hidden md:flex px-6 py-6 flex-col justify-between min-w-[270px] ;
+}

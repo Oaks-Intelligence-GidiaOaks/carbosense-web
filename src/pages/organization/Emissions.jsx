@@ -1,8 +1,12 @@
-import React from 'react'
+import EmissionFrame from "../../assets/icons/EmissionFrame.svg"
 
 const Emissions = () => {
   return (
-    <div className='flex w-full'>Emissions</div>
+    <div>
+      <div className='md:px-6'>
+        <img src={EmissionFrame} alt="" />
+      </div>
+    </div>
   )
 }
 
