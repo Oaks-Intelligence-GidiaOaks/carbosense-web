@@ -2,10 +2,11 @@ import React from 'react';
 import DashboardFrame from "../../assets/icons/DashboardFrame.svg";
 import alertcircle from "../../assets/icons/alertcircle.svg";
 import { DashboardStats } from '../../components';
+import { EmissionsGrid } from '../../components/grid';
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className='mb-10'>
       <div className='md:px-8'>
         <div className='bg-[#FFFFFF] border-l-[6px] h-[60px] border-l-[#FF331E] flex items-center justify-between pr-6'>
           <div className='flex flex-col  items-start px-8 h-full justify-center'>
@@ -39,6 +40,7 @@ const Dashboard = () => {
 
       <div className='px-4 md:px-8 mt-4'>
         <h3 className='text-primary-black font-medium text-lg'>Emissions by Department</h3>
+        <EmissionsGrid />
       </div>
     </div>
   )
