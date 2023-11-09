@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "@syncfusion/ej2-react-calendars": "^23.1.41",
+    "@syncfusion/ej2-react-dropdowns": "^23.1.44",
     "@syncfusion/ej2-react-grids": "^23.1.44",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.4",
