@@ -3,10 +3,11 @@ import alertcircle from "../../assets/icons/alertcircle.svg";
 import arrowright from "../../assets/icons/arrowright.svg";
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
+import { StackedBarChart, DoughnutChart } from "../../components/charts";
 
 const Emissions = () => {
   return (
-    <div className="pb-10">
+    <div className=" pb-40 md:pb-10">
       <div className='md:px-8'>
         <img src={EmissionFrame} alt="" />
       </div>
@@ -29,7 +30,7 @@ const Emissions = () => {
 
       </div>
 
-      <div className="px-8 mt-4 flex items-center gap-4">
+      {/* <div className="px-8 mt-4 flex items-center gap-4">
         <div className="flex items-center bg-white w-64 px-2 border rounded-sm">
           <div className="md:w-32">
             <DatePickerComponent
@@ -54,18 +55,39 @@ const Emissions = () => {
         <div className=" md:w-40 hidden  bg-white px-2 md:flex items-center rounded-sm">
           <DropDownListComponent id="ddlelement" allowFiltering={true} dataSource={""} placeholder="Sources" />
         </div>
-      </div>
+      </div> */}
 
 
-      <div className="grid grid-cols-7 gap-4 mt-4 h-[250px] px-8">
-        <div className="col-span-3 bg-white h-full p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4 lg:h-[250px] px-2 md:px-8">
+        <div className="col-span-1 md:col-span-3 bg-white h-full p-4">
           <div className="flex items-center gap-2">
             <h3 className="text-primary-black text-sm ">Total Emissions by Scope</h3>
             <img src={alertcircle} alt="" width={16} height={16} />
           </div>
 
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="md:flex md:flex-col md:gap-2">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-10 lg:h-10 lg:w-2 bg-[#00B8AC]"></div>
+                <span className="text-sm">Scope 1</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-10 lg:h-10 lg:w-2 bg-[#9553A0]"></div>
+                <span className="text-sm">Scope 2</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-10 lg:h-10 lg:w-2 bg-[#233E9B]"></div>
+                <span className="text-sm">Scope 3</span>
+              </div>
+
+            </div>
+            <div className="">
+              <DoughnutChart />
+            </div>
+          </div>
+
         </div>
-        <div className="col-span-4 bg-white h-full p-4">
+        <div className="col-span-1 md:col-span-4 bg-white h-full p-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <h3 className="text-primary-black text-sm ">Total Emissions by Sources</h3>
@@ -114,11 +136,40 @@ const Emissions = () => {
         </div>
       </div>
 
-      <div className="px-8 mt-4">
-        <div className=" bg-white h-[300px] w-full p-4">
+      <div className="px-2 md:px-8 mt-4">
+        <div className=" bg-white p-4">
           <div className="flex items-center gap-2">
-          <h3 className=" text-primary-black">Emissions Timeline</h3>
-          <img src={alertcircle} alt="" width={18} height={18}/>
+            <h3 className=" text-primary-black">Emissions Timeline</h3>
+            <img src={alertcircle} alt="" width={18} height={18} />
+          </div>
+
+          <div className="">
+            <StackedBarChart
+             labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
+             datasets={[
+                 {
+                     label: 'Scope 1',
+                     data: [2, 4, 5, 8, 4, 5, 3, 4, 5, 6, 7, 4],
+                     backgroundColor: "#00B8AC",
+                     barPercentage: 0.5,   
+                 },
+                 {
+                     label: 'Scope 2',
+                     data: [1, 2, 3, 4, 3, 4, 5, 6, 7, 8, 3, 4],
+                     backgroundColor: "#9553A0",
+                     barPercentage: 0.5,  
+                 },
+                 {
+                     label: 'Scope 3',
+                     data: [1, 2, 3, 5, 3, 5, 6, 1, 4, 7, 8, 9],
+                     backgroundColor: "#233E9B",
+                     barPercentage: 0.5,  
+                 },
+
+                 
+             ]}
+
+            />
           </div>
         </div>
       </div>
