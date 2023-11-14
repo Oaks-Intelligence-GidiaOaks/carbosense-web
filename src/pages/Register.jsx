@@ -6,6 +6,7 @@ import {
   DropDownMenu,
   PasswordInput,
   SizedBox,
+  Spinner,
   TextButton,
   TextInput,
 } from "../components/ui";
@@ -24,20 +25,22 @@ import {
   slideLeft,
   slideRight,
 } from "../constants/framer";
-import { useDispatch, useSelector } from "react-redux";
-import { updateField } from "../features/user/registrationSlice";
+import { useMutation } from "@tanstack/react-query";
+import { registerOrganization, verifyOTP } from "../services";
 
-const RegisterOrg = ({ stepSetter, direction, setDirection }) => {
+const RegisterOrg = ({
+  stepSetter,
+  direction,
+  setDirection,
+  form,
+  formSetter,
+}) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { org_name, org_email, org_industry, org_size } = useSelector(
-    (state) => state.registration.registration
-  );
 
-  const [organizationName, setOrganizationName] = useState("");
-  const [companyEmail, setCompanyEmail] = useState("");
-  const [industry, setIndustry] = useState({ value: "", label: "" });
-  const [companySize, setCompanySize] = useState({ value: "", label: "" });
+  const setFormValue = (name, value) => {
+    formSetter((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <motion.div
       initial={direction === "forward" ? initialRight : initialLeft}
@@ -54,36 +57,39 @@ const RegisterOrg = ({ stepSetter, direction, setDirection }) => {
           Create a Carbosense account for your organization
         </h1>
         <div className="mt-6 w-full flex-col flex items-center">
+          {console.log(form)}
           <TextInput
             bgColor="bg-white"
             label="Organization Name"
-            value={org_name}
-            valueSetter={(value) =>
-              dispatch(updateField({ path: "org_name", value: value }))
-            }
+            name="organizationName"
+            value={form.organizationName}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <TextInput
             bgColor="bg-white"
             label="Company email"
-            value={companyEmail}
-            valueSetter={setCompanyEmail}
+            name="companyEmail"
+            value={form.companyEmail}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <DropDownMenu
             label="Select Industry"
-            value={industry}
-            valueSetter={setIndustry}
+            name="industry"
+            value={form.industry}
+            valueSetter={setFormValue}
             width="w-[70%]"
             options={industries}
           />
           <SizedBox height="h-6" />
           <DropDownMenu
             label="Company Size"
-            value={companySize}
-            valueSetter={setCompanySize}
+            name="companySize"
+            value={form.companySize}
+            valueSetter={setFormValue}
             width="w-[70%]"
             options={companySizes}
           />
@@ -110,13 +116,14 @@ const RegisterOrg = ({ stepSetter, direction, setDirection }) => {
     </motion.div>
   );
 };
-const VerifyOrg = ({ stepSetter, direction, setDirection }) => {
+const VerifyOrg = ({
+  stepSetter,
+  direction,
+  setDirection,
+  form,
+  formSetter,
+}) => {
   const navigate = useNavigate();
-
-  // const [organizationName, setOrganizationName] = useState("");
-  // const [companyEmail, setCompanyEmail] = useState("");
-  // const [industry, setIndustry] = useState({ value: "", label: "" });
-  // const [companySize, setCompanySize] = useState({ value: "", label: "" });
   return (
     <motion.div
       initial={direction === "forward" ? initialRight : initialLeft}
@@ -148,7 +155,7 @@ const VerifyOrg = ({ stepSetter, direction, setDirection }) => {
             Upload your certificate of Incorporation
           </h1>
           <SizedBox height="h-4" />
-          <FilePicker width="w-[70%]" />
+          <FilePicker width="w-[70%]" form={form} valueSetter={formSetter} />
           <SizedBox height="h-6" />
           <Button
             width="w-[70%]"
@@ -170,14 +177,44 @@ const VerifyOrg = ({ stepSetter, direction, setDirection }) => {
     </motion.div>
   );
 };
-const SetupAccount = ({ stepSetter, direction, setDirection }) => {
+const SetupAccount = ({
+  stepSetter,
+  direction,
+  setDirection,
+  form,
+  formSetter,
+}) => {
   const navigate = useNavigate();
 
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const setFormValue = (name, value) => {
+    formSetter((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const prepareOrganizationForm = (form) => {
+    const formData = new FormData();
+    // append all required values
+    formData.append("organizationName", form.organizationName);
+    formData.append("companyEmail", form.companyEmail);
+    formData.append("industry", form.industry.value);
+    formData.append("companySize", form.companySize.value);
+    formData.append("fullName", form.fullName);
+    formData.append("email", form.email);
+    formData.append("tel", form.tel ?? "");
+    formData.append("password", form.password);
+    formData.append("certOfIncorporation", form.certOfInc);
+
+    return formData;
+  };
+
+  // make submission request
+  const submitForm = useMutation({
+    mutationKey: ["register_organization"],
+    mutationFn: (data) => registerOrganization(data),
+    onSuccess: () => {
+      setDirection(() => "forward");
+      stepSetter(4);
+    },
+  });
 
   return (
     <motion.div
@@ -206,49 +243,53 @@ const SetupAccount = ({ stepSetter, direction, setDirection }) => {
           <TextInput
             bgColor="bg-white"
             label="Full Name"
-            value={fullName}
-            valueSetter={setFullName}
+            name="fullName"
+            value={form.fullName}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <TextInput
             bgColor="bg-white"
             label="Email"
-            value={email}
-            valueSetter={setEmail}
+            name="email"
+            value={form.email}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <TextInput
             bgColor="bg-white"
             label="Your Role"
-            value={role}
-            valueSetter={setRole}
+            name="role"
+            value={form.role}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <PasswordInput
             bgColor="bg-white"
             label="Password"
-            value={password}
-            valueSetter={setPassword}
+            name="password"
+            value={form.password}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <PasswordInput
             bgColor="bg-white"
             label="Confirm Password"
-            value={confirmPassword}
-            valueSetter={setConfirmPassword}
+            name="confirmPassword"
+            value={form.confirmPassword}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <Button
             width="w-[70%]"
-            content="Next"
+            content={submitForm.isPending ? <Spinner /> : <span>Next</span>}
             callback={() => {
-              setDirection(() => "forward");
-              stepSetter(4);
+              submitForm.mutate(prepareOrganizationForm(form));
             }}
           />
           <SizedBox height="h-6" />
@@ -263,8 +304,22 @@ const SetupAccount = ({ stepSetter, direction, setDirection }) => {
     </motion.div>
   );
 };
-const VerifyEmail = ({ stepSetter, direction, setDirection }) => {
-  const [otp, setOtp] = useState("");
+const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
+  const navigate = useNavigate();
+
+  const setFormValue = (name, value) => {
+    formSetter((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // submit otp
+  const submitOTP = useMutation({
+    mutationKey: ["submit_otp"],
+    mutationFn: (data) => verifyOTP(data),
+    onSuccess: () => {
+      setDirection(() => "forward");
+      navigate("/admin");
+    },
+  });
 
   return (
     <motion.div
@@ -273,7 +328,7 @@ const VerifyEmail = ({ stepSetter, direction, setDirection }) => {
       exit={exitRight}
       className="flex-col pt-20 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
     >
-      <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
+      {/* <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
         <TextButton
           content="Back"
           prefix={arrowBack}
@@ -282,7 +337,7 @@ const VerifyEmail = ({ stepSetter, direction, setDirection }) => {
             stepSetter((prev) => prev - 1);
           }}
         />
-      </div>
+      </div> */}
       <div className="flex h-[clamp(300px,100%,700px)] flex-col justify-center items-center flex-1">
         <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
           Verify your email
@@ -295,17 +350,17 @@ const VerifyEmail = ({ stepSetter, direction, setDirection }) => {
           <TextInput
             bgColor="bg-white"
             label="OTP"
-            value={otp}
-            valueSetter={setOtp}
+            name="otp"
+            value={form.otp}
+            valueSetter={setFormValue}
             width="w-[70%]"
           />
           <SizedBox height="h-6" />
           <Button
             width="w-[70%]"
-            content="Next"
+            content={submitOTP.isPending ? <Spinner /> : <span>Next</span>}
             callback={() => {
-              setDirection("forward");
-              stepSetter(4);
+              submitOTP.mutate({ otp: form.otp });
             }}
           />
         </div>
@@ -317,6 +372,21 @@ const VerifyEmail = ({ stepSetter, direction, setDirection }) => {
 const Register = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState("forward");
+
+  // register org form
+  const [regForm, setRegForm] = useState({
+    organizationName: "",
+    companyEmail: "",
+    industry: { value: "", label: "" },
+    companySize: { value: "", label: "" },
+    certOfInc: null,
+    fullName: "",
+    email: "",
+    role: "",
+    password: "",
+    confirmPassword: "",
+    otp: "",
+  });
 
   return (
     <main className="relative h-screen bg-white">
@@ -336,6 +406,8 @@ const Register = () => {
               step={step}
               direction={direction}
               setDirection={setDirection}
+              form={regForm}
+              formSetter={setRegForm}
             />
           )}
           {step === 2 && (
@@ -345,6 +417,8 @@ const Register = () => {
               step={step}
               direction={direction}
               setDirection={setDirection}
+              form={regForm}
+              formSetter={setRegForm}
             />
           )}
           {step === 3 && (
@@ -354,6 +428,8 @@ const Register = () => {
               step={step}
               direction={direction}
               setDirection={setDirection}
+              form={regForm}
+              formSetter={setRegForm}
             />
           )}
           {step === 4 && (
@@ -363,6 +439,8 @@ const Register = () => {
               step={step}
               direction={direction}
               setDirection={setDirection}
+              form={regForm}
+              formSetter={setRegForm}
             />
           )}
           {/* graphic */}
@@ -385,24 +463,32 @@ RegisterOrg.propTypes = {
   step: PropTypes.number.isRequired,
   direction: PropTypes.string.isRequired,
   setDirection: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+  formSetter: PropTypes.func.isRequired,
 };
 VerifyOrg.propTypes = {
   stepSetter: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
   direction: PropTypes.string.isRequired,
   setDirection: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+  formSetter: PropTypes.func.isRequired,
 };
 SetupAccount.propTypes = {
   stepSetter: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
   direction: PropTypes.string.isRequired,
   setDirection: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+  formSetter: PropTypes.func.isRequired,
 };
 VerifyEmail.propTypes = {
   stepSetter: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
   direction: PropTypes.string.isRequired,
   setDirection: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+  formSetter: PropTypes.func.isRequired,
 };
 
 export default Register;

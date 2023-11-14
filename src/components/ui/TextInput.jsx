@@ -12,6 +12,7 @@ const TextInput = ({
   value,
   valueSetter,
   width,
+  name,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -51,9 +52,10 @@ const TextInput = ({
       </label>
       <input
         type="text"
+        name={name}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onChange={(e) => valueSetter(e.target.value)}
+        onChange={(e) => valueSetter(e.target.name, e.target.value, e)}
         className={twMerge(
           `z-[1] font-satoshi pr-8 py-4 pl-5 rounded-md w-full ${
             bgColor ?? "bg-white"
@@ -78,6 +80,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   valueSetter: PropTypes.func,
   width: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default TextInput;

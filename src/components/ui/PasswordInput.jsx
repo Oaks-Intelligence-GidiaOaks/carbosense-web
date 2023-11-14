@@ -14,6 +14,7 @@ const PasswordInput = ({
   value,
   valueSetter,
   width,
+  name,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [revealPassword, setRevealPassword] = useState(false);
@@ -57,7 +58,7 @@ const PasswordInput = ({
           type={revealPassword ? "text" : "password"}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          onChange={(e) => valueSetter(e.target.value)}
+          onChange={(e) => valueSetter(name, e.target.value)}
           className={twMerge(
             `z-[1] font-satoshi pr-12 py-4 pl-5 rounded-md w-full ${
               bgColor ?? "bg-white"
@@ -91,6 +92,7 @@ PasswordInput.propTypes = {
   value: PropTypes.string,
   valueSetter: PropTypes.func,
   width: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default PasswordInput;

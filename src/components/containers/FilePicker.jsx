@@ -15,9 +15,9 @@ import {
 } from "../../utils";
 import { acceptedOrgFileTypes } from "../../constants";
 
-const FilePicker = ({ width }) => {
+const FilePicker = ({ width, form, valueSetter }) => {
   const [isDragOver, setIsDragOver] = useState(false);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(form.certOfInc);
   const [convertedFile, setConvertedFile] = useState(null);
 
   const getFileIcon = (extension) => {
@@ -34,11 +34,14 @@ const FilePicker = ({ width }) => {
 
   // convert file once selected
   useEffect(() => {
+    // if file changed
+    valueSetter((prev) => ({ ...prev, certOfInc: file }));
+
     if (file) {
       const dataURL = readAndConvertFileToString(file);
       setConvertedFile(dataURL);
     }
-  }, [file]);
+  }, [file, valueSetter]);
 
   return (
     <>
@@ -147,6 +150,8 @@ const FilePicker = ({ width }) => {
 
 FilePicker.propTypes = {
   width: PropTypes.string,
+  form: PropTypes.object,
+  valueSetter: PropTypes.func,
 };
 
 export default FilePicker;
