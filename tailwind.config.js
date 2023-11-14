@@ -22,6 +22,7 @@ export default {
         "bg-ca-light-gray": "#EDF0F6",
         "bg-ca-gray": "#E3ECFF",
         "bg-ca-red": "#FF331E",
+        "primary-purple": "#9553A0",
 
        
       },

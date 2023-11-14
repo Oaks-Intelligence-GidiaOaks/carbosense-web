@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from "react-router-dom";
 import { bottombarLink } from '../../data/Navigation';
 
@@ -10,7 +9,6 @@ const Bottombar = () => {
             {bottombarLink.map((link) => {
                 const isActive = pathname === link.route;
                 return (
-
                     <Link
                         key={link.label}
                         to={link.route}
@@ -26,7 +24,6 @@ const Bottombar = () => {
                         />
                       <p className=''> {link.label}</p>
                     </Link>
-
                 );
             })}
 

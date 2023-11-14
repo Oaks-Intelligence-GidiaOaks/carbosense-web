@@ -12,12 +12,12 @@ export const sidebarLinks = [
     },
     {
         imgPath: "/assets/icons/invoice.svg",
-        route: "/invoice",
+        route: "/admin/invoice",
         label: "Invoice Centre",
     },
     {
         imgPath: "/assets/icons/account.svg",
-        route: "/account",
+        route: "/admin/account",
         label: "Account",
     },
     {
@@ -37,7 +37,7 @@ export const bottombarLink = [
     },
     {
         imgPath: "/assets/icons/invoice.svg",
-        route: "/invoice",
+        route: "/admin/invoice",
         label: "Invoice ",
     },
     {
@@ -48,7 +48,7 @@ export const bottombarLink = [
 
     {
         imgPath: "/assets/icons/org.svg",
-        route: "/organization",
+        route: "/admin/organization",
         label: "Org",
     },
 
