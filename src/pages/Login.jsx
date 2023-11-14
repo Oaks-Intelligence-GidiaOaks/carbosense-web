@@ -4,6 +4,7 @@ import {
   Button,
   PasswordInput,
   SizedBox,
+  Spinner,
   TextButton,
   TextInput,
 } from "../components/ui";
@@ -12,12 +13,29 @@ import rocketLaunch from "../assets/rocket_launch.svg";
 import { Illustration } from "../components/containers";
 import { AnimatePresence, motion } from "framer-motion";
 import { exitLeft, initialLeft, slideRight } from "../constants/framer";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../services";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  const setFormValue = (name, value) => {
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // make user login request
+  const submitForm = useMutation({
+    mutationKey: ["register_organization"],
+    mutationFn: (data) => loginUser(data),
+    onSuccess: () => {
+      navigate("/admin");
+    },
+  });
 
   return (
     <main className="relative h-screen bg-white overflow-hidden">
@@ -46,16 +64,18 @@ const Login = () => {
                 <TextInput
                   bgColor="bg-white"
                   label="Email address"
-                  value={email}
-                  valueSetter={setEmail}
+                  name="email"
+                  value={credentials.email}
+                  valueSetter={setFormValue}
                   width="w-[60%]"
                 />
                 <SizedBox height="h-6" />
                 <PasswordInput
                   bgColor="bg-white"
                   label="Password"
-                  value={password}
-                  valueSetter={setPassword}
+                  name="password"
+                  value={credentials.password}
+                  valueSetter={setFormValue}
                   width="w-[60%]"
                 />
                 <SizedBox height="h-2" />
@@ -63,7 +83,18 @@ const Login = () => {
                   <TextButton content={"Forgot Password?"} />
                 </div>
                 <SizedBox height="h-6" />
-                <Button width="w-[60%]" content="Sign in" />
+                <Button
+                  width="w-[60%]"
+                  content={
+                    submitForm.isPending ? <Spinner /> : <span>Sign in</span>
+                  }
+                  callback={() =>
+                    submitForm.mutate({
+                      email: credentials.email,
+                      password: credentials.password,
+                    })
+                  }
+                />
                 <SizedBox height="h-8" />
                 <div className="w-[60%] flex justify-center">
                   <span>{"Don't have an account?"}</span>

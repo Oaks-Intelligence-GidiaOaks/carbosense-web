@@ -206,7 +206,7 @@ const SetupAccount = ({
     return formData;
   };
 
-  // make submission request
+  // make user registration request
   const submitForm = useMutation({
     mutationKey: ["register_organization"],
     mutationFn: (data) => registerOrganization(data),
