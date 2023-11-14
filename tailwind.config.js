@@ -10,15 +10,27 @@ export default {
       textColor: {
         "primary-blue": "#4747ff",
         "primary-black": "#0E0E0E",
+        "primary-purple": "#9553A0",
+        "primary-gray": "#5D5D5D",
+        "primary-red": "#FF331E",
+
       },
       backgroundColor: {
         "primary-blue": "#4747ff",
         "primary-black": "#0E0E0E",
         "step-active": "#19CDA7",
+        "bg-ca-light-gray": "#EDF0F6",
+        "bg-ca-gray": "#E3ECFF",
+        "bg-ca-red": "#FF331E",
+        "primary-purple": "#9553A0",
+
+       
       },
       borderColor: {
         "primary-blue": "#4747ff",
         "primary-black": "#0E0E0E",
+        "bg-ca-purple": "#9553A0",
+        "bg-ca-light-purple": "#FBF7FF",
       },
       outlineColor: {
         "primary-blue": "#4747ff",
@@ -28,6 +40,8 @@ export default {
         "primary-blue": "#4747ff",
         "primary-black": "#0E0E0E",
       },
+
+     
     },
   },
   plugins: [],
