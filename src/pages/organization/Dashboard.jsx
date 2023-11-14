@@ -26,7 +26,7 @@ const Dashboard = () => {
       <div className='md:px-8 mt-3'>
         <img src={DashboardFrame} alt="" />
       </div>
-      <div className='px-4 md:px-8'>
+      <div className='px-2 md:px-8'>
         <DashboardStats />
 
         {/* <div className='border mt-4 bg-white border-[#D8DDE8] h-[270px] w-full '>
@@ -38,9 +38,9 @@ const Dashboard = () => {
         </div> */}
       </div>
 
-      <div className='px-4 md:px-8 mt-4'>
+      <div className='px-2 md:px-8 mt-4'>
         <h3 className='text-primary-black font-medium text-lg'>Emissions by Department</h3>
-        <EmissionsGrid />
+        {/* <EmissionsGrid /> */}
       </div>
     </div>
   )
