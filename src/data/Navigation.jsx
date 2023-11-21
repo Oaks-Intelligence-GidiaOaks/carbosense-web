@@ -22,7 +22,7 @@ export const sidebarLinks = [
     },
     {
         imgPath: "/assets/icons/org.svg",
-        route: "/organization",
+        route: "/admin/organization",
         label: "Organization",
     },
 ];
