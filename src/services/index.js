@@ -18,10 +18,11 @@ export const loginUser = async (data) => {
   return await response.data;
 };
 
-export const verifyOTP = async (data) => {
+export const verifyOTP = async (data, accessToken) => {
   const response = await axios.post("user/verify_otp", data, {
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return await response.data;

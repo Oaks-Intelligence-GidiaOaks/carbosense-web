@@ -11,15 +11,18 @@ const Button = ({
   isLoading,
   hoverColor,
   callback,
+  disabled,
 }) => {
   return (
     <button
+      disabled={isLoading ?? disabled}
       className={twMerge(
-        `flex justify-center items-center transition-all`,
+        `flex justify-center items-center transition-all cursor-pointer }`,
         width ?? "w-[240px]",
         height ?? "h-[45px]",
         bgColor ?? "bg-[#4747FF]",
-        hoverColor ?? "hover:bg-[#3030ac]"
+        hoverColor ?? "hover:bg-[#3030ac]",
+        disabled ? "bg-[#a9a9a9] hover:bg-[#a9a9a9] cursor-not-allowed" : null
       )}
       onClick={callback}
     >
@@ -36,13 +39,14 @@ const Button = ({
 
 Button.propTypes = {
   bgColor: PropTypes.string,
-  content: PropTypes.string,
+  content: PropTypes.any,
   width: PropTypes.string,
   height: PropTypes.string,
   textColor: PropTypes.string,
   isLoading: PropTypes.bool,
   hoverColor: PropTypes.string,
   callback: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default Button;

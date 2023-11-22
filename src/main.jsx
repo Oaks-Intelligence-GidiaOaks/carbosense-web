@@ -8,12 +8,13 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./roots/Router.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
-import { base_url, base_url_local } from "./constants/service.js";
+import { base_url } from "./constants/service.js";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
 // axios defaults
-axios.defaults.baseURL = base_url_local;
+axios.defaults.baseURL = base_url;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 // axios.defaults.headers.common["Authorization"] = `Bearer ${
 //   user?.accessToken ?? user?.accesssToken ?? user?.user?.accessToken
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <Toaster />
       </QueryClientProvider>
       {/* <App /> */}
     </Provider>

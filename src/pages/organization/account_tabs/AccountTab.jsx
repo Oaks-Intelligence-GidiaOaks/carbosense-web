@@ -1,152 +1,198 @@
-import React from 'react'
+import React from "react";
 import OrgAdminIcon from "../../../assets/icons/OrgAdminIcon.svg";
-import alertcircle from "../../../assets/icons/alertcircle.svg"
-import log from "../../../assets/icons/log.svg"
-import Logout from "../../../assets/icons/Logout.svg"
-import trash from "../../../assets/icons/trash.svg"
-
+import alertcircle from "../../../assets/icons/alertcircle.svg";
+import log from "../../../assets/icons/log.svg";
+import Logout from "../../../assets/icons/Logout.svg";
+import trash from "../../../assets/icons/trash.svg";
 
 const AccountTab = () => {
   return (
-    <div className=''>
-      <div className='grid md:grid-cols-7 gap-4'>
-        <div className='md:col-span-4 bg-white p-4 md:p-6'>
-          <div className='flex items-center justify-between'>
-            <h3 className='text-sm text-primary-black font-medium'>Profile Information</h3>
-            <button className='text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]' >Edit</button>
+    <div className="">
+      <div className="grid md:grid-cols-7 gap-4">
+        <div className="md:col-span-4 bg-white p-4 md:p-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm text-primary-black font-medium">
+              Profile Information
+            </h3>
+            <button className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]">
+              Edit
+            </button>
           </div>
 
-          <div className='flex flex-col gap-6 mt-4'>
-            <div className=''>
-              <div className='flex items-center justify-between'>
-                <span className='text-sm text-primary-gray'>Full Name</span>
-                <span className='text-sm text-primary-black'>David Orobosa</span>
+          <div className="flex flex-col gap-6 mt-4">
+            <div className="">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-primary-gray">Full Name</span>
+                <span className="text-sm text-primary-black">
+                  David Orobosa
+                </span>
               </div>
             </div>
-            <div className=''>
-              <div className='flex items-center justify-between'>
-                <span className='text-sm text-primary-gray'>Email</span>
-                <span className='text-sm text-primary-black'>davidorobosa@example.com</span>
+            <div className="">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-primary-gray">Email</span>
+                <span className="text-sm text-primary-black">
+                  davidorobosa@example.com
+                </span>
               </div>
             </div>
-            <div className=''>
-              <div className='flex items-center justify-between'>
-                <span className='text-sm text-primary-gray'>Phone</span>
-                <span className='text-sm text-primary-black'>+44 20 7123 4567</span>
+            <div className="">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-primary-gray">Phone</span>
+                <span className="text-sm text-primary-black">
+                  +44 20 7123 4567
+                </span>
               </div>
             </div>
           </div>
-
         </div>
 
-        <div className='md:col-span-3 bg-white p-4 md:p-6'>
-          <div className='flex flex-col gap-2'>
-            <h3 className='text-sm text-primary-black font-medium'>Profile Photo</h3>
-            <span className='text-xs'>Your profile photo will be visible to all your org members.</span>
+        <div className="md:col-span-3 bg-white p-4 md:p-6">
+          <div className="flex flex-col gap-2">
+            <h3 className="text-sm text-primary-black font-medium">
+              Profile Photo
+            </h3>
+            <span className="text-xs">
+              Your profile photo will be visible to all your org members.
+            </span>
           </div>
-          <div className='flex items-center justify-center py-3'>
-            <img src="" alt="" className='h-16 w-16 rounded-full border' />
+          <div className="flex items-center justify-center py-3">
+            <img src="" alt="" className="h-16 w-16 rounded-full border" />
           </div>
 
-          <div className='flex items-center justify-center gap-10 '>
-            <button className='text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]' >Upload picture</button>
-            <button className='text-[12px] border border-[#E3ECFF] text-primary-blue py-1 px-2 bg-white' >Remove picture</button>
+          <div className="flex items-center justify-center gap-10 ">
+            <button className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]">
+              Upload picture
+            </button>
+            <button className="text-[12px] border border-[#E3ECFF] text-primary-blue py-1 px-2 bg-white">
+              Remove picture
+            </button>
           </div>
         </div>
       </div>
 
-      <div className='bg-white mt-4 p-4 md:p-6 '>
-        <div className='flex flex-col gap-2'>
-          <h3 className='text-sm text-primary-black font-medium'>Account Information</h3>
-          <span className='text-xs'>Your profile photo will be visible to all your org members.</span>
+      <div className="bg-white mt-4 p-4 md:p-6 ">
+        <div className="flex flex-col gap-2">
+          <h3 className="text-sm text-primary-black font-medium">
+            Account Information
+          </h3>
+          <span className="text-xs">
+            Your profile photo will be visible to all your org members.
+          </span>
         </div>
 
         <div>
-          <div className='grid md:grid-cols-2 gap-4 mt-4'>
-            <div className='flex items-center justify-between border p-2'>
-              <span className='text-xs md:text-sm text-primary-gray'>User Permission</span>
-              <div className='p-1 border rounded-3xl flex items-center justify-center gap-2 bg-[#E3ECFF] border-[#E3ECFF]'>
+          <div className="grid md:grid-cols-2 gap-4 mt-4">
+            <div className="flex items-center justify-between border p-2">
+              <span className="text-xs md:text-sm text-primary-gray">
+                User Permission
+              </span>
+              <div className="p-1 border rounded-3xl flex items-center justify-center gap-2 bg-[#E3ECFF] border-[#E3ECFF]">
                 <img src={OrgAdminIcon} alt="" width={12} height={12} />
-                <span className='text-xs text-primary-black'>Organization Admin</span>
+                <span className="text-xs text-primary-black">
+                  Organization Admin
+                </span>
               </div>
             </div>
-            <div className='flex items-center justify-between border p-3'>
-              <span className='text-xs md:text-sm text-primary-gray'>Invited by</span>
-              <span className='text-xs md:text-sm text-primary-black'>dwaynecarter@example.com</span>
+            <div className="flex items-center justify-between border p-3">
+              <span className="text-xs md:text-sm text-primary-gray">
+                Invited by
+              </span>
+              <span className="text-xs md:text-sm text-primary-black">
+                dwaynecarter@example.com
+              </span>
             </div>
-            <div className='flex items-center justify-between border p-3'>
-              <span className='text-xs md:text-sm text-primary-gray'>Created on</span>
-              <span className='text-xs md:text-sm text-primary-black'>12 July 2023</span>
+            <div className="flex items-center justify-between border p-3">
+              <span className="text-xs md:text-sm text-primary-gray">
+                Created on
+              </span>
+              <span className="text-xs md:text-sm text-primary-black">
+                12 July 2023
+              </span>
             </div>
-            <div className='flex items-center justify-between border p-3'>
-              <span className='text-xs md:text-sm text-primary-gray'>Department</span>
-              <span className='text-xs md:text-sm text-primary-black'>Data Analysis</span>
+            <div className="flex items-center justify-between border p-3">
+              <span className="text-xs md:text-sm text-primary-gray">
+                Department
+              </span>
+              <span className="text-xs md:text-sm text-primary-black">
+                Data Analysis
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className='grid md:grid-cols-2 gap-6 md:gap-4 mt-4 p-4 md:p-6 bg-white'>
-        <div className='grid grid-cols-2 gap-4'>
-          <div className='bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center'>
-            <div className='flex items-center gap-2'>
-              <h3 className='font-medium text-primary-black text-base'>0</h3>
-              <span className='text-sm text-primary-gray'>tCO2e</span>
+      <div className="grid md:grid-cols-2 gap-6 md:gap-4 mt-4 p-4 md:p-6 bg-white">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
-            <span className=' text-primary-black text-sm text-center'>My total emissions</span>
+            <span className=" text-primary-black text-sm text-center">
+              My total emissions
+            </span>
           </div>
-          <div className='bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center'>
-            <div className='flex items-center gap-2'>
-              <h3 className='font-medium text-primary-black text-base'>0</h3>
-              <span className='text-sm text-primary-gray'>tCO2e</span>
+          <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
-            <span className=' text-primary-black text-sm text-center'>My total scope 1 emissions</span>
+            <span className=" text-primary-black text-sm text-center">
+              My total scope 1 emissions
+            </span>
           </div>
-          <div className='bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center'>
-            <div className='flex items-center gap-2'>
-              <h3 className='font-medium text-primary-black text-base'>0</h3>
-              <span className='text-sm text-primary-gray'>tCO2e</span>
+          <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
-            <span className=' text-primary-black text-sm text-center'>My total scope 2 emissions</span>
+            <span className=" text-primary-black text-sm text-center">
+              My total scope 2 emissions
+            </span>
           </div>
-          <div className='bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center'>
-            <div className='flex items-center gap-2'>
-              <h3 className='font-medium text-primary-black text-base'>0</h3>
-              <span className='text-sm text-primary-gray'>tCO2e</span>
+          <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
-            <span className=' text-primary-black text-sm text-center'>My total scope 3 emissions</span>
+            <span className=" text-primary-black text-sm text-center">
+              My total scope 3 emissions
+            </span>
           </div>
         </div>
-        <div className='mt-4 md:mt-0'>
-          <div className='bg-[#FBF7FF] p-3'>
-            <h3 className='text-base text-primary-black font-medium'>Account Settings</h3>
-            <span className='text-sm text-primary-gray'>Manage your account settings</span>
+        <div className="mt-4 md:mt-0">
+          <div className="bg-[#FBF7FF] p-3">
+            <h3 className="text-base text-primary-black font-medium">
+              Account Settings
+            </h3>
+            <span className="text-sm text-primary-gray">
+              Manage your account settings
+            </span>
           </div>
 
-          <div className='flex flex-col gap-4 mt-2 px-3'>
-            <div className='flex items-center gap-4 hover:cursor-pointer'>
+          <div className="flex flex-col gap-4 mt-2 px-3">
+            <div className="flex items-center gap-4 hover:cursor-pointer">
               <img src={log} alt="" width={20} height={20} />
-              <span className='text-sm text-primary-gray'>Change Password</span>
+              <span className="text-sm text-primary-gray">Change Password</span>
             </div>
-            <div className='flex items-center gap-4 hover:cursor-pointer'>
+            <div className="flex items-center gap-4 hover:cursor-pointer">
               <img src={Logout} alt="" width={20} height={20} />
-              <span className='text-sm text-primary-gray'>Log out</span>
+              <span className="text-sm text-primary-gray">Log out</span>
             </div>
-            <div className='flex items-center gap-4 hover:cursor-pointer'>
+            <div className="flex items-center gap-4 hover:cursor-pointer">
               <img src={trash} alt="" width={20} height={20} />
-              <span className='text-sm text-primary-gray'>Delete Account</span>
+              <span className="text-sm text-primary-gray">Delete Account</span>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AccountTab
+export default AccountTab;

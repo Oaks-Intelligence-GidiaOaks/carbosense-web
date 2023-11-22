@@ -8,6 +8,7 @@ import jpg from "../../assets/icons/jpg_file.svg";
 import jpeg from "../../assets/icons/jpeg_file.svg";
 import pdf from "../../assets/icons/pdf_file.svg";
 import cancelIcon from "../../assets/icons/cancel.svg";
+import errorIcon from "../../assets/icons/error_icon.svg";
 import {
   formatBytes,
   identifyFileType,
@@ -19,6 +20,7 @@ const FilePicker = ({ width, form, valueSetter }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [file, setFile] = useState(form.certOfInc);
   const [convertedFile, setConvertedFile] = useState(null);
+  const [fileErrorMessage, setFileErrorMessage] = useState("");
 
   const getFileIcon = (extension) => {
     if (extension === "png") {
@@ -92,9 +94,40 @@ const FilePicker = ({ width, form, valueSetter }) => {
           accept=".png,.jpg,.jpeg,.pdf"
           className="hidden"
           // multiple={false}
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={(e) => {
+            // reset all fields
+            setFileErrorMessage("");
+            setConvertedFile(null);
+            setFile(null);
+
+            // check if file type is acceptable
+            if (
+              !acceptedOrgFileTypes.includes(
+                e.target.files[0].type.split("/")[1]
+              )
+            )
+              return setFileErrorMessage("File format not accepted.");
+
+            // check if file size is greater than 5MB
+            if (e.target.files[0].size > 5242880)
+              return setFileErrorMessage("File size exceeds 5MB limit.");
+            setFile(e.target.files[0]);
+          }}
         />
       </label>
+      {/* file error message */}
+      {fileErrorMessage && (
+        <div
+          className={`w-[clamp(280px,70%,600px)] flex items-center justify-start gap-2 text-red-500 my-2`}
+        >
+          <img
+            alt="error icon"
+            src={errorIcon}
+            className="fill-red-500 text-red-500"
+          />
+          <p>{fileErrorMessage}</p>
+        </div>
+      )}
       {file && (
         <>
           <SizedBox height="h-4" />

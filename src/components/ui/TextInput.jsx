@@ -41,7 +41,7 @@ const TextInput = ({
     >
       <label
         className={twMerge(
-          `pointer-events-none transition-all absolute top-1/2 px-2 -translate-y-1/2 ${
+          `pointer-events-none transition-all absolute top-1/2 px-2 -translate-y-1/2 rounded ${
             labelColor ?? "text-gray-600"
           } z-[1] left-2 text-gray-600 bg-[${labelBg ?? "white"}]`,
           isFocused || value.trim().length > 0 ? focusedLabelStyle : null,

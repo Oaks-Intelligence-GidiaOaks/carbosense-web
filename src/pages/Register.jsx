@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { companySizes, industries } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -27,6 +27,13 @@ import {
 } from "../constants/framer";
 import { useMutation } from "@tanstack/react-query";
 import { registerOrganization, verifyOTP } from "../services";
+import validator from "validator";
+import PhoneInput from "../components/ui/PhoneInput";
+import toast from "react-hot-toast";
+import { XCircle } from "lucide-react";
+import { isObject } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccessToken, setUser } from "../features/user/userSlice";
 
 const RegisterOrg = ({
   stepSetter,
@@ -40,6 +47,25 @@ const RegisterOrg = ({
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
   };
+
+  // generate button state based on form values
+  const isButtonDisabled = useMemo(() => {
+    if (validator.isEmpty(form.organizationName)) return true;
+    if (
+      !validator.isEmail(form.companyEmail) ||
+      validator.isEmpty(form.companyEmail)
+    )
+      return true;
+    if (!form.industry?.value) return true;
+    if (!form.companySize?.value) return true;
+
+    return false;
+  }, [
+    form.organizationName,
+    form.companyEmail,
+    form.industry,
+    form.companySize,
+  ]);
 
   return (
     <motion.div
@@ -57,7 +83,6 @@ const RegisterOrg = ({
           Create a Carbosense account for your organization
         </h1>
         <div className="mt-6 w-full flex-col flex items-center">
-          {console.log(form)}
           <TextInput
             bgColor="bg-white"
             label="Organization Name"
@@ -95,6 +120,7 @@ const RegisterOrg = ({
           />
           <SizedBox height="h-6" />
           <Button
+            disabled={isButtonDisabled}
             width="w-[70%]"
             content="Next"
             callback={() => {
@@ -124,6 +150,12 @@ const VerifyOrg = ({
   formSetter,
 }) => {
   const navigate = useNavigate();
+
+  const isButtonDisabled = useMemo(() => {
+    if (form.certOfInc === null) return true;
+    return false;
+  }, [form.certOfInc]);
+
   return (
     <motion.div
       initial={direction === "forward" ? initialRight : initialLeft}
@@ -131,7 +163,7 @@ const VerifyOrg = ({
       exit={direction === "forward" ? exitLeft : exitRight}
       className="flex-col pt-20 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
     >
-      <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
+      <div className="flex justify-start w-[clamp(280px,70%,600px)] mx-auto items-center flex-1">
         <TextButton
           content="Back"
           prefix={arrowBack}
@@ -142,23 +174,28 @@ const VerifyOrg = ({
         />
       </div>
       <div className="flex h-full flex-col items-center pt-14 flex-1">
-        <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
+        <h1 className="text-3xl font-semibold text-primary-black w-[clamp(280px,70%,600px)]">
           Verify your org
         </h1>
         <SizedBox height="h-2" />
-        <h1 className="text-primary-black w-[70%]">
+        <h1 className="text-primary-black w-[clamp(280px,70%,600px)]">
           We need to verify your organization to helps us maintain highest
           standards.
         </h1>
         <div className="mt-6 w-full flex-col flex items-center">
-          <h1 className="text-primary-blue font-medium w-[70%] text-lg">
+          <h1 className="text-primary-blue font-medium w-[clamp(280px,70%,600px)] text-lg">
             Upload your certificate of Incorporation
           </h1>
           <SizedBox height="h-4" />
-          <FilePicker width="w-[70%]" form={form} valueSetter={formSetter} />
+          <FilePicker
+            width="w-[clamp(280px,70%,600px)]"
+            form={form}
+            valueSetter={formSetter}
+          />
           <SizedBox height="h-6" />
           <Button
-            width="w-[70%]"
+            disabled={isButtonDisabled}
+            width="w-[clamp(280px,70%,600px)]"
             content="Next"
             callback={() => {
               setDirection(() => "forward");
@@ -166,7 +203,7 @@ const VerifyOrg = ({
             }}
           />
           <SizedBox height="h-6" />
-          <div className="w-[70%] pb-10 flex justify-start">
+          <div className="w-[clamp(280px,70%,600px)] pb-10 flex justify-start">
             <span>{"Already have an account?"}</span>
             &nbsp;
             <TextButton content={"Sign in"} callback={() => navigate("/")} />
@@ -185,10 +222,41 @@ const SetupAccount = ({
   formSetter,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
   };
+
+  // generate button state based on form values
+  console.log(form.phone);
+  const isButtonDisabled = useMemo(() => {
+    if (validator.isEmpty(form.fullName)) return true;
+    if (!validator.isEmail(form.email) || validator.isEmpty(form.email))
+      return true;
+    if (validator.isEmpty(form.phone)) return true;
+    if (validator.isEmpty(form.role)) return true;
+    if (
+      !validator.isStrongPassword(form.password, {
+        minLength: 6,
+        minNumbers: 1,
+        minUppercase: 1,
+        minSymbols: 1,
+        minLowercase: 1,
+      })
+    )
+      return true;
+    if (form.password !== form.confirmPassword) return true;
+
+    return false;
+  }, [
+    form.fullName,
+    form.email,
+    form.phone,
+    form.role,
+    form.password,
+    form.confirmPassword,
+  ]);
 
   const prepareOrganizationForm = (form) => {
     const formData = new FormData();
@@ -199,7 +267,7 @@ const SetupAccount = ({
     formData.append("companySize", form.companySize.value);
     formData.append("fullName", form.fullName);
     formData.append("email", form.email);
-    formData.append("tel", form.tel ?? "");
+    formData.append("tel", form.phone);
     formData.append("password", form.password);
     formData.append("certOfIncorporation", form.certOfInc);
 
@@ -210,9 +278,72 @@ const SetupAccount = ({
   const submitForm = useMutation({
     mutationKey: ["register_organization"],
     mutationFn: (data) => registerOrganization(data),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      dispatch(setUser(data.data));
+      dispatch(setAccessToken(data.accessToken));
+      toast.success("Organization registered successfully.", {
+        duration: 10000,
+      });
       setDirection(() => "forward");
       stepSetter(4);
+    },
+    onError: (e) => {
+      console.log(e);
+      toast.custom(
+        (t) => (
+          <div
+            className={`${
+              t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          >
+            <div className="flex-1 w-0 p-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 pt-0.5">
+                  <XCircle color="red" strokeWidth={1.5} />
+                </div>
+                <div className="ml-3 flex-1">
+                  <p className="text-sm font-medium text-gray-900">
+                    Error registering your organization.
+                  </p>
+
+                  {/* error data is an array */}
+                  {Array.isArray(e.response.data) && (
+                    <p className="mt-1 text-sm text-gray-700">
+                      The following issues were encountered when registering
+                      your organization.
+                    </p>
+                  )}
+
+                  {/* error data is an object */}
+                  {isObject(e.response.data) && e.response.data.message && (
+                    <p className="mt-1 text-sm text-gray-700">
+                      The following issue was encountered when registering your
+                      organization.
+                    </p>
+                  )}
+
+                  <ul className="mt-2 text-sm list-disc pl-4">
+                    <li className="text-red-500">{e.response.data.message}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="flex border-l border-gray-200">
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                className="w-full border border-transparent hover:bg-gray-100 transition-all duration-300
+                 rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primary-blue hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-primary-blue"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: Infinity,
+          // id: "registration-error",
+        }
+      );
     },
   });
 
@@ -223,7 +354,7 @@ const SetupAccount = ({
       exit={direction === "forward" ? exitLeft : exitRight}
       className="flex-col pt-20 pb-10 flex-1 min-[760px]:flex-[0.4] min-h-full items-stretch justify-center"
     >
-      <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
+      <div className="flex justify-start w-[clamp(280px,70%,600px)] mx-auto items-center flex-1">
         <TextButton
           content="Back"
           prefix={arrowBack}
@@ -234,11 +365,13 @@ const SetupAccount = ({
         />
       </div>
       <div className="flex h-full flex-col items-center pt-14 flex-1">
-        <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
+        <h1 className="text-3xl font-semibold text-primary-black w-[clamp(280px,70%,600px)]">
           Setup your account
         </h1>
         <SizedBox height="h-2" />
-        <h1 className="text-primary-black w-[70%]">Tell us about yourself</h1>
+        <h1 className="text-primary-black w-[clamp(280px,70%,600px)]">
+          Tell us about yourself
+        </h1>
         <div className="mt-6 w-full flex-col flex items-center">
           <TextInput
             bgColor="bg-white"
@@ -246,7 +379,7 @@ const SetupAccount = ({
             name="fullName"
             value={form.fullName}
             valueSetter={setFormValue}
-            width="w-[70%]"
+            width="w-[clamp(280px,70%,600px)]"
           />
           <SizedBox height="h-6" />
           <TextInput
@@ -255,7 +388,16 @@ const SetupAccount = ({
             name="email"
             value={form.email}
             valueSetter={setFormValue}
-            width="w-[70%]"
+            width="w-[clamp(280px,70%,600px)]"
+          />
+          <SizedBox height="h-6" />
+          <PhoneInput
+            bgColor="bg-white"
+            label="Phone Number"
+            name="phone"
+            value={form.phone}
+            valueSetter={setFormValue}
+            width="w-[clamp(280px,70%,600px)]"
           />
           <SizedBox height="h-6" />
           <TextInput
@@ -264,7 +406,7 @@ const SetupAccount = ({
             name="role"
             value={form.role}
             valueSetter={setFormValue}
-            width="w-[70%]"
+            width="w-[clamp(280px,70%,600px)]"
           />
           <SizedBox height="h-6" />
           <PasswordInput
@@ -273,7 +415,8 @@ const SetupAccount = ({
             name="password"
             value={form.password}
             valueSetter={setFormValue}
-            width="w-[70%]"
+            width="w-[clamp(280px,70%,600px)]"
+            newPassword={true}
           />
           <SizedBox height="h-6" />
           <PasswordInput
@@ -282,18 +425,19 @@ const SetupAccount = ({
             name="confirmPassword"
             value={form.confirmPassword}
             valueSetter={setFormValue}
-            width="w-[70%]"
+            width="w-[clamp(280px,70%,600px)]"
           />
           <SizedBox height="h-6" />
           <Button
-            width="w-[70%]"
+            disabled={isButtonDisabled}
+            width="w-[clamp(280px,70%,600px)]"
             content={submitForm.isPending ? <Spinner /> : <span>Next</span>}
             callback={() => {
               submitForm.mutate(prepareOrganizationForm(form));
             }}
           />
           <SizedBox height="h-6" />
-          <div className="w-[70%] pb-10 flex justify-start">
+          <div className="w-[clamp(280px,70%,600px)] pb-10 flex justify-start">
             <span>{"Already have an account?"}</span>
             &nbsp;
             <TextButton content={"Sign in"} callback={() => navigate("/")} />
@@ -307,17 +451,27 @@ const SetupAccount = ({
 const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
   const navigate = useNavigate();
 
+  const { accessToken } = useSelector((state) => state.user);
+
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
   };
 
+  const isButtonDisabled = useMemo(() => {
+    if (form.otp.trim().length < 6) return true;
+    return false;
+  }, [form.otp]);
+
   // submit otp
   const submitOTP = useMutation({
     mutationKey: ["submit_otp"],
-    mutationFn: (data) => verifyOTP(data),
+    mutationFn: (data) => verifyOTP(data, accessToken),
     onSuccess: () => {
       setDirection(() => "forward");
       navigate("/admin");
+    },
+    onError: (e) => {
+      console.log(e);
     },
   });
 
@@ -357,6 +511,7 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
           />
           <SizedBox height="h-6" />
           <Button
+            disabled={isButtonDisabled}
             width="w-[70%]"
             content={submitOTP.isPending ? <Spinner /> : <span>Next</span>}
             callback={() => {
@@ -382,6 +537,7 @@ const Register = () => {
     certOfInc: null,
     fullName: "",
     email: "",
+    phone: "",
     role: "",
     password: "",
     confirmPassword: "",
