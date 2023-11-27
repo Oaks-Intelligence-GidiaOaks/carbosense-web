@@ -51,3 +51,28 @@ export const readAndConvertFileToString = async (file) => {
 
   reader.readAsDataURL(file);
 };
+
+// is data type an object
+export const isObject = (value) => {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+};
+
+// handle axios error
+export const handleAxiosError = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    return (
+      error.response.data.message ??
+      error.response.data.msg ??
+      error.response.data ??
+      "Can't handle your request at the moment."
+    );
+  } else if (error.request) {
+    // The request was made but no response was received
+    return "An error occurred while processing your request and it's not your fault.";
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    return error.message;
+  }
+};

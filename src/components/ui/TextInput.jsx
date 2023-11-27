@@ -12,6 +12,7 @@ const TextInput = ({
   value,
   valueSetter,
   width,
+  name,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -40,7 +41,7 @@ const TextInput = ({
     >
       <label
         className={twMerge(
-          `pointer-events-none transition-all absolute top-1/2 px-2 -translate-y-1/2 ${
+          `pointer-events-none transition-all absolute top-1/2 px-2 -translate-y-1/2 rounded ${
             labelColor ?? "text-gray-600"
           } z-[1] left-2 text-gray-600 bg-[${labelBg ?? "white"}]`,
           isFocused || value.trim().length > 0 ? focusedLabelStyle : null,
@@ -51,9 +52,10 @@ const TextInput = ({
       </label>
       <input
         type="text"
+        name={name}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onChange={(e) => valueSetter(e.target.value)}
+        onChange={(e) => valueSetter(e.target.name, e.target.value, e)}
         className={twMerge(
           `z-[1] font-satoshi pr-8 py-4 pl-5 rounded-md w-full ${
             bgColor ?? "bg-white"
@@ -78,6 +80,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   valueSetter: PropTypes.func,
   width: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default TextInput;

@@ -17,6 +17,7 @@ const DropDownMenu = ({
   allowFiltering,
   width,
   optionsBgColor,
+  name,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [controlValue, setControlValue] = useState(value?.label ?? "");
@@ -66,10 +67,11 @@ const DropDownMenu = ({
         <input
           placeholder="Select option"
           type="text"
+          name={name}
           // onFocus={() => setIsFocused(true)}
           onBlur={() => {
             if (options.every((option) => option.label !== controlValue)) {
-              valueSetter(null);
+              valueSetter(name, null);
               setControlValue("");
             }
           }}
@@ -124,7 +126,7 @@ const DropDownMenu = ({
                     key={index}
                     onClick={() => {
                       setControlValue(option?.label);
-                      valueSetter({
+                      valueSetter(name, {
                         label: option?.label,
                         value: option?.value,
                       });
@@ -139,7 +141,10 @@ const DropDownMenu = ({
                   key={index}
                   onClick={() => {
                     setControlValue(option?.label);
-                    valueSetter({ label: option?.label, value: option?.value });
+                    valueSetter(name, {
+                      label: option?.label,
+                      value: option?.value,
+                    });
                   }}
                 >
                   {option?.label}
@@ -164,6 +169,7 @@ DropDownMenu.propTypes = {
   allowFiltering: PropTypes.bool,
   width: PropTypes.string,
   optionsBgColor: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default DropDownMenu;

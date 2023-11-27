@@ -77,6 +77,36 @@
   }
 }
 
+/* react-phone-input reset */
+.selected-flag:hover,
+.selected-flag:focus {
+  background-color: transparent !important;
+}
+.react-tel-input .flag-dropdown.open .selected-flag {
+  background-color: transparent !important;
+}
+.react-tel-input .country-list {
+  background-color: white !important;
+  width: full !important;
+}
+.react-tel-input .country-list::-webkit-scrollbar {
+  width: 4px;
+}
+.react-tel-input .selected-flag .arrow {
+  left: 22px !important;
+}
+
+/* Handle */
+.react-tel-input .country-list::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.react-tel-input .country-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue);
+}
+
 .topbar {
   @apply sticky top-0 z-50 md:hidden bg-bg-ca-light-gray w-full;
 }
@@ -103,7 +133,6 @@ td[aria-colindex="96"] {
 
 /* To specify background color and font size */
 .custom-datepicker .e-input-group-icon:last-child {
-  
 }
 
 .parent {
@@ -112,4 +141,4 @@ td[aria-colindex="96"] {
   grid-template-rows: 1fr;
   grid-column-gap: 4px;
   grid-row-gap: 0px;
-  }
+}

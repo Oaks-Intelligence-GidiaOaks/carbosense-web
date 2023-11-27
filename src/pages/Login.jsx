@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   PasswordInput,
   SizedBox,
+  Spinner,
   TextButton,
   TextInput,
 } from "../components/ui";
@@ -12,12 +13,95 @@ import rocketLaunch from "../assets/rocket_launch.svg";
 import { Illustration } from "../components/containers";
 import { AnimatePresence, motion } from "framer-motion";
 import { exitLeft, initialLeft, slideRight } from "../constants/framer";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../services";
+import validator from "validator";
+import errorIcon from "../assets/icons/error_icon.svg";
+import toast from "react-hot-toast";
+import { XCircle } from "lucide-react";
+import { handleAxiosError } from "../utils";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  // custom setter function for auth input fields
+  const setFormValue = (name, value) => {
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // make user login request
+  const submitForm = useMutation({
+    mutationKey: ["register_organization"],
+    mutationFn: (data) => loginUser(data),
+    onSuccess: () => {
+      navigate("/admin", { replace: true });
+    },
+    onError: (e) => {
+      console.log(e);
+      toast.custom(
+        (t) => (
+          <div
+            className={`${
+              t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          >
+            <div className="flex-1 w-0 p-4">
+              <div className="flex items-center">
+                <div className="flex-shrink-0 pt-0.5">
+                  <XCircle color="red" strokeWidth={1.5} />
+                </div>
+                <div className="ml-3 flex-1">
+                  <p className="font-medium text-gray-900 first-letter:capitalize">
+                    {handleAxiosError(e)}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex border-l border-gray-200">
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                className="w-full border border-transparent hover:bg-gray-100 transition-all duration-300
+                 rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primary-blue hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-primary-blue"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: Infinity,
+          // id: "registration-error",
+        }
+      );
+    },
+  });
+
+  // generate button state based on form values
+  const isButtonDisabled = useMemo(() => {
+    if (submitForm.isPending) return true;
+    if (
+      !validator.isEmail(credentials.email) ||
+      validator.isEmpty(credentials.email)
+    )
+      return true;
+    if (
+      !validator.isStrongPassword(credentials.password, {
+        minLength: 6,
+        minNumbers: 1,
+        minUppercase: 1,
+        minSymbols: 1,
+        minLowercase: 1,
+      })
+    )
+      return true;
+
+    return false;
+  }, [submitForm.isPending, credentials.email, credentials.password]);
 
   return (
     <main className="relative h-screen bg-white overflow-hidden">
@@ -46,26 +130,54 @@ const Login = () => {
                 <TextInput
                   bgColor="bg-white"
                   label="Email address"
-                  value={email}
-                  valueSetter={setEmail}
-                  width="w-[60%]"
+                  name="email"
+                  value={credentials.email}
+                  valueSetter={setFormValue}
+                  width="w-[clamp(280px,60%,600px)]"
                 />
                 <SizedBox height="h-6" />
                 <PasswordInput
                   bgColor="bg-white"
                   label="Password"
-                  value={password}
-                  valueSetter={setPassword}
-                  width="w-[60%]"
+                  name="password"
+                  value={credentials.password}
+                  valueSetter={setFormValue}
+                  width="w-[clamp(280px,60%,600px)]"
                 />
                 <SizedBox height="h-2" />
-                <div className="w-[60%] flex justify-end">
+                <div className="w-[clamp(280px,60%,600px)] flex justify-end">
                   <TextButton content={"Forgot Password?"} />
                 </div>
                 <SizedBox height="h-6" />
-                <Button width="w-[60%]" content="Sign in" />
+
+                {/* TODO: Return to this when server side validation is complete */}
+                {/* error message */}
+                <div
+                  className={`w-[clamp(280px,60%,600px)] opacity-0 pointer-events-none flex items-center justify-start gap-2 text-red-500 mb-2`}
+                >
+                  <img
+                    alt="error icon"
+                    src={errorIcon}
+                    className="fill-red-500 text-red-500"
+                  />
+                  <p>User does not exist.</p>
+                </div>
+
+                <Button
+                  disabled={isButtonDisabled}
+                  width="w-[clamp(280px,60%,600px)]"
+                  content={
+                    submitForm.isPending ? <Spinner /> : <span>Sign in</span>
+                  }
+                  callback={() =>
+                    submitForm.mutate({
+                      email: credentials.email,
+                      password: credentials.password,
+                    })
+                  }
+                />
                 <SizedBox height="h-8" />
-                <div className="w-[60%] flex justify-center">
+                <div className="w-[clamp(280px,60%,600px)] flex justify-center">
                   <span>{"Don't have an account?"}</span>
                   &nbsp;
                   <TextButton
