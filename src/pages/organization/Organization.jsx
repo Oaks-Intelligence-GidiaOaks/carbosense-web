@@ -36,9 +36,8 @@ const Organization = () => {
           </Tab>
 
         </Tabs>
-
       </div>
-
+     
     </div>
   )
 }

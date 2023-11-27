@@ -1,8 +1,7 @@
-
 import { createBrowserRouter } from "react-router-dom";
 import { Login, Register } from "../pages";
 import { OrganizationLayout } from "../components/layout";
-import { Dashboard, Emissions, Invoice, Account, Organization } from "../pages/organization";
+import { Dashboard, Emissions, Invoice, Account, OrganizationPage } from "../pages/organization";
 
 export const router = createBrowserRouter([
   {
@@ -23,21 +22,22 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "emissions", 
+        path: "emissions",
         element: <Emissions />,
       },
       {
-        path: "invoice", 
+        path: "invoice",
         element: <Invoice />,
       },
       {
-        path: "account", 
+        path: "account",
         element: <Account />,
       },
       {
-        path: "organization", 
-        element: <Organization />,
+        path: "organization",
+        element: <OrganizationPage />,
       },
+
     ],
   },
 ]);

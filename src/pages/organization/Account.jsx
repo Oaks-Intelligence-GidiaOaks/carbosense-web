@@ -4,6 +4,7 @@ import account from "../../assets/icons/account.svg"
 import org from "../../assets/icons/org.svg"
 import AccountFrame from "../../assets/icons/AccountFrame.svg"
 import { AccountTab, OrgInfoTab } from './account_tabs';
+import { TfiPencil } from "react-icons/tfi";
 
 const Account = () => {
   return (
