@@ -25,6 +25,10 @@
 :root {
   --primary-blue: #4747ff;
 }
+body,
+html {
+  overflow-x: hidden;
+}
 
 * {
   box-sizing: border-box;
@@ -112,7 +116,7 @@
 }
 
 .leftsidebar {
-  @apply hidden md:flex px-6 py-6 flex-col justify-between min-w-[270px];
+  @apply hidden md:flex px-6 py-6 flex-col justify-between min-w-[270px] max-w-[270px];
 }
 
 #datepicker {
@@ -141,4 +145,10 @@ td[aria-colindex="96"] {
   grid-template-rows: 1fr;
   grid-column-gap: 4px;
   grid-row-gap: 0px;
+}
+
+@media screen and (height: 400px) {
+  .show-login-header {
+    display: none;
+  }
 }

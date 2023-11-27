@@ -1,19 +1,39 @@
-
 import { createBrowserRouter } from "react-router-dom";
 import { Login, Register } from "../pages";
 import { OrganizationLayout } from "../components/layout";
-import { Dashboard, Emissions, Invoice, Account, Organization } from "../pages/organization";
+import {
+  Dashboard,
+  Emissions,
+  Invoice,
+  Account,
+  Organization,
+} from "../pages/organization";
+import RootContainer from "../components/containers/RootContainer";
 
 export const router = createBrowserRouter([
+  // login
   {
     path: "/",
-    element: <Login />,
+    element: <RootContainer />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      },
+    ],
   },
+  // registere
   {
     path: "/register",
-    element: <Register />,
+    element: <RootContainer />,
+    children: [
+      {
+        index: true,
+        element: <Register />,
+      },
+    ],
   },
-
+  // admin
   {
     path: "/admin",
     element: <OrganizationLayout />,
@@ -23,22 +43,21 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "emissions", 
+        path: "emissions",
         element: <Emissions />,
       },
       {
-        path: "invoice", 
+        path: "invoice",
         element: <Invoice />,
       },
       {
-        path: "account", 
+        path: "account",
         element: <Account />,
       },
       {
-        path: "organization", 
+        path: "organization",
         element: <Organization />,
       },
     ],
   },
 ]);
-

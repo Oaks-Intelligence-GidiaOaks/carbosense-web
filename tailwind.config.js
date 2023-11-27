@@ -25,6 +25,7 @@ export default {
         "bg-ca-gray": "#E3ECFF",
         "bg-ca-red": "#FF331E",
         "primary-purple": "#9553A0",
+        "modal-black": "rgba(0, 0, 0, 0.3)",
       },
       borderColor: {
         "primary-blue": "#4747ff",

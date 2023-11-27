@@ -19,10 +19,14 @@ import validator from "validator";
 import errorIcon from "../assets/icons/error_icon.svg";
 import toast from "react-hot-toast";
 import { XCircle } from "lucide-react";
-import { handleAxiosError } from "../utils";
+import { handleAxiosError, saveUser } from "../utils";
+import { useDispatch } from "react-redux";
+import { setAccessToken, setUser } from "../features/user/userSlice";
+import secureLocalStorage from "react-secure-storage";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [credentials, setCredentials] = useState({
     email: "",
@@ -38,7 +42,11 @@ const Login = () => {
   const submitForm = useMutation({
     mutationKey: ["register_organization"],
     mutationFn: (data) => loginUser(data),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.dismiss();
+      saveUser(data);
+      dispatch(setUser(data.data));
+      dispatch(setAccessToken(data.accessToken));
       navigate("/admin", { replace: true });
     },
     onError: (e) => {
@@ -76,6 +84,8 @@ const Login = () => {
         {
           duration: Infinity,
           // id: "registration-error",
+
+          style: { transform: "translateY(16px)" },
         }
       );
     },
@@ -104,10 +114,14 @@ const Login = () => {
   }, [submitForm.isPending, credentials.email, credentials.password]);
 
   return (
-    <main className="relative h-screen bg-white overflow-hidden">
-      <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 pl-[5%] min-[1560px]:pl-[3%] py-4 w-full bg-white">
+    <main className="relative h-screen bg-white min-[770px]:overflow-hidden">
+      <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
         <Link to={"/"}>
-          <img src={carbosenseLogo} alt="logo" className="max-w-[200px]" />
+          <img
+            src={carbosenseLogo}
+            alt="logo"
+            className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
+          />
         </Link>
       </header>
       {/* form and graphic */}
@@ -123,7 +137,7 @@ const Login = () => {
             // className="flex pt-14 flex-[0.4] h-full items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center flex-1">
-              <h1 className="text-3xl font-semibold text-primary-black">
+              <h1 className="text-2xl min-[770px]:text-3xl font-semibold text-primary-black">
                 Sign In
               </h1>
               <div className="mt-10 w-full flex-col flex items-center">
@@ -133,7 +147,7 @@ const Login = () => {
                   name="email"
                   value={credentials.email}
                   valueSetter={setFormValue}
-                  width="w-[clamp(280px,60%,600px)]"
+                  width="w-[clamp(240px,60%,600px)]"
                 />
                 <SizedBox height="h-6" />
                 <PasswordInput
@@ -142,10 +156,10 @@ const Login = () => {
                   name="password"
                   value={credentials.password}
                   valueSetter={setFormValue}
-                  width="w-[clamp(280px,60%,600px)]"
+                  width="w-[clamp(240px,60%,600px)]"
                 />
                 <SizedBox height="h-2" />
-                <div className="w-[clamp(280px,60%,600px)] flex justify-end">
+                <div className="w-[clamp(240px,60%,600px)] flex justify-end">
                   <TextButton content={"Forgot Password?"} />
                 </div>
                 <SizedBox height="h-6" />
@@ -153,7 +167,7 @@ const Login = () => {
                 {/* TODO: Return to this when server side validation is complete */}
                 {/* error message */}
                 <div
-                  className={`w-[clamp(280px,60%,600px)] opacity-0 pointer-events-none flex items-center justify-start gap-2 text-red-500 mb-2`}
+                  className={`w-[clamp(240px,60%,600px)] opacity-0 pointer-events-none flex items-center justify-start gap-2 text-red-500 mb-2`}
                 >
                   <img
                     alt="error icon"
@@ -165,7 +179,7 @@ const Login = () => {
 
                 <Button
                   disabled={isButtonDisabled}
-                  width="w-[clamp(280px,60%,600px)]"
+                  width="w-[clamp(240px,60%,600px)]"
                   content={
                     submitForm.isPending ? <Spinner /> : <span>Sign in</span>
                   }
@@ -177,7 +191,7 @@ const Login = () => {
                   }
                 />
                 <SizedBox height="h-8" />
-                <div className="w-[clamp(280px,60%,600px)] flex justify-center">
+                <div className="w-[clamp(240px,60%,600px)] flex justify-center">
                   <span>{"Don't have an account?"}</span>
                   &nbsp;
                   <TextButton

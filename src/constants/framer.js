@@ -12,7 +12,7 @@ const initialUp = {
 };
 const initialDown = {
   opacity: 0,
-  translateX: "10vh",
+  translateY: "10vh",
 };
 const slideLeft = {
   opacity: 1,
@@ -46,6 +46,15 @@ const exitDown = {
   opacity: 0,
   translateY: "10vh",
 };
+const invisible = {
+  opacity: 0,
+};
+const fadeIn = {
+  opacity: 1,
+};
+const fadeOut = {
+  opacity: 0,
+};
 
 export {
   initialLeft,
@@ -60,4 +69,7 @@ export {
   exitRight,
   exitUp,
   exitDown,
+  invisible,
+  fadeIn,
+  fadeOut,
 };
