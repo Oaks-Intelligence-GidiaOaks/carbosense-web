@@ -1,4 +1,5 @@
 import React from 'react'
+import { HiOutlinePencil } from "react-icons/hi";
 
 const OrgInfoTab = () => {
   return (
@@ -11,7 +12,10 @@ const OrgInfoTab = () => {
             <h3 className='text-sm text-primary-black font-medium'>Org Information</h3>
             <span className='text-xs'>Your profile photo will be visible to all your org members.</span>
           </div>
-          <button className='text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]' >Edit</button>
+          <button className='text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]' >
+            <HiOutlinePencil />
+          <span>Edit</span>
+          </button>
         </div>
 
         <div>
@@ -41,7 +45,10 @@ const OrgInfoTab = () => {
             <h3 className='text-sm text-primary-black font-medium'>About Org</h3>
             <span className='text-xs'>Your profile photo will be visible to all your org members.</span>
           </div>
-          <button className='text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]' >Edit</button>
+          <button className='text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]' >
+            <HiOutlinePencil />
+          <span>Edit</span>
+          </button>
         </div>
 
         <div>

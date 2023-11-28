@@ -4,6 +4,7 @@ import alertcircle from "../../../assets/icons/alertcircle.svg";
 import log from "../../../assets/icons/log.svg";
 import Logout from "../../../assets/icons/Logout.svg";
 import trash from "../../../assets/icons/trash.svg";
+import { HiOutlinePencil } from "react-icons/hi";
 
 const AccountTab = () => {
   return (
@@ -14,8 +15,9 @@ const AccountTab = () => {
             <h3 className="text-sm text-primary-black font-medium">
               Profile Information
             </h3>
-            <button className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]">
-              Edit
+            <button className="text-[12px] flex items-center rounded-sm gap-2 text-primary-blue py-[6px] px-3 bg-[#E3ECFF]">
+              <HiOutlinePencil />
+            <span>  Edit</span>
             </button>
           </div>
 
