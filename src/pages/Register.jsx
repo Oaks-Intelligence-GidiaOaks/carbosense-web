@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { companySizes, industries } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -26,13 +26,13 @@ import {
   slideRight,
 } from "../constants/framer";
 import { useMutation } from "@tanstack/react-query";
-import { registerOrganization, verifyOTP } from "../services";
+import { registerOrganization, resendOTP, verifyOTP } from "../services";
 import validator from "validator";
 import PhoneInput from "../components/ui/PhoneInput";
 import toast from "react-hot-toast";
 import { XCircle } from "lucide-react";
-import { isObject } from "../utils";
-import { useDispatch, useSelector } from "react-redux";
+import { isObject, saveUser } from "../utils";
+import { useDispatch } from "react-redux";
 import { setAccessToken, setUser } from "../features/user/userSlice";
 
 const RegisterOrg = ({
@@ -171,6 +171,7 @@ const VerifyOrg = ({
             setDirection(() => "backward");
             stepSetter((prev) => prev - 1);
           }}
+          isImage={true}
         />
       </div>
       <div className="flex h-full flex-col items-center pt-14 flex-1">
@@ -229,7 +230,6 @@ const SetupAccount = ({
   };
 
   // generate button state based on form values
-  console.log(form.phone);
   const isButtonDisabled = useMemo(() => {
     if (validator.isEmpty(form.fullName)) return true;
     if (!validator.isEmail(form.email) || validator.isEmpty(form.email))
@@ -262,11 +262,11 @@ const SetupAccount = ({
     const formData = new FormData();
     // append all required values
     formData.append("organizationName", form.organizationName);
-    formData.append("companyEmail", form.companyEmail);
+    formData.append("email", form.companyEmail);
     formData.append("industry", form.industry.value);
     formData.append("companySize", form.companySize.value);
     formData.append("fullName", form.fullName);
-    formData.append("email", form.email);
+    formData.append("personalEmail", form.email);
     formData.append("tel", form.phone);
     formData.append("password", form.password);
     formData.append("certOfIncorporation", form.certOfInc);
@@ -281,11 +281,15 @@ const SetupAccount = ({
     onSuccess: (data) => {
       dispatch(setUser(data.data));
       dispatch(setAccessToken(data.accessToken));
-      toast.success("Organization registered successfully.", {
-        duration: 10000,
-      });
+      saveUser(data);
+      toast.success(
+        "Organization registered successfully and OTP sent to organization email.",
+        {
+          duration: 10000,
+        }
+      );
       setDirection(() => "forward");
-      stepSetter(4);
+      navigate("/admin");
     },
     onError: (e) => {
       console.log(e);
@@ -362,6 +366,7 @@ const SetupAccount = ({
             setDirection(() => "backward");
             stepSetter((prev) => prev - 1);
           }}
+          isImage={true}
         />
       </div>
       <div className="flex h-full flex-col items-center pt-14 flex-1">
@@ -448,81 +453,158 @@ const SetupAccount = ({
     </motion.div>
   );
 };
-const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
-  const navigate = useNavigate();
 
-  const { accessToken } = useSelector((state) => state.user);
+// Removed from flow
+// const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
+//   const navigate = useNavigate();
 
-  const setFormValue = (name, value) => {
-    formSetter((prev) => ({ ...prev, [name]: value }));
-  };
+//   const { accessToken } = useSelector((state) => state.user);
+//   const [timer, setTimer] = useState();
+//   const [, setTimes] = useState(1);
+//   const [countDown, setCountDown] = useState(
+//     secureLocalStorage.getItem("RORT") ?? 60
+//   );
 
-  const isButtonDisabled = useMemo(() => {
-    if (form.otp.trim().length < 6) return true;
-    return false;
-  }, [form.otp]);
+//   const setFormValue = (name, value) => {
+//     formSetter((prev) => ({ ...prev, [name]: value }));
+//   };
 
-  // submit otp
-  const submitOTP = useMutation({
-    mutationKey: ["submit_otp"],
-    mutationFn: (data) => verifyOTP(data, accessToken),
-    onSuccess: () => {
-      setDirection(() => "forward");
-      navigate("/admin");
-    },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
+//   const isButtonDisabled = useMemo(() => {
+//     if (form.otp.trim().length < 6) return true;
+//     return false;
+//   }, [form.otp]);
 
-  return (
-    <motion.div
-      initial={direction === "forward" ? initialRight : initialLeft}
-      animate={direction === "forward" ? slideLeft : slideRight}
-      exit={exitRight}
-      className="flex-col pt-20 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
-    >
-      {/* <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
-        <TextButton
-          content="Back"
-          prefix={arrowBack}
-          callback={() => {
-            setDirection(() => "backward");
-            stepSetter((prev) => prev - 1);
-          }}
-        />
-      </div> */}
-      <div className="flex h-[clamp(300px,100%,700px)] flex-col justify-center items-center flex-1">
-        <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
-          Verify your email
-        </h1>
-        <SizedBox height="h-2" />
-        <h1 className="text-primary-black w-[70%]">
-          Input the one time passcode sent to your email
-        </h1>
-        <div className="mt-6 pb-10 w-full flex-col flex items-center">
-          <TextInput
-            bgColor="bg-white"
-            label="OTP"
-            name="otp"
-            value={form.otp}
-            valueSetter={setFormValue}
-            width="w-[70%]"
-          />
-          <SizedBox height="h-6" />
-          <Button
-            disabled={isButtonDisabled}
-            width="w-[70%]"
-            content={submitOTP.isPending ? <Spinner /> : <span>Next</span>}
-            callback={() => {
-              submitOTP.mutate({ otp: form.otp });
-            }}
-          />
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+//   // submit otp
+//   const submitOTP = useMutation({
+//     mutationKey: ["submit_otp"],
+//     mutationFn: (data) => verifyOTP(data, accessToken),
+//     onSuccess: () => {
+//       setDirection(() => "forward");
+//       navigate("/admin");
+//     },
+//     onError: (e) => {
+//       console.log(e);
+//     },
+//   });
+
+//   // resend otp
+//   const resendOtpMutation = useMutation({
+//     mutationKey: ["resend_otp"],
+//     mutationFn: (token) => {
+//       setTimes((prev) => prev++);
+//       return toast.promise(resendOTP(token), {
+//         loading: "Sending OTP",
+//         success: "OTP successfully sent to your mail. Please check your inbox.",
+//         error: "Could not send OTP at the moment",
+//       });
+//     },
+//     onSuccess: () => {
+//       // otp successfully sent
+//       secureLocalStorage.setItem("OSS", true);
+//       const cachedTimer = secureLocalStorage.getItem("RORT") ?? 60;
+//       setCountDown(cachedTimer <= 0 ? 60 : cachedTimer);
+//       let timer = setInterval(() => {
+//         // OTP Resend Timer
+//         setCountDown((prev) => {
+//           secureLocalStorage.setItem("RORT", prev - 1);
+//           return prev - 1;
+//         });
+//       }, 1000);
+//       setTimer(timer);
+//     },
+//     onError: () => {
+//       // otp error
+//       secureLocalStorage.setItem("OSS", false);
+//     },
+//     retry: 0,
+//   });
+
+//   useEffect(() => {
+//     let timer = setInterval(() => {
+//       // OTP Resend Timer
+//       setCountDown((prev) => {
+//         secureLocalStorage.setItem("RORT", prev - 1);
+//         return prev - 1;
+//       });
+//     }, 1000);
+//     setTimer(timer);
+
+//     return () => clearInterval(timer);
+//   }, []);
+
+//   useEffect(() => {
+//     if (countDown < 1) {
+//       clearInterval(timer);
+//       setTimer(null);
+//       secureLocalStorage.removeItem("RORT");
+//       setCountDown(0);
+//     }
+//   }, [countDown, timer]);
+
+//   return (
+//     <motion.div
+//       initial={direction === "forward" ? initialRight : initialLeft}
+//       animate={direction === "forward" ? slideLeft : slideRight}
+//       exit={exitRight}
+//       className="flex-col pt-20 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
+//     >
+//       {/* <div className="flex justify-start w-[70%] mx-auto items-center flex-1">
+//         <TextButton
+//           content="Back"
+//           prefix={arrowBack}
+//           callback={() => {
+//             setDirection(() => "backward");
+//             stepSetter((prev) => prev - 1);
+//           }}
+//         />
+//       </div> */}
+//       <div className="flex h-[clamp(300px,100%,700px)] flex-col justify-center items-center flex-1">
+//         <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
+//           Verify your email
+//         </h1>
+//         <SizedBox height="h-2" />
+//         <h1 className="text-primary-black w-[70%]">
+//           Input the one time passcode sent to your email
+//         </h1>
+//         <div className="mt-6 pb-10 w-full flex-col flex items-center">
+//           <TextInput
+//             bgColor="bg-white"
+//             label="OTP"
+//             name="otp"
+//             value={form.otp}
+//             valueSetter={setFormValue}
+//             width="w-[70%]"
+//           />
+//           <SizedBox height="h-6" />
+//           <Button
+//             disabled={isButtonDisabled}
+//             width="w-[70%]"
+//             content={submitOTP.isPending ? <Spinner /> : <span>Next</span>}
+//             callback={() => {
+//               submitOTP.mutate({ otp: form.otp });
+//             }}
+//           />
+//           <SizedBox height="h-6" />
+//           <div className="text-primary-black w-[70%] flex flex-nowrap gap-1">
+//             <TextButton
+//               content={"Resend OTP"}
+//               disabled={Boolean(timer) || resendOtpMutation.isPending}
+//               prefix={<RefreshCw size={16} />}
+//               callback={() => resendOtpMutation.mutate(accessToken)}
+//             />{" "}
+//             {console.log(countDown)}
+//             {countDown > 0 && (
+//               <span>
+//                 {" "}
+//                 in <span className="font-semibold">{countDown}s</span>
+//               </span>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </motion.div>
+//   );
+// };
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -546,9 +628,13 @@ const Register = () => {
 
   return (
     <main className="relative h-screen bg-white">
-      <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 pl-[5%] min-[1560px]:pl-[3%] py-4 w-full bg-white">
+      <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
         <Link to={"/"}>
-          <img src={carbosenseLogo} alt="logo" className="max-w-[200px]" />
+          <img
+            src={carbosenseLogo}
+            alt="logo"
+            className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
+          />
         </Link>
       </header>
       {/* form and graphic */}
@@ -588,7 +674,9 @@ const Register = () => {
               formSetter={setRegForm}
             />
           )}
-          {step === 4 && (
+
+          {/* Removed from flow */}
+          {/* {step === 4 && (
             <VerifyEmail
               key="verify_email"
               stepSetter={setStep}
@@ -598,7 +686,8 @@ const Register = () => {
               form={regForm}
               formSetter={setRegForm}
             />
-          )}
+          )} */}
+
           {/* graphic */}
         </AnimatePresence>
         <Illustration
@@ -638,13 +727,13 @@ SetupAccount.propTypes = {
   form: PropTypes.object.isRequired,
   formSetter: PropTypes.func.isRequired,
 };
-VerifyEmail.propTypes = {
-  stepSetter: PropTypes.func.isRequired,
-  step: PropTypes.number.isRequired,
-  direction: PropTypes.string.isRequired,
-  setDirection: PropTypes.func.isRequired,
-  form: PropTypes.object.isRequired,
-  formSetter: PropTypes.func.isRequired,
-};
+// VerifyEmail.propTypes = {
+//   stepSetter: PropTypes.func.isRequired,
+//   step: PropTypes.number.isRequired,
+//   direction: PropTypes.string.isRequired,
+//   setDirection: PropTypes.func.isRequired,
+//   form: PropTypes.object.isRequired,
+//   formSetter: PropTypes.func.isRequired,
+// };
 
 export default Register;

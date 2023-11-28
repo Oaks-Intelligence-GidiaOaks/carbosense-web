@@ -1,3 +1,5 @@
+import secureLocalStorage from "react-secure-storage";
+
 // This function formats numbers in number input and adds commas
 export const handleValue = (value) => {
   const numbersOnly = value.replace(/\D/g, "");
@@ -74,5 +76,23 @@ export const handleAxiosError = (error) => {
   } else {
     // Something happened in setting up the request that triggered an Error
     return error.message;
+  }
+};
+
+export const saveUser = (data) => {
+  // UCD User Credential Details
+  secureLocalStorage.setItem("UCD", data.data);
+  // UTFA User Token For Access
+  secureLocalStorage.setItem("UTFA", data.accessToken);
+  // RTFU Refresh Token For User
+  secureLocalStorage.setItem("RTFU", data.refreshToken);
+};
+
+export const generateInitials = (name) => {
+  const formattedName = name.split(" ");
+  if (formattedName.length % 2 === 1) {
+    return formattedName[0][1];
+  } else {
+    return `${formattedName[0][0]}${formattedName[1][0]}`;
   }
 };

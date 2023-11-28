@@ -5,8 +5,19 @@ import log from "../../../assets/icons/log.svg";
 import Logout from "../../../assets/icons/Logout.svg";
 import trash from "../../../assets/icons/trash.svg";
 import { HiOutlinePencil } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
+import { generateInitials } from "../../../utils";
+import { editProfile, removeUser } from "../../../features/user/userSlice";
+import PropTypes from "prop-types";
 
-const AccountTab = () => {
+const AccountTab = ({ userInfo }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const logoutUser = () => {
+    sessionStorage.clear();
+    dispatch(removeUser());
+  };
+
   return (
     <div className="">
       <div className="grid md:grid-cols-7 gap-4">
@@ -15,9 +26,12 @@ const AccountTab = () => {
             <h3 className="text-sm text-primary-black font-medium">
               Profile Information
             </h3>
-            <button className="text-[12px] flex items-center rounded-sm gap-2 text-primary-blue py-[6px] px-3 bg-[#E3ECFF]">
-              <HiOutlinePencil />
-            <span>  Edit</span>
+
+            <button
+              onClick={() => dispatch(editProfile(true))}
+              className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]"
+            >
+              Edit
             </button>
           </div>
 
@@ -26,7 +40,7 @@ const AccountTab = () => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Full Name</span>
                 <span className="text-sm text-primary-black">
-                  David Orobosa
+                  {userInfo.fullName}
                 </span>
               </div>
             </div>
@@ -34,7 +48,7 @@ const AccountTab = () => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Email</span>
                 <span className="text-sm text-primary-black">
-                  davidorobosa@example.com
+                  {userInfo.email}
                 </span>
               </div>
             </div>
@@ -42,7 +56,7 @@ const AccountTab = () => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Phone</span>
                 <span className="text-sm text-primary-black">
-                  +44 20 7123 4567
+                  {userInfo.tel}
                 </span>
               </div>
             </div>
@@ -59,7 +73,15 @@ const AccountTab = () => {
             </span>
           </div>
           <div className="flex items-center justify-center py-3">
-            <img src="" alt="" className="h-16 w-16 rounded-full border" />
+            {userInfo.profilePic ? (
+              <img src="" alt="" className="h-16 w-16 rounded-full border" />
+            ) : (
+              <div className="w-16 max-w-[64px] h-16 rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">
+                <h3 className="text-3xl font-semibold text-primary-purple uppercase">
+                  {generateInitials(userInfo.fullName)}
+                </h3>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center justify-center gap-10 ">
@@ -109,7 +131,12 @@ const AccountTab = () => {
                 Created on
               </span>
               <span className="text-xs md:text-sm text-primary-black">
-                12 July 2023
+                {new Date(userInfo.createdAt).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+                {/* 12 July 2023 */}
               </span>
             </div>
             <div className="flex items-center justify-between border p-3">
@@ -182,7 +209,10 @@ const AccountTab = () => {
               <img src={log} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Change Password</span>
             </div>
-            <div className="flex items-center gap-4 hover:cursor-pointer">
+            <div
+              onClick={logoutUser}
+              className="flex items-center gap-4 hover:cursor-pointer"
+            >
               <img src={Logout} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Log out</span>
             </div>
@@ -195,6 +225,10 @@ const AccountTab = () => {
       </div>
     </div>
   );
+};
+
+AccountTab.propTypes = {
+  userInfo: PropTypes.object.isRequired,
 };
 
 export default AccountTab;
