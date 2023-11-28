@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editOrg } from "../../../features/user/userSlice";
+import { HiOutlinePencil } from "react-icons/hi";
 
 const OrgInfoTab = () => {
   const dispatch = useDispatch();
@@ -19,11 +20,9 @@ const OrgInfoTab = () => {
               Your profile photo will be visible to all your org members.
             </span>
           </div>
-          <button
-            onClick={() => dispatch(editOrg(true))}
-            className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]"
-          >
-            Edit
+          <button className="text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]">
+            <HiOutlinePencil />
+            <span>Edit</span>
           </button>
         </div>
 
@@ -67,6 +66,10 @@ const OrgInfoTab = () => {
           {/* <button className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]">
             Edit
           </button> */}
+          <button className="text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]">
+            <HiOutlinePencil />
+            <span>Edit</span>
+          </button>
         </div>
 
         <div>

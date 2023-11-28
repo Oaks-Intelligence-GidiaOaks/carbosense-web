@@ -4,6 +4,7 @@ import alertcircle from "../../../assets/icons/alertcircle.svg";
 import log from "../../../assets/icons/log.svg";
 import Logout from "../../../assets/icons/Logout.svg";
 import trash from "../../../assets/icons/trash.svg";
+import { HiOutlinePencil } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { generateInitials } from "../../../utils";
 import {
@@ -30,6 +31,7 @@ const AccountTab = ({ userInfo }) => {
             <h3 className="text-sm text-primary-black font-medium">
               Profile Information
             </h3>
+
             <button
               onClick={() => dispatch(editProfile(true))}
               className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]"

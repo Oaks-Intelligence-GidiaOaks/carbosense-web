@@ -1,13 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Login, Register } from "../pages";
 import { OrganizationLayout } from "../components/layout";
-import {
-  Dashboard,
-  Emissions,
-  Invoice,
-  Account,
-  Organization,
-} from "../pages/organization";
+import { Dashboard, Emissions, Invoice, Account, OrganizationPage } from "../pages/organization";
+
 import RootContainer from "../components/containers/RootContainer";
 
 export const router = createBrowserRouter([
@@ -56,8 +51,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "organization",
-        element: <Organization />,
+        element: <OrganizationPage />,
+        
       },
+
     ],
   },
 ]);
