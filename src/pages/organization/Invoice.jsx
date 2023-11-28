@@ -16,32 +16,32 @@ const Invoice = () => {
 
       <div className='px-2 md:px-0'>
         <Tabs>
-          <Tab label={
-            <div className='flex items-center gap-2'>
-              <img src={invoice} alt="" width={12} height={12} />
-              <span className=''>New Invoice</span>
-            </div>
-          }>
+          <Tab
+          label={{
+            text: "New Invoice",
+            icon: <img src={invoice} alt="" width={12} height={12} />,
+          }}
+          >
             <div className="py-4">
               <NewInvoice />
             </div>
           </Tab>
-          <Tab label={
-            <div className='flex items-center gap-2'>
-              <img src={myinvoice} alt="" width={12} height={12} />
-              <span className=''>My Invoices</span>
-            </div>
-          }>
+          <Tab 
+          label={{
+            text: "My Invoices",
+            icon: <img src={myinvoice} alt="" width={12} height={12} />,
+          }}
+          >
             <div className="py-4">
               <MyInvoice />
             </div>
           </Tab>
-          <Tab label={
-            <div className='flex items-center gap-2'>
-              <img src={orgInvoice} alt="" width={12} height={12} />
-              <span className=''>Org Invoices</span>
-            </div>
-          }>
+          <Tab
+          label={{
+            text: "Org Invoices",
+            icon: <img src={orgInvoice} alt="" width={12} height={12} />,
+          }}
+          >
             <div className="py-4">
               <OrgInvoice />
             </div>

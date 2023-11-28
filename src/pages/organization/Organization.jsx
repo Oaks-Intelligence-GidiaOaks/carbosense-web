@@ -14,22 +14,22 @@ const Organization = () => {
 
       <div>
         <Tabs>
-          <Tab label={
-            <div className='flex items-center gap-2'>
-              <img src={allStaff} alt="" width={12} height={12} />
-              <span className=''>All staff</span>
-            </div>
-          }>
+          <Tab 
+          label={{
+            text: "All staff",
+            icon: <img src={allStaff} alt="" width={12} height={12} />,
+          }}
+          >
             <div className="py-4">
               <AllStaff />
             </div>
           </Tab>
-          <Tab label={
-            <div className='flex items-center gap-2'>
-              <img src={department} alt="" width={12} height={12} />
-              <span className=''>My department</span>
-            </div>
-          }>
+          <Tab 
+          label={{
+            text: "My department",
+            icon: <img src={department} alt="" width={12} height={12} />,
+          }}
+          >
             <div className="py-4">
               <MyDepartment />
             </div>
