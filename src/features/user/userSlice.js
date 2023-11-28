@@ -14,7 +14,8 @@ const initialState = {
     editProfile: false,
     changeProfilePic: false,
     deleteAccount: false,
-    changePasswords: false,
+    changePassword: false,
+    editOrg: false,
   },
 };
 
@@ -45,6 +46,24 @@ export const userSlice = createSlice({
     editProfile: (state, action) => {
       state.accountActions.editProfile = action.payload;
     },
+    changePassword: (state, action) => {
+      state.accountActions.changePassword = action.payload;
+    },
+    deleteAccount: (state, action) => {
+      state.accountActions.deleteAccount = action.payload;
+    },
+    editOrg: (state, action) => {
+      state.accountActions.editOrg = action.payload;
+    },
+    resetAccountActions: (state) => {
+      state.accountActions = {
+        editProfile: false,
+        changeProfilePic: false,
+        deleteAccount: false,
+        changePassword: false,
+        editOrg: false,
+      };
+    },
   },
 });
 
@@ -56,6 +75,10 @@ export const {
   setSessionTimedOut,
   clearSessionTimedOut,
   editProfile,
+  changePassword,
+  deleteAccount,
+  editOrg,
+  resetAccountActions,
 } = userSlice.actions;
 
 export default userSlice.reducer;

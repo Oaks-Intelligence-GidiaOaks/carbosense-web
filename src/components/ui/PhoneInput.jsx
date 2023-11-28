@@ -86,6 +86,7 @@ const PhoneNumberInput = ({
         onChange={(val, country, e, formattedValue) =>
           valueSetter(name, formattedValue, e)
         }
+        placeholder={isFocused ? "1 (702) 123-4567" : ""}
       />
     </div>
   );

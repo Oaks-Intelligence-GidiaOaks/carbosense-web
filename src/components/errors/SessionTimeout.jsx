@@ -4,7 +4,10 @@ import { X } from "lucide-react";
 import toast from "react-hot-toast";
 import sessionTimeOut from "../../assets/session_timeout.svg";
 import { useDispatch } from "react-redux";
-import { clearSessionTimedOut } from "../../features/user/userSlice";
+import {
+  clearSessionTimedOut,
+  resetAccountActions,
+} from "../../features/user/userSlice";
 
 const SessionTimeout = ({ t }) => {
   const dispatch = useDispatch();
@@ -12,6 +15,7 @@ const SessionTimeout = ({ t }) => {
 
   const closeToast = (toastId) => {
     dispatch(clearSessionTimedOut());
+    dispatch(resetAccountActions());
     toast.dismiss(toastId);
   };
 

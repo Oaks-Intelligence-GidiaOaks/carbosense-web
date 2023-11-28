@@ -6,7 +6,12 @@ import Logout from "../../../assets/icons/Logout.svg";
 import trash from "../../../assets/icons/trash.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { generateInitials } from "../../../utils";
-import { editProfile, removeUser } from "../../../features/user/userSlice";
+import {
+  changePassword,
+  deleteAccount,
+  editProfile,
+  removeUser,
+} from "../../../features/user/userSlice";
 import PropTypes from "prop-types";
 
 const AccountTab = ({ userInfo }) => {
@@ -83,9 +88,19 @@ const AccountTab = ({ userInfo }) => {
           </div>
 
           <div className="flex items-center justify-center gap-10 ">
-            <button className="text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]">
+            <input
+              id="profile-pic"
+              type="file"
+              multiple={false}
+              accept="image/*"
+              className="hidden"
+            />
+            <label
+              htmlFor="profile-pic"
+              className="cursor-pointer text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]"
+            >
               Upload picture
-            </button>
+            </label>
             <button className="text-[12px] border border-[#E3ECFF] text-primary-blue py-1 px-2 bg-white">
               Remove picture
             </button>
@@ -203,7 +218,10 @@ const AccountTab = ({ userInfo }) => {
           </div>
 
           <div className="flex flex-col gap-4 mt-2 px-3">
-            <div className="flex items-center gap-4 hover:cursor-pointer">
+            <div
+              onClick={() => dispatch(changePassword(true))}
+              className="flex items-center gap-4 hover:cursor-pointer"
+            >
               <img src={log} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Change Password</span>
             </div>
@@ -214,7 +232,10 @@ const AccountTab = ({ userInfo }) => {
               <img src={Logout} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Log out</span>
             </div>
-            <div className="flex items-center gap-4 hover:cursor-pointer">
+            <div
+              onClick={() => dispatch(deleteAccount(true))}
+              className="flex items-center gap-4 hover:cursor-pointer"
+            >
               <img src={trash} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Delete Account</span>
             </div>
