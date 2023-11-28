@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Tabs, Tab } from "../../components/Tabs";
 import account from "../../assets/icons/account.svg";
 import org from "../../assets/icons/org.svg";
@@ -17,6 +18,7 @@ import {
 } from "../../constants/framer";
 
 const Account = () => {
+  const [activeTab, setActiveTab] = useState("account");
   const { accessToken } = useSelector((state) => state.user);
 
   const { isPending, isError, data, isSuccess } = useQuery({
@@ -43,17 +45,10 @@ const Account = () => {
             <Tabs>
               <Tab
                 key={"account"}
-                label={
-                  <motion.div
-                    initial={initialDown}
-                    animate={slideUp}
-                    exit={initialDown}
-                    className="flex items-center gap-2"
-                  >
-                    <img src={account} alt="" width={12} height={12} />
-                    <span className="">My Account</span>
-                  </motion.div>
-                }
+              label={{
+                text: "My Account",
+                icon: <img src={account} alt="" width={12} height={12} />,
+              }}
               >
                 <motion.div
                   initial={initialDown}
@@ -66,12 +61,10 @@ const Account = () => {
               </Tab>
               <Tab
                 key={"org"}
-                label={
-                  <div className="flex items-center gap-2">
-                    <img src={org} alt="" width={12} height={12} />
-                    <span className="">Org Information</span>
-                  </div>
-                }
+                label={{
+                  text: "Org Information",
+                  icon: <img src={org} alt="" width={12} height={12} />,
+                }}
               >
                 <motion.div
                   initial={initialDown}
@@ -91,3 +84,4 @@ const Account = () => {
 };
 
 export default Account;
+
