@@ -1,12 +1,11 @@
-import React from "react";
+import { useRef } from "react";
 import OrgAdminIcon from "../../../assets/icons/OrgAdminIcon.svg";
 import alertcircle from "../../../assets/icons/alertcircle.svg";
 import log from "../../../assets/icons/log.svg";
 import Logout from "../../../assets/icons/Logout.svg";
 import trash from "../../../assets/icons/trash.svg";
-import { HiOutlinePencil } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
-import { generateInitials } from "../../../utils";
+import { useDispatch } from "react-redux";
+import { generateInitials, handleAxiosError } from "../../../utils";
 import {
   changePassword,
   deleteAccount,
@@ -14,14 +13,37 @@ import {
   removeUser,
 } from "../../../features/user/userSlice";
 import PropTypes from "prop-types";
+import { Button } from "../../../components/ui";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { uploadPicture } from "../../../services";
+import toast from "react-hot-toast";
 
 const AccountTab = ({ userInfo }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const inputRef = useRef();
+  const queryClient = useQueryClient();
+
   const logoutUser = () => {
     sessionStorage.clear();
     dispatch(removeUser());
   };
+
+  const uploadPictureMutation = useMutation({
+    mutationKey: ["upload_picture"],
+    mutationFn: (data) => {
+      const formData = new FormData();
+      formData.append("profileImage", data);
+      return uploadPicture(formData);
+    },
+    onSuccess: () => {
+      toast.success(`Profile photo updated successfully`, {
+        duration: 5000,
+        id: "profile-updated",
+      });
+      queryClient.invalidateQueries(["fetch_account_info"]);
+    },
+    onError: (e) => toast.error(handleAxiosError(e)),
+  });
 
   return (
     <div className="">
@@ -53,7 +75,7 @@ const AccountTab = ({ userInfo }) => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Email</span>
                 <span className="text-sm text-primary-black">
-                  {userInfo.email}
+                  {userInfo.personalEmail}
                 </span>
               </div>
             </div>
@@ -78,8 +100,12 @@ const AccountTab = ({ userInfo }) => {
             </span>
           </div>
           <div className="flex items-center justify-center py-3">
-            {userInfo.profilePic ? (
-              <img src="" alt="" className="h-16 w-16 rounded-full border" />
+            {userInfo.profileImage ? (
+              <img
+                src={userInfo.profileImage}
+                alt=""
+                className="h-16 w-16 rounded-full border"
+              />
             ) : (
               <div className="w-16 max-w-[64px] h-16 rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">
                 <h3 className="text-3xl font-semibold text-primary-purple uppercase">
@@ -89,20 +115,26 @@ const AccountTab = ({ userInfo }) => {
             )}
           </div>
 
-          <div className="flex items-center justify-center gap-10 ">
+          <div className="flex items-center justify-center gap-10 flex-wrap">
             <input
               id="profile-pic"
               type="file"
               multiple={false}
               accept="image/*"
               className="hidden"
+              ref={inputRef}
+              onChange={(e) => uploadPictureMutation.mutate(e.target.files[0])}
             />
-            <label
-              htmlFor="profile-pic"
-              className="cursor-pointer text-[12px] text-primary-blue py-1 px-2 bg-[#E3ECFF]"
-            >
-              Upload picture
-            </label>
+            <Button
+              content={"Upload Picture"}
+              callback={() => inputRef.current.click()}
+              height={"h-6"}
+              textSize={"text-xs"}
+              width={"w-[100px]"}
+              disabled={uploadPictureMutation.isPending}
+              isLoading={uploadPictureMutation.isPending}
+              spinnerSize={"small"}
+            />
             <button className="text-[12px] border border-[#E3ECFF] text-primary-blue py-1 px-2 bg-white">
               Remove picture
             </button>
@@ -138,7 +170,7 @@ const AccountTab = ({ userInfo }) => {
                 Invited by
               </span>
               <span className="text-xs md:text-sm text-primary-black">
-                dwaynecarter@example.com
+                Admin
               </span>
             </div>
             <div className="flex items-center justify-between border p-3">

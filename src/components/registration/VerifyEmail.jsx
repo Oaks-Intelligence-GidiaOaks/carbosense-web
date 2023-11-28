@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { resendOTP, verifyOTP } from "../../services";
@@ -17,8 +17,11 @@ import { RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
+import { handleAxiosError } from "../../utils";
+import { removeUser, resetAccountActions } from "../../features/user/userSlice";
 
 const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [timer, setTimer] = useState();
 
@@ -44,10 +47,13 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
     onSuccess: () => {
       secureLocalStorage.removeItem("ORT");
       setDirection(() => "forward");
-      navigate("/admin");
+      toast.success("Email verified successfully. Please login to continue");
+      dispatch(removeUser());
+      dispatch(resetAccountActions());
+      navigate("/");
     },
     onError: (e) => {
-      console.log(e);
+      toast.error(handleAxiosError(e));
     },
   });
 

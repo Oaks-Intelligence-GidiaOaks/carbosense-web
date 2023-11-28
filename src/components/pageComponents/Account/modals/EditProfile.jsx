@@ -11,15 +11,20 @@ import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { Button, SizedBox, TextInput } from "../../../ui";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfile } from "../../../../features/user/userSlice";
+import { editProfile, setUser } from "../../../../features/user/userSlice";
 import PhoneNumberInput from "../../../ui/PhoneInput";
 import * as _ from "lodash";
 import validator from "validator";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { editProfileDetails, inviteStaff } from "../../../../services";
+import toast from "react-hot-toast";
+import { handleAxiosError } from "../../../../utils";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
   const editProfileRef = useRef();
   const { user } = useSelector((state) => state.user);
+  const queryClient = useQueryClient();
 
   const initialValues = {
     fullName: user.fullName,
@@ -36,6 +41,20 @@ const EditProfile = () => {
   const setFormValue = (name, value) => {
     setProfileInfo((prev) => ({ ...prev, [name]: value }));
   };
+
+  const editProfileMutation = useMutation({
+    mutationKey: ["edit_profile"],
+    mutationFn: (data) => editProfileDetails(data),
+    onSuccess: () => {
+      toast.success(`Profile details updated successfully`, {
+        duration: 5000,
+        id: "profile-updated",
+      });
+      queryClient.invalidateQueries(["fetch_account_info"]);
+      dispatch(editProfile(false));
+    },
+    onError: (e) => toast.error(handleAxiosError(e)),
+  });
 
   return (
     <motion.div
@@ -80,6 +99,7 @@ const EditProfile = () => {
             valueSetter={setFormValue}
             name={"email"}
             label={"Email"}
+            isDisabled={true}
           />
           <SizedBox height={"h-6"} />
           <PhoneNumberInput
@@ -102,10 +122,13 @@ const EditProfile = () => {
               _.isEqual(initialValues, profileInfo) ||
               _.isEmpty(profileInfo.fullName) ||
               !validator.isEmail(profileInfo.email) ||
-              profileInfo.tel.trim().length < 6
+              profileInfo.tel.trim().length < 6 ||
+              editProfileMutation.isPending
             }
             content={"Save Changes"}
             width={"w-full"}
+            isLoading={editProfileMutation.isPending}
+            callback={() => editProfileMutation.mutate(profileInfo)}
           >
             Save Changes
           </Button>

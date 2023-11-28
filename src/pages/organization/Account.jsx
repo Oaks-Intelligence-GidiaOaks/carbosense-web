@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs, Tab } from "../../components/Tabs";
 import account from "../../assets/icons/account.svg";
 import org from "../../assets/icons/org.svg";
@@ -7,7 +7,7 @@ import { AccountTab, OrgInfoTab } from "./account_tabs";
 import { AccountPageShimmer } from "../../primitives/shimmers";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAccountInfo } from "../../services";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   fadeIn,
@@ -16,15 +16,34 @@ import {
   invisible,
   slideUp,
 } from "../../constants/framer";
+import { setUser } from "../../features/user/userSlice";
+import toast from "react-hot-toast";
+import { handleAxiosError } from "../../utils";
 
 const Account = () => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("account");
   const { accessToken } = useSelector((state) => state.user);
 
   const { isPending, isError, data, isSuccess } = useQuery({
     queryKey: ["fetch_account_info"],
     queryFn: () => fetchAccountInfo(accessToken),
+    onSuccess: (data) => {
+      alert("Refetched");
+      dispatch(setUser(data.data));
+      toast.success("Store updated");
+    },
+    onError: (e) => {
+      toast.error(handleAxiosError(e));
+    },
   });
+
+  // update user data on refetch
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data.data));
+    }
+  }, [data, dispatch]);
 
   return (
     <AnimatePresence mode="wait">
@@ -45,10 +64,10 @@ const Account = () => {
             <Tabs>
               <Tab
                 key={"account"}
-              label={{
-                text: "My Account",
-                icon: <img src={account} alt="" width={12} height={12} />,
-              }}
+                label={{
+                  text: "My Account",
+                  icon: <img src={account} alt="" width={12} height={12} />,
+                }}
               >
                 <motion.div
                   initial={initialDown}
@@ -84,4 +103,3 @@ const Account = () => {
 };
 
 export default Account;
-

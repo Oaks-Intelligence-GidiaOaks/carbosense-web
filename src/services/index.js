@@ -56,3 +56,29 @@ export const fetchAccountInfo = async (accessToken) => {
   });
   return await response.data;
 };
+
+export const inviteStaff = async (data) => {
+  const response = await axios.post("user/invite_staff", data);
+  return await response.data;
+};
+
+export const editProfileDetails = async (data) => {
+  const response = await axios.put("user/update_user", data);
+  return await response.data;
+};
+export const editOrgDetails = async (data) => {
+  const response = await axios.put("user/update_user", data);
+  return await response.data;
+};
+export const changePasswordValue = async (data) => {
+  const response = await axios.put("user/change_password", data);
+  return await response.data;
+};
+export const uploadPicture = async (data) => {
+  const response = await axios.put("user/upload_profile_picture", data, {
+    headers: {
+      "Content-Type": "Multipart/form-data",
+    },
+  });
+  return await response.data;
+};

@@ -11,11 +11,12 @@ import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { Button, PasswordInput, SizedBox } from "../../../ui";
 import { useDispatch } from "react-redux";
-import {
-  changePassword,
-  editProfile,
-} from "../../../../features/user/userSlice";
+import { changePassword } from "../../../../features/user/userSlice";
 import validator from "validator";
+import { useMutation } from "@tanstack/react-query";
+import { changePasswordValue } from "../../../../services";
+import toast from "react-hot-toast";
+import { handleAxiosError } from "../../../../utils";
 
 const ChangePassword = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,19 @@ const ChangePassword = () => {
   const setFormValue = (name, value) => {
     setPasswords((prev) => ({ ...prev, [name]: value }));
   };
+
+  const changePasswordMutation = useMutation({
+    mutationKey: ["change_password"],
+    mutationFn: (data) => changePasswordValue(data),
+    onSuccess: () => {
+      toast.success(`Password updated successfully`, {
+        duration: 5000,
+        id: "profile-updated",
+      });
+      dispatch(changePassword(false));
+    },
+    onError: (e) => toast.error(handleAxiosError(e)),
+  });
 
   return (
     <motion.div
@@ -83,13 +97,13 @@ const ChangePassword = () => {
             value={passwords.confirmNew}
             valueSetter={setFormValue}
             name={"confirmNew"}
-            label={"Confirm Paswword"}
+            label={"Confirm Password"}
           />
           <SizedBox height={"h-6"} />
         </div>
         <div className="flex border-l gap-x-5 mt-10 mb-3 mx-3 border-gray-200">
           <button
-            onClick={() => dispatch(editProfile(false))}
+            onClick={() => dispatch(changePassword(false))}
             className="w-full border border-[#ACB7BC] hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300
        rounded-none p-3 flex items-center justify-center text-sm font-medium"
           >
@@ -117,10 +131,18 @@ const ChangePassword = () => {
                 minUppercase: 1,
                 minSymbols: 1,
                 minLowercase: 1,
-              })
+              }) ||
+              changePasswordMutation.isPending
             }
             content={"Save Changes"}
             width={"w-full"}
+            callback={() =>
+              changePasswordMutation.mutate({
+                oldPassword: passwords.current,
+                newPassword: passwords.new,
+              })
+            }
+            isLoading={changePasswordMutation.isPending}
           >
             Save Changes
           </Button>

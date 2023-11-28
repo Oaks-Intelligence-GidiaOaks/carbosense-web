@@ -15,22 +15,27 @@ import { editOrg, editProfile } from "../../../../features/user/userSlice";
 import PhoneNumberInput from "../../../ui/PhoneInput";
 import * as _ from "lodash";
 import validator from "validator";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { editOrgDetails } from "../../../../services";
+import toast from "react-hot-toast";
+import { handleAxiosError } from "../../../../utils";
 
 const OrgProfile = () => {
   const dispatch = useDispatch();
   const modalRef = useRef();
   const { user } = useSelector((state) => state.user);
+  const queryClient = useQueryClient();
 
   const initialValues = {
-    orgName: user.organizationName,
+    organizationName: user.organizationName,
     fullName: user.fullName,
-    email: user.companyEmail,
+    email: user.email,
     tel: user.tel,
   };
   const [orgInfo, setOrgInfo] = useState({
-    orgName: user.organizationName,
+    organizationName: user.organizationName,
     fullName: user.fullName,
-    email: user.companyEmail,
+    email: user.email,
     tel: user.tel,
   });
 
@@ -38,6 +43,20 @@ const OrgProfile = () => {
   const setFormValue = (name, value) => {
     setOrgInfo((prev) => ({ ...prev, [name]: value }));
   };
+
+  const editOrgMutation = useMutation({
+    mutationKey: ["edit_org"],
+    mutationFn: (data) => editOrgDetails(data),
+    onSuccess: () => {
+      toast.success(`Organization details updated successfully`, {
+        duration: 5000,
+        id: "profile-updated",
+      });
+      queryClient.invalidateQueries(["fetch_account_info"]);
+      dispatch(editOrg(false));
+    },
+    onError: (e) => toast.error(handleAxiosError(e)),
+  });
 
   return (
     <motion.div
@@ -70,9 +89,9 @@ const OrgProfile = () => {
         <div className="px-3 pt-10">
           <TextInput
             width={"w-[clamp(240px,100%,480px)]"}
-            value={orgInfo.orgName}
+            value={orgInfo.organizationName}
             valueSetter={setFormValue}
-            name={"orgName"}
+            name={"organizationName"}
             label={"Organization Name"}
           />
           <SizedBox height={"h-6"} />
@@ -90,6 +109,7 @@ const OrgProfile = () => {
             value={orgInfo.tel}
             valueSetter={setFormValue}
             name={"tel"}
+            label={"Phone Number"}
           />
           <SizedBox height={"h-6"} />
           <TextInput
@@ -110,14 +130,16 @@ const OrgProfile = () => {
             Cancel
           </button>
           <Button
-            // disabled={
-            //   _.isEqual(initialValues, profileInfo) ||
-            //   _.isEmpty(profileInfo.fullName) ||
-            //   !validator.isEmail(profileInfo.email) ||
-            //   profileInfo.tel.trim().length < 6
-            // }
+            disabled={
+              _.isEqual(initialValues, orgInfo) ||
+              _.isEmpty(orgInfo.organizationName) ||
+              orgInfo.tel.trim().length < 6 ||
+              editOrgMutation.isPending
+            }
             content={"Save Changes"}
             width={"w-full"}
+            callback={() => editOrgMutation.mutate(orgInfo)}
+            isLoading={editOrgMutation.isPending}
           >
             Save Changes
           </Button>
