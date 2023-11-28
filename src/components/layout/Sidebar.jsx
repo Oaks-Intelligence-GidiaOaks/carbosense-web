@@ -46,11 +46,19 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="flex items-center gap-2 pr-2 w-full">
-        <div className="min-w-[40px] h-[40px] rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">
-          <h3 className="text-lg font-semibold text-primary-purple uppercase">
-            {generateInitials(user.fullName)}
-          </h3>
-        </div>
+        {user.profileImage ? (
+          <img
+            src={user.profileImage}
+            alt=""
+            className="h-[40px] w-[40px] rounded-full border"
+          />
+        ) : (
+          <div className="min-w-[40px] h-[40px] rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">
+            <h3 className="text-lg font-semibold text-primary-purple uppercase">
+              {generateInitials(user.fullName)}
+            </h3>
+          </div>
+        )}
 
         <div className="pr-2 max-w-[200px]">
           <h3 className="text-base font-semibold text-primary-black overflow-hidden whitespace-nowrap max-w-[200px] text-ellipsis">

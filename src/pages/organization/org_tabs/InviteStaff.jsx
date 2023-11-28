@@ -1,117 +1,105 @@
-import React, { useState } from 'react';
-import { Stack, TextField } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
-import { inviteStaff } from '../../../services';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Button, TextInput } from "../../../components/ui";
+import validator from "validator";
+import { useMutation } from "@tanstack/react-query";
+import { inviteStaff } from "../../../services";
 import toast from "react-hot-toast";
-import { Spinner } from '../../../components/ui';
+import { handleAxiosError } from "../../../utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { initialRight, slideLeft } from "../../../constants/framer";
 
-const InviteStaff = () => {
+const InviteStaff = ({ onClose }) => {
   const [values, setValues] = useState({
-    email: '',
-    fullName: '',
+    email: "",
+    fullName: "",
   });
-  const handleChange = (field) => (event) => {
+  const handleChange = (name, value) => {
     setValues({
       ...values,
-      [field]: event.target.value,
+      [name]: value,
     });
   };
 
-
-  const {mutateAsync: inviteStaffMutation, isLoading} = useMutation({
-    mutationFn: inviteStaff,
-  })
- 
-  const handleSendInvite = async () => {
-    try {
-      await inviteStaffMutation({
-        email: values.email,
-        fullName: values.fullName,
-      }); 
-      toast.success('Invite sent successfully!', {
-        duration: 3000, 
-        position: 'top-center', 
+  const inviteStaffMutation = useMutation({
+    mutationKey: ["invite_staff"],
+    mutationFn: (data) => inviteStaff(data),
+    onSuccess: () => {
+      toast.success(`Invite successfully sent to ${values.fullName}`, {
+        duration: 5000,
       });
       setValues({
-        email: '',
-        fullName: '',
+        email: "",
+        fullName: "",
       });
-    } catch (err) {
-      const errorMessage = err?.response?.data?.message || 'Error sending invite. Please try again.';
-      toast.error(errorMessage, {
-        duration: 5000, 
-        position: 'top-center',
-      });
-    }
-  };
-  
-  
+    },
+    onError: (e) => toast.error(handleAxiosError(e)),
+  });
   return (
-    <div className='bg-white px-4 py-4 md:px-10 md:py-10 rounded-sm'>
-      <div className='mb-7'>
-        <h3 className='text-base font-medium text-primary-black mb-2'>Send an invite</h3>
-        <span className='text-sm text-primary-gray'>Add a new member to your organization’s Carbosense account</span>
+    <motion.div
+      initial={initialRight}
+      animate={slideLeft}
+      exit={initialRight}
+      className="bg-white px-4 py-4 md:px-10 md:py-10 rounded-sm"
+    >
+      <div className="mb-7">
+        <h3 className="text-base font-medium text-primary-black mb-2">
+          Send an invite
+        </h3>
+        <span className="text-sm text-primary-gray">
+          Add a new member to your organization’s Carbosense account
+        </span>
       </div>
 
-      <Stack
-        spacing={{ xs: 4, md: 4 }}
-        direction={{ xs: 'column', md: 'row' }}
-      >
-        <TextField
-          sx={{
-            width: '100%',
-            '& .MuiInputBase-root': {
-              height: 50,
-            },
-            '& .MuiInputLabel-root': {
-              fontSize: '14px',
-              color: 'black',
-            },
-            '& .MuiInputLabel-asterisk': {
-              color: 'red',
-            },
-          }}
-          fullWidth
-          required
-          label='Email address'
-          variant='outlined'
+      <div className="flex gap-x-6">
+        <TextInput
           value={values.email}
-          onChange={handleChange('email')}
+          name={"email"}
+          label={"Email address"}
+          valueSetter={handleChange}
+          width={"w-[clamp(200px,100%,640px)]"}
         />
-        <TextField
-          sx={{
-            width: '100%',
-            '& .MuiInputBase-root': {
-              height: 50,
-            },
-            '& .MuiInputLabel-root': {
-              fontSize: '14px',
-              color: 'black',
-            },
-            '& .MuiInputLabel-asterisk': {
-              color: 'red',
-            },
-            '@media (min-width: 600px)': {
-              marginLeft: '16px',
-            },
-          }}
-          required
-          label='Full Name'
-          variant='outlined'
+        <TextInput
           value={values.fullName}
-          onChange={handleChange('fullName')}
+          name={"fullName"}
+          label={"Full Name"}
+          valueSetter={handleChange}
+          width={"w-[clamp(200px,100%,640px)]"}
         />
-      </Stack>
-      <div className='flex justify-end mt-4'>
-        <button className='text-[12px] border border-primary-blue text-primary-blue py-1 px-2 bg-[#E3ECFF]'>
-          Cancel
-        </button>
-        <button className='text-[12px] bg-primary-blue text-white py-1 px-2 ml-2' onClick={handleSendInvite} >
-        {isLoading ? <Spinner /> : 'Send Invite'}
-        </button>
       </div>
-    </div>
+
+      <div className="flex justify-end mt-4 gap-x-4">
+        <Button
+          content="Cancel"
+          bgColor="bg-white"
+          textColor="text-primary-blue"
+          hoverColor="hover:text-red-500 hover:border-red-500"
+          width="w-[clamp(80px,20%,120px)]"
+          height="h-8"
+          borderStyle="border border-primary-blue border-primary-blue"
+          textSize="text-sm"
+          callback={onClose}
+        />
+        <Button
+          content="Send Invite"
+          width="w-[clamp(80px,20%,120px)]"
+          height="h-8"
+          textSize="text-sm"
+          disabled={
+            !validator.isEmail(values.email) ||
+            validator.isEmpty(values.fullName) ||
+            inviteStaffMutation.isPending
+          }
+          isLoading={inviteStaffMutation.isPending}
+          callback={() => inviteStaffMutation.mutate(values)}
+        />
+      </div>
+    </motion.div>
   );
+};
+
+InviteStaff.propTypes = {
+  onClose: PropTypes.func,
 };
 
 export default InviteStaff;

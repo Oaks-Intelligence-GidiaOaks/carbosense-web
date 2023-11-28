@@ -8,6 +8,11 @@ import { initialUp, slideDown, slideUp } from "../../constants/framer";
 import { ProtectedRoute } from "../../guards";
 import { useSelector } from "react-redux";
 import EditProfile from "../pageComponents/Account/modals/editProfile";
+import {
+  ChangePassword,
+  DeleteAccount,
+  OrgProfile,
+} from "../pageComponents/Account/modals";
 
 const AnimatedOutlet = () => {
   const outlet = useOutlet();
@@ -25,7 +30,9 @@ const AnimatedOutlet = () => {
 };
 
 const OrganizationLayout = () => {
-  const { editProfile } = useSelector((state) => state.user.accountActions);
+  const { editProfile, changePassword, deleteAccount, editOrg } = useSelector(
+    (state) => state.user.accountActions
+  );
 
   return (
     <ProtectedRoute>
@@ -50,7 +57,10 @@ const OrganizationLayout = () => {
 
       {/* Account actions */}
       <AnimatePresence>
-        {editProfile === true && <EditProfile />}
+        {editProfile && <EditProfile />}
+        {changePassword && <ChangePassword />}
+        {deleteAccount && <DeleteAccount />}
+        {editOrg && <OrgProfile />}
       </AnimatePresence>
     </ProtectedRoute>
   );

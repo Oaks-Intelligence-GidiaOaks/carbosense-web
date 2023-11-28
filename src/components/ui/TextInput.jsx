@@ -13,6 +13,7 @@ const TextInput = ({
   valueSetter,
   width,
   name,
+  isDisabled,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -36,7 +37,8 @@ const TextInput = ({
       className={twMerge(
         borderStyle,
         isFocused ? focusedBorderStyle : null,
-        isError ? errorBorderStyle : null
+        isError ? errorBorderStyle : null,
+        isDisabled ? borderStyle : null
       )}
     >
       <label
@@ -57,14 +59,16 @@ const TextInput = ({
         onBlur={() => setIsFocused(false)}
         onChange={(e) => valueSetter(e.target.name, e.target.value, e)}
         className={twMerge(
-          `z-[1] font-satoshi pr-8 py-4 pl-5 rounded-md w-full ${
+          ` z-[1] font-satoshi pr-8 py-4 pl-5 rounded-md w-full ${
             bgColor ?? "bg-white"
           }`,
           isFocused ? focusedBorderStyle : null,
           isError ? errorBorderStyle : null,
-          isError && isFocused ? errorFocusedStyle : null
+          isError && isFocused ? errorFocusedStyle : null,
+          isDisabled ? "bg-gray-100" : null
         )}
         value={value}
+        disabled={isDisabled}
       />
     </div>
   );
@@ -73,6 +77,7 @@ const TextInput = ({
 TextInput.propTypes = {
   label: PropTypes.string,
   isError: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   bgColor: PropTypes.string,
   labelBg: PropTypes.string,
   labelColor: PropTypes.string,
