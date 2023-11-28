@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import helpCircleGray from "../../assets/icons/helpCircleGray.svg";
 import notify from "../../assets/icons/notify.svg";
+import {Link} from "react-router-dom"
 
 const Topbar = () => {
   const { user } = useSelector((state) => state.user);
@@ -13,12 +14,12 @@ const Topbar = () => {
           </h3>
         </div>
         <div className="flex items-center gap-4 py-4">
-          <div className="flex items-center gap-2 py-4">
+          <Link to="/admin/activity" className="flex items-center gap-2 py-4">
             <img src={notify} alt="" width={20} height={20} />
             <span className=" text-primary-black font-medium text-sm">
               Activity Log
             </span>
-          </div>
+          </Link>
           <div className="flex items-center gap-2 py-4">
             <img src={helpCircleGray} alt="" width={20} height={20} />
             <span className=" text-primary-black font-medium text-sm">

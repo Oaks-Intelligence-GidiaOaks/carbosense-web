@@ -56,3 +56,14 @@ export const fetchAccountInfo = async (accessToken) => {
   });
   return await response.data;
 };
+
+//invite user
+export const inviteStaff = async (data) => {
+  const response = await axios.post("user/invite_staff", data, {
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return await response.data;
+};

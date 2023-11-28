@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Stack, TextField } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { inviteStaff } from '../../../services';
+import toast from "react-hot-toast";
+import { Spinner } from '../../../components/ui';
 
 const InviteStaff = () => {
   const [values, setValues] = useState({
     email: '',
-    phoneNumber: '',
+    fullName: '',
   });
   const handleChange = (field) => (event) => {
     setValues({
@@ -12,9 +16,36 @@ const InviteStaff = () => {
       [field]: event.target.value,
     });
   };
-  const handleSendInvite = () => {
-    console.log('Values:', values);
+
+
+  const {mutateAsync: inviteStaffMutation, isLoading} = useMutation({
+    mutationFn: inviteStaff,
+  })
+ 
+  const handleSendInvite = async () => {
+    try {
+      await inviteStaffMutation({
+        email: values.email,
+        fullName: values.fullName,
+      }); 
+      toast.success('Invite sent successfully!', {
+        duration: 3000, 
+        position: 'top-center', 
+      });
+      setValues({
+        email: '',
+        fullName: '',
+      });
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || 'Error sending invite. Please try again.';
+      toast.error(errorMessage, {
+        duration: 5000, 
+        position: 'top-center',
+      });
+    }
   };
+  
+  
   return (
     <div className='bg-white px-4 py-4 md:px-10 md:py-10 rounded-sm'>
       <div className='mb-7'>
@@ -65,10 +96,10 @@ const InviteStaff = () => {
             },
           }}
           required
-          label='Phone Number'
+          label='Full Name'
           variant='outlined'
-          value={values.phoneNumber}
-          onChange={handleChange('phoneNumber')}
+          value={values.fullName}
+          onChange={handleChange('fullName')}
         />
       </Stack>
       <div className='flex justify-end mt-4'>
@@ -76,7 +107,7 @@ const InviteStaff = () => {
           Cancel
         </button>
         <button className='text-[12px] bg-primary-blue text-white py-1 px-2 ml-2' onClick={handleSendInvite} >
-          Send Invite
+        {isLoading ? <Spinner /> : 'Send Invite'}
         </button>
       </div>
     </div>
