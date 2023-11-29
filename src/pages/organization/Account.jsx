@@ -19,24 +19,29 @@ import {
 import { setUser } from "../../features/user/userSlice";
 import toast from "react-hot-toast";
 import { handleAxiosError } from "../../utils";
+import RequestError from "../../components/errors/RequestError";
 
 const Account = () => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("account");
   const { accessToken } = useSelector((state) => state.user);
 
-  const { isPending, isError, data, isSuccess } = useQuery({
-    queryKey: ["fetch_account_info"],
-    queryFn: () => fetchAccountInfo(accessToken),
-    onSuccess: (data) => {
-      alert("Refetched");
-      dispatch(setUser(data.data));
-      toast.success("Store updated");
-    },
-    onError: (e) => {
-      toast.error(handleAxiosError(e));
-    },
-  });
+  const { isPending, isError, data, isSuccess, error, refetch, isRefetching } =
+    useQuery({
+      queryKey: ["fetch_account_info"],
+      queryFn: () => fetchAccountInfo(accessToken),
+      onSuccess: (data) => {
+        alert("Refetched");
+        dispatch(setUser(data.data));
+        toast.success("Store updated");
+      },
+      onError: (e) => {
+        toast.error(handleAxiosError(e));
+      },
+      refetchOnMount: false,
+      retryOnMount: false,
+      retry: false,
+    });
 
   // update user data on refetch
   useEffect(() => {
@@ -97,6 +102,13 @@ const Account = () => {
             </Tabs>
           </div>
         </motion.div>
+      )}
+      {isError && (
+        <RequestError
+          error={error}
+          retryCallback={() => refetch()}
+          isLoading={isRefetching}
+        />
       )}
     </AnimatePresence>
   );

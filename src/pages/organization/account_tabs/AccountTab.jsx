@@ -129,6 +129,9 @@ const AccountTab = ({ userInfo }) => {
               content={"Upload Picture"}
               callback={() => inputRef.current.click()}
               height={"h-6"}
+              bgColor={"bg-bg-ca-gray"}
+              textColor={"text-primary-blue"}
+              hoverColor={"hover:bg-primary-blue hover:text-white"}
               textSize={"text-xs"}
               width={"w-[100px]"}
               disabled={uploadPictureMutation.isPending}
