@@ -57,6 +57,7 @@ export const fetchAccountInfo = async (accessToken) => {
   return await response.data;
 };
 
+//invite user
 export const inviteStaff = async (data) => {
   const response = await axios.post("user/invite_staff", data);
   return await response.data;
