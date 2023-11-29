@@ -27,14 +27,14 @@ const EditProfile = () => {
   const queryClient = useQueryClient();
 
   const initialValues = {
-    fullName: user.fullName,
-    email: user.email,
-    tel: user.tel,
+    fullName: user?.fullName,
+    email: user?.email,
+    tel: user?.tel,
   };
   const [profileInfo, setProfileInfo] = useState({
-    fullName: user.fullName,
-    email: user.email,
-    tel: user.tel,
+    fullName: user?.fullName ?? "",
+    email: user?.email ?? "",
+    tel: user?.tel ?? "",
   });
 
   // custom setter function for auth input fields
