@@ -21,7 +21,6 @@ import { ProtectedRoute } from "../../guards";
 // };
 
 const OrganizationLayout = () => {
-  // const outlet = useOutlet(location.pathname);
   return (
     <ProtectedRoute>
       <motion.div
@@ -37,14 +36,14 @@ const OrganizationLayout = () => {
             <Topbar />
             <AnimatePresence mode="wait">
               {/* <AnimatedOutlet /> */}
-              <motion.div
+              {/* <motion.div
                 key={location.pathname}
                 initial={initialUp}
                 animate={slideDown}
                 exit={slideUp}
-              >
-                <Outlet context={location.pathname} key={location.pathname} />
-              </motion.div>
+              > */}
+              <Outlet />
+              {/* </motion.div> */}
             </AnimatePresence>
           </div>
         </section>
