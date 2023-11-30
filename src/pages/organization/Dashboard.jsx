@@ -40,7 +40,7 @@ const Dashboard = () => {
 
       <div className='px-2 md:px-8 mt-4'>
         <h3 className='text-primary-black font-medium text-lg'>Emissions by Department</h3>
-        {/* <EmissionsGrid /> */}
+        <EmissionsGrid />
       </div>
     </div>
   )

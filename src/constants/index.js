@@ -47,4 +47,11 @@ export const companySizes = [
   },
 ];
 
+export const departments = [
+  {
+    label: "department",
+    value: "Department",
+  },
+];
+
 export const acceptedOrgFileTypes = ["png", "jpg", "jpeg", "pdf"];
