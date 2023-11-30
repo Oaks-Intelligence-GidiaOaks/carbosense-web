@@ -3,10 +3,17 @@ import DashboardFrame from "../../assets/icons/DashboardFrame.svg";
 import alertcircle from "../../assets/icons/alertcircle.svg";
 import { DashboardStats } from "../../components";
 import { EmissionsGrid } from "../../components/grid";
+import { motion } from "framer-motion";
+import { initialUp, slideDown } from "../../constants/framer";
 
 const Dashboard = () => {
   return (
-    <div className="mb-10">
+    <motion.div
+      initial={initialUp}
+      animate={slideDown}
+      exit={initialUp}
+      className="mb-10"
+    >
       <div className="md:px-8">
         <div className="bg-[#FFFFFF] border-l-[6px] h-[60px] border-l-[#FF331E] flex items-center justify-between pr-6">
           <div className="flex flex-col  items-start px-8 h-full justify-center">
@@ -46,7 +53,7 @@ const Dashboard = () => {
         </h3>
         <EmissionsGrid />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -9,6 +9,8 @@ import { CiCalendar } from "react-icons/ci";
 import Select from "react-select";
 import { DropDownMenu } from "../../components/ui";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { motion } from "framer-motion";
+import { initialUp, slideDown } from "../../constants/framer";
 
 const options = [{ value: "department", label: "Department" }];
 
@@ -47,7 +49,12 @@ const Emissions = () => {
   };
 
   return (
-    <div className=" pb-40 md:pb-10">
+    <motion.div
+      initial={initialUp}
+      animate={slideDown}
+      exit={initialUp}
+      className=" pb-40 md:pb-10"
+    >
       <div className="md:px-8">
         <img src={EmissionFrame} alt="" />
       </div>
@@ -262,7 +269,7 @@ const Emissions = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
