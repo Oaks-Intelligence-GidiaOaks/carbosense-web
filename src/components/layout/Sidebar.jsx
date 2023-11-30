@@ -50,7 +50,7 @@ const Sidebar = () => {
           <img
             src={user.profileImage}
             alt=""
-            className="h-[40px] w-[40px] rounded-full border"
+            className="h-[40px] w-[40px] rounded-full border object-cover"
           />
         ) : (
           <div className="min-w-[40px] h-[40px] rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">

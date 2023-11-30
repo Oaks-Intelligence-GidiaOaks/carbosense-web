@@ -6,7 +6,7 @@ import PasswordInput from "./PasswordInput";
 import SizedBox from "./SizedBox";
 import Spinner from "./Spinner";
 import TextButton from "./TextButton";
-import CustomDatePicker from "./CustomDatePicker";
+import PermissionCard from "./PermissionCard";
 
 export {
   TextInput,
@@ -17,5 +17,5 @@ export {
   SizedBox,
   Spinner,
   TextButton,
-  CustomDatePicker
+  PermissionCard,
 };

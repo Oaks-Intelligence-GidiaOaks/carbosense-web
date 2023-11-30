@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import OrgAdminIcon from "../../../assets/icons/OrgAdminIcon.svg";
 import alertcircle from "../../../assets/icons/alertcircle.svg";
 import log from "../../../assets/icons/log.svg";
 import Logout from "../../../assets/icons/Logout.svg";
@@ -13,7 +12,7 @@ import {
   removeUser,
 } from "../../../features/user/userSlice";
 import PropTypes from "prop-types";
-import { Button } from "../../../components/ui";
+import { Button, PermissionCard } from "../../../components/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { uploadPicture } from "../../../services";
 import toast from "react-hot-toast";
@@ -25,6 +24,7 @@ const AccountTab = ({ userInfo }) => {
 
   const logoutUser = () => {
     sessionStorage.clear();
+    queryClient.clear();
     dispatch(removeUser());
   };
 
@@ -67,7 +67,7 @@ const AccountTab = ({ userInfo }) => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Full Name</span>
                 <span className="text-sm text-primary-black">
-                  {userInfo.fullName}
+                  {userInfo?.fullName}
                 </span>
               </div>
             </div>
@@ -75,7 +75,9 @@ const AccountTab = ({ userInfo }) => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Email</span>
                 <span className="text-sm text-primary-black">
-                  {userInfo.personalEmail}
+                  {userInfo.role !== "admin"
+                    ? userInfo?.email
+                    : userInfo?.personalEmail}
                 </span>
               </div>
             </div>
@@ -83,7 +85,7 @@ const AccountTab = ({ userInfo }) => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-primary-gray">Phone</span>
                 <span className="text-sm text-primary-black">
-                  {userInfo.tel}
+                  {userInfo?.tel}
                 </span>
               </div>
             </div>
@@ -104,7 +106,7 @@ const AccountTab = ({ userInfo }) => {
               <img
                 src={userInfo.profileImage}
                 alt=""
-                className="h-16 w-16 rounded-full border"
+                className="h-16 w-16 rounded-full border object-cover"
               />
             ) : (
               <div className="w-16 max-w-[64px] h-16 rounded-full border border-bg-ca-purple flex items-center justify-center bg-bg-ca-light-gray">
@@ -129,6 +131,9 @@ const AccountTab = ({ userInfo }) => {
               content={"Upload Picture"}
               callback={() => inputRef.current.click()}
               height={"h-6"}
+              bgColor={"bg-bg-ca-gray"}
+              textColor={"text-primary-blue"}
+              hoverColor={"hover:bg-primary-blue hover:text-white"}
               textSize={"text-xs"}
               width={"w-[100px]"}
               disabled={uploadPictureMutation.isPending}
@@ -158,12 +163,7 @@ const AccountTab = ({ userInfo }) => {
               <span className="text-xs md:text-sm text-primary-gray">
                 User Permission
               </span>
-              <div className="p-1 border rounded-3xl flex items-center justify-center gap-2 bg-[#E3ECFF] border-[#E3ECFF]">
-                <img src={OrgAdminIcon} alt="" width={12} height={12} />
-                <span className="text-xs text-primary-black">
-                  Organization Admin
-                </span>
-              </div>
+              <PermissionCard type="admin" />
             </div>
             <div className="flex items-center justify-between border p-3">
               <span className="text-xs md:text-sm text-primary-gray">
@@ -191,7 +191,7 @@ const AccountTab = ({ userInfo }) => {
                 Department
               </span>
               <span className="text-xs md:text-sm text-primary-black">
-                Data Analysis
+                {userInfo?.department ?? "Not assigned"}
               </span>
             </div>
           </div>
@@ -266,13 +266,17 @@ const AccountTab = ({ userInfo }) => {
               <img src={Logout} alt="" width={20} height={20} />
               <span className="text-sm text-primary-gray">Log out</span>
             </div>
-            <div
-              onClick={() => dispatch(deleteAccount(true))}
-              className="flex items-center gap-4 hover:cursor-pointer"
-            >
-              <img src={trash} alt="" width={20} height={20} />
-              <span className="text-sm text-primary-gray">Delete Account</span>
-            </div>
+            {userInfo.role === "admin" && (
+              <div
+                onClick={() => dispatch(deleteAccount(true))}
+                className="flex items-center gap-4 hover:cursor-pointer"
+              >
+                <img src={trash} alt="" width={20} height={20} />
+                <span className="text-sm text-primary-gray">
+                  Delete Account
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

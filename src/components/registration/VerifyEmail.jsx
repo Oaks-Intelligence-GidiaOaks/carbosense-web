@@ -28,7 +28,7 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
   const { accessToken } = useSelector((state) => state.user);
   const [, setTimes] = useState(1);
   const [countDown, setCountDown] = useState(
-    secureLocalStorage.getItem("ORT") ?? 60
+    secureLocalStorage.getItem("ORT") ?? 10
   );
 
   const setFormValue = (name, value) => {
@@ -70,8 +70,8 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
     onSuccess: () => {
       // otp successfully sent
       secureLocalStorage.setItem("OSS", true);
-      const cachedTimer = secureLocalStorage.getItem("ORT") ?? 60;
-      setCountDown(cachedTimer <= 0 ? 60 : cachedTimer);
+      const cachedTimer = secureLocalStorage.getItem("ORT") ?? 10;
+      setCountDown(cachedTimer <= 0 ? 10 : cachedTimer);
       let timer = setInterval(() => {
         // OTP Resend Timer
         setCountDown((prev) => {

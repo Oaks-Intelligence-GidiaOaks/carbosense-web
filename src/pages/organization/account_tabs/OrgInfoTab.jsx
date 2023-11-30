@@ -20,13 +20,15 @@ const OrgInfoTab = () => {
               Your profile photo will be visible to all your org members.
             </span>
           </div>
-          <button
-            onClick={() => dispatch(editOrg(true))}
-            className="text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]"
-          >
-            <HiOutlinePencil />
-            <span>Edit</span>
-          </button>
+          {user.role === "admin" && (
+            <button
+              onClick={() => dispatch(editOrg(true))}
+              className="text-[12px] flex items-center gap-2 text-primary-blue py-[6px] px-3 rounded-sm bg-[#E3ECFF]"
+            >
+              <HiOutlinePencil />
+              <span>Edit</span>
+            </button>
+          )}
         </div>
 
         <div>
