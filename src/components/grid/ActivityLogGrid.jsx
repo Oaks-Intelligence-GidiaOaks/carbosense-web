@@ -49,7 +49,7 @@ const ActivityLogGrid = ({ tableData }) => {
               <TableCell colSpan={2}>
                 <Typography variant='body1'   sx={{
                 color: '#0E0E0E',
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 'light',
               }}>
                   No logs to display

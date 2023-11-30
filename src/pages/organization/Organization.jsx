@@ -12,7 +12,7 @@ const Organization = () => {
         <img src={OrgFrame} alt="" />
       </div>
 
-      <div>
+      <div className='px-2'>
         <Tabs>
           <Tab 
           label={{

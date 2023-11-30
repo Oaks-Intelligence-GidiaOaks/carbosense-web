@@ -1,11 +1,54 @@
+import React, { useState } from "react";
 import EmissionFrame from "../../assets/icons/EmissionFrame.svg"
 import alertcircle from "../../assets/icons/alertcircle.svg";
-import arrowright from "../../assets/icons/arrowright.svg";
-import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
-import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { StackedBarChart, DoughnutChart } from "../../components/charts";
+import { departments } from "../../constants";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { CiCalendar } from "react-icons/ci";
+import Select from 'react-select';
+import { DropDownMenu } from "../../components/ui";
+
+const options = [
+  { value: 'department', label: 'Department' },
+];
 
 const Emissions = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  const colorStyle = {
+    control: (styles) => ({
+      ...styles,
+      paddingLeft: "6px",
+      paddingBottom: "2px",
+      color: "#495057",
+      fontSize: "14px"
+    }),
+    singleValue: (styles) => ({
+      ...styles,
+      color: "",
+      fontFamily: "Lato, sans-serif",
+    }),
+    placeholder: (styles) => ({
+      ...styles,
+      fontFamily: "Lato, sans-serif",
+      color: "#9ca3af",
+      fontWeight: "600",
+    }),
+    option: (styles, state) => ({
+      ...styles,
+      color: state.isSelected ? "white" : "#495057",
+      background: state.isSelected
+        ? "#2196F3"
+        : state.isFocused
+        ? "#2195f32a"
+        : "#ffffff",
+
+   
+    }),
+  };
+
   return (
     <div className=" pb-40 md:pb-10">
       <div className='md:px-8'>
@@ -29,35 +72,48 @@ const Emissions = () => {
         </div>
 
       </div>
-
-      {/* <div className="px-8 mt-4 flex items-center gap-4">
-        <div className="flex items-center bg-white w-64 px-2 border rounded-sm">
-          <div className="md:w-32">
-            <DatePickerComponent
-              cssClass="custom-datepicker"
-              id="datepicker"
-            />
-          </div>
-          <div className=" mx-4 w-6 my-auto">
-            <img src={arrowright} alt="" />
-          </div>
-          <div className="md:w-32">
-
-            <DatePickerComponent
-              id="datepicker"
-            />
-          </div>
+      <div className="mt-4 md:px-8 flex  gap-6">
+        {/* <CustomDatePicker /> */}
+        <div className="flex items-center gap-1">
+          <DatePicker
+            showIcon
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            wrapperClassName="datePicker"
+            icon={
+              <CiCalendar />
+            }
+            
+          />
+          <DatePicker
+            icon={
+              <CiCalendar />
+            }
+            wrapperClassName="datePicker"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            showIcon
+          />
         </div>
+        <div className="flex gap-2">
+          {/* <Select
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
+            styles={colorStyle}
+            className="custom-select"
+          />
+          <Select
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
+            styles={colorStyle}
+          /> */}
 
-        <div className=" md:w-40 bg-white px-2 flex items-center rounded-sm">
-          <DropDownListComponent id="ddlelement" allowFiltering={true} dataSource={""} placeholder="Department" />
+          <DropDownMenu options={departments} />
+          <DropDownMenu options={departments}/>
         </div>
-        <div className=" md:w-40 hidden  bg-white px-2 md:flex items-center rounded-sm">
-          <DropDownListComponent id="ddlelement" allowFiltering={true} dataSource={""} placeholder="Sources" />
-        </div>
-      </div> */}
-
-
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4 lg:h-[250px] px-2 md:px-8">
         <div className="col-span-1 md:col-span-3 bg-white h-full p-4">
           <div className="flex items-center gap-2">
@@ -145,34 +201,35 @@ const Emissions = () => {
 
           <div className="">
             <StackedBarChart
-             labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
-             datasets={[
-                 {
-                     label: 'Scope 1',
-                     data: [2, 4, 5, 8, 4, 5, 3, 4, 5, 6, 7, 4],
-                     backgroundColor: "#00B8AC",
-                     barPercentage: 0.5,   
-                 },
-                 {
-                     label: 'Scope 2',
-                     data: [1, 2, 3, 4, 3, 4, 5, 6, 7, 8, 3, 4],
-                     backgroundColor: "#9553A0",
-                     barPercentage: 0.5,  
-                 },
-                 {
-                     label: 'Scope 3',
-                     data: [1, 2, 3, 5, 3, 5, 6, 1, 4, 7, 8, 9],
-                     backgroundColor: "#233E9B",
-                     barPercentage: 0.5,  
-                 },
+              labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
+              datasets={[
+                {
+                  label: 'Scope 1',
+                  data: [2, 4, 5, 8, 4, 5, 3, 4, 5, 6, 7, 4],
+                  backgroundColor: "#00B8AC",
+                  barPercentage: 0.5,
+                },
+                {
+                  label: 'Scope 2',
+                  data: [1, 2, 3, 4, 3, 4, 5, 6, 7, 8, 3, 4],
+                  backgroundColor: "#9553A0",
+                  barPercentage: 0.5,
+                },
+                {
+                  label: 'Scope 3',
+                  data: [1, 2, 3, 5, 3, 5, 6, 1, 4, 7, 8, 9],
+                  backgroundColor: "#233E9B",
+                  barPercentage: 0.5,
+                },
 
-                 
-             ]}
+
+              ]}
 
             />
           </div>
         </div>
       </div>
+
     </div>
   )
 }
