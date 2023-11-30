@@ -18,6 +18,11 @@ const DropDownMenu = ({
   width,
   optionsBgColor,
   name,
+  height,
+  radius,
+  textSize,
+  padding,
+  border,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [controlValue, setControlValue] = useState(value?.label ?? "");
@@ -42,8 +47,12 @@ const DropDownMenu = ({
   return (
     <div
       className={twMerge(
-        `border border-solid border-[#ACB7BC] relative font-satoshi rounded-md`,
+        `border-solid border-[#ACB7BC] relative font-satoshi ${
+          radius ? "rounded-md" : "rounded-none"
+        }`,
+        `${border ? "border" : "border-0"}`,
         `${width ?? "w-[240px]"}`,
+        `${height ?? null}`,
         `${isFocused ? focusedDropDownStyle : null}`,
         `${isError ? errorBorderStyle : null}`
       )}
@@ -78,9 +87,11 @@ const DropDownMenu = ({
           readOnly={!allowFiltering}
           onChange={(e) => setControlValue(e.target.value)}
           className={twMerge(
-            `outline-0 flex-1 font-satoshi py-4 pl-5 pr-12 text-ellipsis overflow-hidden rounded-md w-[240px] cursor-pointer ${
-              bgColor ?? "bg-white"
-            } `,
+            `${textSize ?? null} outline-0 flex-1 font-satoshi ${
+              padding ?? "py-4"
+            } pl-5 pr-12 text-ellipsis overflow-hidden ${
+              radius ? "rounded-md" : "rounded-none"
+            } w-[240px] cursor-pointer ${bgColor ?? "bg-white"} `,
             `${
               isFocused
                 ? focusedBorderStyle
@@ -93,9 +104,9 @@ const DropDownMenu = ({
         />{" "}
         <button
           className={twMerge(
-            `flex justify-center items-center w-12 rounded-md ${
-              bgColor ?? "bg-white"
-            }`
+            `flex justify-center items-center w-12 ${
+              radius ? "rounded-md" : "rounded-none"
+            } ${bgColor ?? "bg-white"}`
           )}
         >
           <img
@@ -170,6 +181,11 @@ DropDownMenu.propTypes = {
   width: PropTypes.string,
   optionsBgColor: PropTypes.string,
   name: PropTypes.string,
+  textSize: PropTypes.string,
+  padding: PropTypes.string,
+  radius: PropTypes.bool,
+  height: PropTypes.string,
+  border: PropTypes.bool,
 };
 
 export default DropDownMenu;

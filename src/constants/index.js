@@ -49,8 +49,8 @@ export const companySizes = [
 
 export const departments = [
   {
-    label: "department",
-    value: "Department",
+    label: "Department",
+    value: "department",
   },
 ];
 

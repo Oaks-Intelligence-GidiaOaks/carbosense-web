@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 /**
@@ -20,4 +21,14 @@ export function useOutsideCloser(ref, state, setShowPopup) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref, setShowPopup, state]);
+}
+
+export function useQueryCache() {
+  const queryClient = useQueryClient();
+
+  const clear = () => {
+    queryClient.clear();
+  };
+
+  return { clear };
 }
