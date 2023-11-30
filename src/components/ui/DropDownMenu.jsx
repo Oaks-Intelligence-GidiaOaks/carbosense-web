@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { useOutsideCloser } from "../../hooks";
 import chevronDown from "../../assets/icons/chevron_down.svg";
 import { twMerge } from "tailwind-merge";
+import { AnimatePresence, motion } from "framer-motion";
+import { initialUp, slideDown } from "../../constants/framer";
 
 const DropDownMenu = ({
   label,
@@ -38,7 +40,7 @@ const DropDownMenu = ({
   } ${isError ? "focus:outline-[red]" : "focus:outline-primary-blue"}`;
   const focusedDropDownStyle = `${borderColor ?? "border-primary-blue"} ${
     isError ? "focus:outline-[red]" : "focus:outline-primary-blue"
-  } outline outline-primary-blue outline-[2px]`;
+  } outline outline-primary-blue border-[1px] outline-[1.5px] transition-all`;
   const errorLabelStyle = "text-[red_!important]";
   const errorBorderStyle = "border-[red_!important]";
   const errorFocusedStyle =
@@ -48,9 +50,9 @@ const DropDownMenu = ({
     <div
       className={twMerge(
         `border-solid border-[#ACB7BC] relative font-satoshi ${
-          radius ? "rounded-md" : "rounded-none"
+          !radius ? "rounded-md" : "rounded-none"
         }`,
-        `${border ? "border" : "border-0"}`,
+        `${!border ? "border" : "border-0"}`,
         `${width ?? "w-[240px]"}`,
         `${height ?? null}`,
         `${isFocused ? focusedDropDownStyle : null}`,
@@ -90,7 +92,7 @@ const DropDownMenu = ({
             `${textSize ?? null} outline-0 flex-1 font-satoshi ${
               padding ?? "py-4"
             } pl-5 pr-12 text-ellipsis overflow-hidden ${
-              radius ? "rounded-md" : "rounded-none"
+              !radius ? "rounded-md" : "rounded-none"
             } w-[240px] cursor-pointer ${bgColor ?? "bg-white"} `,
             `${
               isFocused
@@ -105,7 +107,7 @@ const DropDownMenu = ({
         <button
           className={twMerge(
             `flex justify-center items-center w-12 ${
-              radius ? "rounded-md" : "rounded-none"
+              !radius ? "rounded-md" : "rounded-none"
             } ${bgColor ?? "bg-white"}`
           )}
         >
@@ -117,21 +119,40 @@ const DropDownMenu = ({
           />
         </button>
       </div>
-      {isFocused && options.length && (
-        <ul
-          className={twMerge(
-            `${optionsBgColor ?? "bg-white"}`,
-            `overflow-y-scroll absolute z-[1] top-[110%] rounded-md w-full shadow-md h-[150px] dropdown-menu`
-          )}
-        >
-          {allowFiltering
-            ? options
-                .filter((option) =>
-                  option?.label
-                    .toLowerCase()
-                    .includes(controlValue.toLowerCase())
-                )
-                .map((option, index) => (
+      <AnimatePresence>
+        {isFocused && options.length && (
+          <motion.ul
+            initial={initialUp}
+            animate={slideDown}
+            exit={initialUp}
+            className={twMerge(
+              `${optionsBgColor ?? "bg-white"}`,
+              `overflow-y-scroll absolute z-[1] top-[110%] rounded-md w-full shadow-md h-[150px] dropdown-menu`
+            )}
+          >
+            {allowFiltering
+              ? options
+                  .filter((option) =>
+                    option?.label
+                      .toLowerCase()
+                      .includes(controlValue.toLowerCase())
+                  )
+                  .map((option, index) => (
+                    <li
+                      className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
+                      key={index}
+                      onClick={() => {
+                        setControlValue(option?.label);
+                        valueSetter(name, {
+                          label: option?.label,
+                          value: option?.value,
+                        });
+                      }}
+                    >
+                      {option?.label}
+                    </li>
+                  ))
+              : options.map((option, index) => (
                   <li
                     className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
                     key={index}
@@ -145,24 +166,10 @@ const DropDownMenu = ({
                   >
                     {option?.label}
                   </li>
-                ))
-            : options.map((option, index) => (
-                <li
-                  className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
-                  key={index}
-                  onClick={() => {
-                    setControlValue(option?.label);
-                    valueSetter(name, {
-                      label: option?.label,
-                      value: option?.value,
-                    });
-                  }}
-                >
-                  {option?.label}
-                </li>
-              ))}
-        </ul>
-      )}
+                ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

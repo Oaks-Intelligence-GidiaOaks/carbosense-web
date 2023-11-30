@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, Tab } from "../../components/Tabs";
 import account from "../../assets/icons/account.svg";
 import org from "../../assets/icons/org.svg";
@@ -20,11 +20,20 @@ import { setUser } from "../../features/user/userSlice";
 import toast from "react-hot-toast";
 import { handleAxiosError } from "../../utils";
 import RequestError from "../../components/errors/RequestError";
+import {
+  ChangePassword,
+  DeleteAccount,
+  EditProfile,
+  OrgProfile,
+} from "../../components/pageComponents/Account/modals";
 
 const Account = () => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("account");
   const { accessToken } = useSelector((state) => state.user);
+  const { editProfile, changePassword, deleteAccount, editOrg } = useSelector(
+    (state) => state.user.accountActions
+  );
 
   const { isPending, isError, data, isSuccess, error, refetch, isRefetching } =
     useQuery({
@@ -60,7 +69,6 @@ const Account = () => {
           exit={fadeOut}
           className="pb-40 md:pb-10"
         >
-          {console.log(data)}
           <div className="md:px-8">
             <img src={AccountFrame} alt="" />
           </div>
@@ -101,6 +109,14 @@ const Account = () => {
               </Tab>
             </Tabs>
           </div>
+
+          {/* Account actions */}
+          <AnimatePresence>
+            {editProfile && <EditProfile />}
+            {changePassword && <ChangePassword />}
+            {deleteAccount && <DeleteAccount />}
+            {editOrg && <OrgProfile />}
+          </AnimatePresence>
         </motion.div>
       )}
       {isError && (
