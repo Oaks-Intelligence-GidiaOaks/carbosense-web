@@ -37,7 +37,7 @@ const AllStaff = () => {
         {!showInviteForm && (
           <button
             onClick={handleInviteClick}
-            className="text-[12px] border border-primary-blue text-primary-blue py-1 px-2 bg-[#E3ECFF]"
+            className="text-[12px] border border-primary-blue text-primary-blue py-1 px-2 mr-2 bg-[#E3ECFF]"
           >
             Invite Staff
           </button>
@@ -49,7 +49,12 @@ const AllStaff = () => {
           {showInviteForm ? (
             <InviteStaff onClose={() => setShowInviteForm(false)} />
           ) : (
-            <AllStaffCard />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+              <AllStaffCard />
+              <AllStaffCard />
+              <AllStaffCard />
+            </div>
           )}
         </AnimatePresence>
       </div>

@@ -15,8 +15,8 @@ const ActivityLog = () => {
       <div className="md:px-8">
         <img src={activityFrame} alt="" />
       </div>
-      <div className='mt-4 px-2 md:px-8'>
-        <div className="flex items-center gap-1">
+      <div className='mt-4  md:px-8'>
+        <div className="flex items-center md:gap-1">
           <DatePicker
             showIcon
             selected={startDate}
@@ -25,7 +25,6 @@ const ActivityLog = () => {
             icon={
               <CiCalendar />
             }
-
           />
           <div>
             <IoIosArrowRoundForward />
