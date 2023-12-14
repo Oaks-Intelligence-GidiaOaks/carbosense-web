@@ -3,6 +3,7 @@ import { AllStaffCard } from "../../../components";
 import InviteStaff from "./InviteStaff";
 import { HiArrowLeft } from "react-icons/hi2";
 import { AnimatePresence } from "framer-motion";
+import Pagination from "../../../components/ui/Pagination";
 
 const AllStaff = () => {
   const [showInviteForm, setShowInviteForm] = useState(false);
@@ -49,13 +50,17 @@ const AllStaff = () => {
           {showInviteForm ? (
             <InviteStaff onClose={() => setShowInviteForm(false)} />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <AllStaffCard />
               <AllStaffCard />
               <AllStaffCard />
             </div>
           )}
+
+          {!showInviteForm && (<div className="flex items-center justify-between my-5">
+            <Pagination />
+            {/* <div>Loading</div> */}
+          </div>)}
         </AnimatePresence>
       </div>
     </div>

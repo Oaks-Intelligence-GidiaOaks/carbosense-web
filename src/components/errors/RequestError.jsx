@@ -29,33 +29,39 @@ const RequestError = ({ retryCallback, error, isLoading }) => {
       initial={initialUp}
       animate={slideDown}
       exit={slideUp}
-      ref={sessionTimeOutRef}
-      className={`mx-auto mt-[10vh] max-w-md w-full h-fit bg-white rounded-lg pointer-events-auto flex flex-col ring-1 ring-black ring-opacity-5`}
+      className="flex justify-center px-3"
     >
-      <div className="bg-red-100 rounded-t-lg w-full py-10 h-[180px] flex items-center justify-center relative">
-        <img
-          alt="session expired"
-          src={errorGraphic}
-          className="w-[clamp(100px,50%,150px)]"
-        />
-      </div>
-      <div className="pl-3 pt-2">
-        <p className="text-xl font-semibold text-red-600">An Error Occured!🫢</p>
-      </div>
-      <div className="px-3 pt-5">
-        <p>{handleAxiosError(error)}</p>
-      </div>
-      <div className="flex border-l mt-5 mb-3 mx-3 border-gray-200">
-        <Button
-          callback={() => retryCallback()}
-          bgColor={"bg-gray-300"}
-          textColor={"text-gray-800"}
-          hoverColor={"hover:text-white hover:bg-primary-blue"}
-          width={"w-full"}
-          content={"Retry"}
-          isLoading={isLoading}
-          disabled={isLoading}
-        />
+      <div
+        ref={sessionTimeOutRef}
+        className={`mx-auto mt-[10vh] max-w-md w-full h-fit bg-white rounded-lg pointer-events-auto flex flex-col ring-1 ring-black ring-opacity-5`}
+      >
+        <div className="bg-red-100 rounded-t-lg w-full py-10 h-[180px] flex items-center justify-center relative">
+          <img
+            alt="session expired"
+            src={errorGraphic}
+            className="w-[clamp(100px,50%,150px)]"
+          />
+        </div>
+        <div className="pl-3 pt-2">
+          <p className="text-xl font-semibold text-red-600">
+            An Error Occured!🫢
+          </p>
+        </div>
+        <div className="px-3 pt-5">
+          <p>{handleAxiosError(error)}</p>
+        </div>
+        <div className="flex border-l mt-5 mb-3 mx-3 border-gray-200">
+          <Button
+            callback={() => retryCallback()}
+            bgColor={"bg-gray-300"}
+            textColor={"text-gray-800"}
+            hoverColor={"hover:text-white hover:bg-primary-blue"}
+            width={"w-full"}
+            content={"Retry"}
+            isLoading={isLoading}
+            disabled={isLoading}
+          />
+        </div>
       </div>
     </motion.div>
   );

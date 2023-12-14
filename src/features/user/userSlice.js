@@ -16,6 +16,7 @@ const initialState = {
     deleteAccount: false,
     changePassword: false,
     editOrg: false,
+   
   },
 };
 
@@ -55,6 +56,8 @@ export const userSlice = createSlice({
     editOrg: (state, action) => {
       state.accountActions.editOrg = action.payload;
     },
+  
+
     resetAccountActions: (state) => {
       state.accountActions = {
         editProfile: false,
@@ -62,6 +65,7 @@ export const userSlice = createSlice({
         deleteAccount: false,
         changePassword: false,
         editOrg: false,
+        addEmission: false,
       };
     },
   },

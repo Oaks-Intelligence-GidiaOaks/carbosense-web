@@ -83,3 +83,9 @@ export const uploadPicture = async (data) => {
   });
   return await response.data;
 };
+
+
+export const addUserEmission = async (data) => {
+  const response = await axios.post("https://test-carbosense.onrender.com/api/v1/emission", data);
+  return await response.data;
+};

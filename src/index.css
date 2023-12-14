@@ -158,4 +158,8 @@ td[aria-colindex="96"] {
   border-radius: 8px !important; 
 }
 
+.drop-file-input:hover,
+.drop-file-input.dragover {
+  opacity: 0.6;
+}
 

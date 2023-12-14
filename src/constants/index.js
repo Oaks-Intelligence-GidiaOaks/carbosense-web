@@ -49,9 +49,40 @@ export const companySizes = [
 
 export const departments = [
   {
-    label: "department",
-    value: "Department",
+    label: "Department",
+    value: "department",
   },
 ];
+
+export const emissionRegion = [
+  {
+    label: "United Kingdom",
+    value: "GB"
+  },
+]
+
+export const emissionSource = [
+  {
+    label: "Energy",
+    value: "energy"
+  }
+]
+
+
+export const emissionFactor = [
+  {
+    label: "Electricty",
+    value: "electricity"
+  },
+
+]
+
+export const emissionUnit = [
+  {
+    label: "kWh",
+    value: "kWh"
+  },
+ 
+]
 
 export const acceptedOrgFileTypes = ["png", "jpg", "jpeg", "pdf"];

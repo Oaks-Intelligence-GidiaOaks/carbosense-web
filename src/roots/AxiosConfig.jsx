@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { SessionTimeout } from "../components/errors";
 
 const AxiosConfig = ({ children }) => {
-  //   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { accessToken } = useSelector((state) => state.user);
 
@@ -33,7 +32,7 @@ const AxiosConfig = ({ children }) => {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
       if (
-        error.response.status === 401 &&
+        error.response.status === 401 ||
         error.response.statusText === "Unauthorized"
       ) {
         secureLocalStorage.clear();

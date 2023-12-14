@@ -10,7 +10,7 @@ const AllStaffCard = () => {
       initial={initialDown}
       animate={slideUp}
       exit={initialDown}
-      className="bg-white px-3 py-5 md:max-w-[250px]"
+      className="bg-white px-3 py-5"
     >
       <div className="flex items-center gap-2">
         <img src={image} alt="" className="h-10 w-10 rounded-full bg-cover" />

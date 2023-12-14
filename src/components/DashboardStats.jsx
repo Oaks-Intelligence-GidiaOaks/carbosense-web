@@ -3,7 +3,7 @@ import alertcircle from "../assets/icons/alertcircle.svg"
 
 const DashboardStats = () => {
     return (
-        <div className='gap-4 mt-4 w-full grid grid-cols-2 md:grid-cols-4'>
+        <div className='gap-4 mt-4 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <div className='bg-white p-4 h-[132px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center'>
                 <div className='flex items-center gap-2'>
                     <h3 className='font-medium text-primary-black text-2xl'>0</h3>

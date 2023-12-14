@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   TableContainer,
   Table,
@@ -8,28 +8,35 @@ import {
   TableCell,
   Paper,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 const ActivityLogGrid = ({ tableData }) => {
   return (
-    <TableContainer sx={{ maxHeight: '250px' }} component={Paper}>
-      <Table stickyHeader aria-label='simple table'>
+    <TableContainer
+      sx={{ maxHeight: "250px", borderRadius: 0, boxShadow: "none" }}
+      component={Paper}
+    >
+      <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell 
-             sx={{
-                color: '#0E0E0E',
-                fontSize: '14px',
-                fontWeight: 'light',
-              }}
-            >All Activities</TableCell>
             <TableCell
               sx={{
-                color: '#0E0E0E',
-                fontSize: '14px',
-                fontWeight: 'light',
+                color: "#0E0E0E",
+                fontSize: "14px",
+                fontFamily: "Satoshi",
               }}
-            >Time</TableCell>
+            >
+              All Activities
+            </TableCell>
+            <TableCell
+              sx={{
+                color: "#0E0E0E",
+                fontSize: "14px",
+                fontFamily: "Satoshi",
+              }}
+            >
+              Time
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -37,21 +44,24 @@ const ActivityLogGrid = ({ tableData }) => {
             tableData.map((row) => (
               <TableRow
                 key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.first_name}</TableCell>
                 <TableCell>{row.last_name}</TableCell>
-                <TableCell align='center'>{row.email}</TableCell>
+                <TableCell align="center">{row.email}</TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell colSpan={2}>
-                <Typography variant='body1'   sx={{
-                color: '#0E0E0E',
-                fontSize: '12px',
-                fontWeight: 'light',
-              }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#0E0E0E",
+                    fontFamily: "Satoshi",
+                  }}
+                >
                   No logs to display
                 </Typography>
               </TableCell>
@@ -65,7 +75,4 @@ const ActivityLogGrid = ({ tableData }) => {
 
 export default ActivityLogGrid;
 
-
-const tableData = [
-    {}
-]
+const tableData = [{}];
