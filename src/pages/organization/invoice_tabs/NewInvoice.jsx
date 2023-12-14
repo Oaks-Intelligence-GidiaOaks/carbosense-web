@@ -57,7 +57,7 @@ const NewInvoice = props => {
                 <input className='opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer' type="file" value="" onChange={onFileDrop} />
             </div>
 
-            <button className='text-[12px] bg-purple-300 text-white py-1 px-2  mt-4' >View emission report</button>
+            <button className='text-[12px] bg-purple-300 text-white py-1 px-2  my-4' >View emission report</button>
             {
                 fileList.length > 0 ? (
                     <div className="drop-file-preview">
@@ -67,8 +67,8 @@ const NewInvoice = props => {
                                 <div key={index} className="relative flex items-center gap-4 mb-2 bg-white p-2 rounded-2xl">
                                     <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt="" />
                                     <div className="flex flex-col justify-between ">
-                                        <p>{item.name}</p>
-                                        <p>{item.size}B</p>
+                                        <p className='text-sm text-primary-black'>{item.name}</p>
+                                        <p className='text-sm text-primary-black'>{item.size}B</p>
                                     </div>
                                     <span className=" w-10 h-8 rounded-full flex items-center justify-center absolute right-4 top-1/2 transform -translate-y-1/2 shadow-md cursor-pointer  transition-opacity duration-300 ease-in-out" onClick={() => fileRemove(item)}>x</span>
                                 </div>
