@@ -55,34 +55,76 @@ export const departments = [
 ];
 
 export const emissionRegion = [
-  {
-    label: "United Kingdom",
-    value: "GB"
-  },
+  { label: "Sweden", value: "SWE" },
+  { label: "United Kingdom", value: "GB" },
+  { label: "France", value: "FRA" },
+  { label: "Denmark", value: "DK" },
+  { label: "United States", value: "US" },
+  { label: "Canada", value: "CAN" }
 ]
 
 export const emissionSource = [
-  {
-    label: "Energy",
-    value: "energy"
-  }
+  { label: "water", value: "water" },
+  { label: "waste", value: "waste" },
+  { label: "energy", value: "energy" },
+  { label: "transportation", value: "transportation" },
+  { label: "food", value: "food" },
+  { label: "equipment", value: "equipment" },
+  { label: "Accomodation", value: "accomodation" }
 ]
 
 
 export const emissionFactor = [
   {
-    label: "Electricty",
+    label: "Air travel",
+    value: "air_travel"
+  },
+  {
+    label: "Road travel",
+    value: "road_travel"
+  },
+  {
+    label: "Water treatment",
+    value: "water"
+  },
+  {
+    label: "Water supply",
+    value: "water"
+  },
+  {
+    label: "Waste from mixed plastic",
+    value: "waste"
+  },
+  {
+    label: "Electricity from grid",
     value: "electricity"
   },
+  {
+    label: "Office machinery and computers",
+    value: "office_machinery_and_computers"
+  },
+  {
+    label: "Office equipment rental",
+    value: "office_equipment_rental"
+  },
+  {
+    label: "Hotel Stay",
+    value: "hotel_stay"
+  },
+  {
+    label: "Hotel and restaurant services",
+    value: "hotel_and_restaurant_services"
+  }
 
 ]
 
 export const emissionUnit = [
   {
-    label: "kWh",
-    value: "kWh"
+    label: "USD",
+    value: "usd"
   },
  
 ]
 
 export const acceptedOrgFileTypes = ["png", "jpg", "jpeg", "pdf"];
+
