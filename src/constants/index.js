@@ -119,24 +119,24 @@ export const emissionFactorss = {
   water: [
     {
       label: "Water treatment",
-      value: "water_treatment"
+      value: "water"
     },
     {
       label: "Water supply",
-      value: "water_supply"
+      value: "water"
     }
   ],
   waste: [
     {
       label: "Waste from mixed plastic",
-      value: "waste_mixed_plastic"
+      value: "waste"
     },
   
   ],
   energy: [
     {
       label: "Electricity from grid",
-      value: "electricity_grid"
+      value: "electricity"
     },
 
   ],
