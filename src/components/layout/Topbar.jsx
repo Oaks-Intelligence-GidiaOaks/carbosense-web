@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import helpCircleGray from "../../assets/icons/helpCircleGray.svg";
 import notify from "../../assets/icons/notify.svg";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const Topbar = () => {
   const { user } = useSelector((state) => state.user);

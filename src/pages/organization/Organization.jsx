@@ -43,6 +43,7 @@ const Organization = () => {
           </Tab>
         </Tabs>
       </div>
+
     </motion.div>
   );
 };

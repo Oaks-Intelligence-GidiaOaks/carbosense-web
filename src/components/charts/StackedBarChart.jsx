@@ -16,7 +16,6 @@ ChartJS.register(BarElement,
     Legend
 );
 
-
 const StackedBarChart = ({ labels, datasets }) => {
 
     if (!labels || labels.length === 0 || !datasets || datasets.length === 0) {
@@ -28,19 +27,44 @@ const StackedBarChart = ({ labels, datasets }) => {
         datasets,
     };
     const options = {
-        scales: {
-            x: { stacked: true, grid: { display: false }, borderWidth: 2 },
-            y: { stacked: true,  display: false,  gridLines: {
-                display: false, 
-            }, }
-        },
+        
+        // scales: {
+        //     x: { stacked: true, grid: { display: false }, borderWidth: 2,  ticks: {
+        //         fontSize: 14, // Adjust this value to change the x-axis label font size
+        //     }, },
+        //     y: { stacked: true,  display: false,  gridLines: {
+        //         display: false, 
+        //     }, }
+        // },
 
-      
+        scales: {
+            x: {
+                stacked: true,
+                grid: { display: false },
+                borderWidth: 2,
+                ticks: {
+                    fontSize: 20, // Adjust this value to change the x-axis label font size
+                },
+            },
+            y: {
+                stacked: true,
+                display: false,
+                gridLines: {
+                    display: false,
+                },
+                ticks: {
+                    fontSize: 20, // Adjust this value to change the y-axis label font size
+                },
+            },
+        },
+        maintainAspectRatio: false, 
+        responsive: true,
+        defaultFontSize:"20px",
      
     };
 
     return (
-        <div className=''>
+        <div className='h-full w-full'>
             <Bar data={data} options={options} >
             </Bar>
         </div>

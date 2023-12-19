@@ -13,8 +13,13 @@ import {
   invisible,
   slideDown,
 } from "../../constants/framer.js";
+import { ImageConfig } from "../../components/config/ImageConfig.js";
 
 const Invoice = () => {
+
+  const onFileChange = (files) => {
+    console.log(files);
+  }
   return (
     <motion.div
       initial={initialUp}
@@ -35,7 +40,7 @@ const Invoice = () => {
             }}
           >
             <div className="py-4">
-              <NewInvoice />
+              <NewInvoice onFileChange={(files) => onFileChange(files)}/>
             </div>
           </Tab>
           <Tab

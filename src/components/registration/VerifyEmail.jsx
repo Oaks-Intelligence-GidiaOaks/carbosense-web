@@ -25,13 +25,27 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
   const navigate = useNavigate();
   const [timer, setTimer] = useState();
 
-  const { accessToken } = useSelector((state) => state.user);
+  const { accessToken, user } = useSelector((state) => state.user);
+
+
+  const [verificationData, setVerificationData] = useState({
+    email: user.email,
+    otp: "",
+  });
   const [, setTimes] = useState(1);
   const [countDown, setCountDown] = useState(
     secureLocalStorage.getItem("ORT") ?? 10
   );
 
+  // const setFormValue = (name, value) => {
+  //   formSetter((prev) => ({ ...prev, [name]: value }));
+  // };
+
   const setFormValue = (name, value) => {
+    setVerificationData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
     formSetter((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -43,7 +57,7 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
   // submit otp
   const submitOTP = useMutation({
     mutationKey: ["submit_otp"],
-    mutationFn: (data) => verifyOTP(data, accessToken),
+    mutationFn: (data) => verifyOTP(data),
     onSuccess: () => {
       secureLocalStorage.removeItem("ORT");
       setDirection(() => "forward");
@@ -70,7 +84,7 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
     onSuccess: () => {
       // otp successfully sent
       secureLocalStorage.setItem("OSS", true);
-      const cachedTimer = secureLocalStorage.getItem("ORT") ?? 10;
+      const cachedTimer = secureLocalStorage.getItem("ORT") ?? 30;
       setCountDown(cachedTimer <= 0 ? 10 : cachedTimer);
       let timer = setInterval(() => {
         // OTP Resend Timer
@@ -141,7 +155,7 @@ const VerifyEmail = ({ direction, setDirection, form, formSetter }) => {
             width="w-[70%]"
             content={submitOTP.isPending ? <Spinner /> : <span>Next</span>}
             callback={() => {
-              submitOTP.mutate({ otp: form.otp });
+              submitOTP.mutate(verificationData);
             }}
           />
           <SizedBox height="h-6" />

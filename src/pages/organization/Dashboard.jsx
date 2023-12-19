@@ -5,6 +5,7 @@ import { DashboardStats } from "../../components";
 import { EmissionsGrid } from "../../components/grid";
 import { motion } from "framer-motion";
 import { initialUp, slideDown } from "../../constants/framer";
+import Pagination from "../../components/ui/Pagination";
 
 const Dashboard = () => {
   return (
@@ -52,6 +53,11 @@ const Dashboard = () => {
           Emissions by Department
         </h3>
         <EmissionsGrid />
+
+        <div className="flex items-center justify-between my-5">
+          <Pagination />
+          {/* <div>Loading</div> */}
+        </div>
       </div>
     </motion.div>
   );
