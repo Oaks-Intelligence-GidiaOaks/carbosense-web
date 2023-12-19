@@ -21,11 +21,11 @@ export const loginUser = async (data) => {
 };
 
 // verify OTP
-export const verifyOTP = async (data, accessToken) => {
+export const verifyOTP = async (data) => {
   const response = await axios.post("user/verify_otp", data, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+     
     },
   });
   return await response.data;
@@ -83,7 +83,6 @@ export const uploadPicture = async (data) => {
   });
   return await response.data;
 };
-
 
 export const addUserEmission = async (data) => {
   const response = await axios.post("https://test-carbosense.onrender.com/api/v1/emission", data);

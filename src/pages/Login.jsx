@@ -47,16 +47,15 @@ const Login = () => {
       saveUser(data);
       dispatch(setUser(data.data));
       dispatch(setAccessToken(data.accessToken));
-      navigate("/admin", { replace: true });
+        navigate("/admin", { replace: true });
     },
     onError: (e) => {
       console.log(e);
       toast.custom(
         (t) => (
           <div
-            className={`${
-              t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+            className={`${t.visible ? "animate-enter" : "animate-leave"
+              } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
           >
             <div className="flex-1 w-0 p-4">
               <div className="flex items-center">
@@ -134,7 +133,7 @@ const Login = () => {
             animate={slideRight}
             exit={exitLeft}
             className="flex pt-20 flex-1 min-[760px]:flex-[0.4] min-h-full items-center justify-center"
-            // className="flex pt-14 flex-[0.4] h-full items-center justify-center"
+          // className="flex pt-14 flex-[0.4] h-full items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center flex-1">
               <h1 className="text-2xl min-[770px]:text-3xl font-semibold text-primary-black">

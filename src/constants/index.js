@@ -64,64 +64,128 @@ export const emissionRegion = [
 ]
 
 export const emissionSource = [
-  { label: "water", value: "water" },
-  { label: "waste", value: "waste" },
-  { label: "energy", value: "energy" },
-  { label: "transportation", value: "transportation" },
-  { label: "food", value: "food" },
-  { label: "equipment", value: "equipment" },
+  { label: "Water", value: "water" },
+  { label: "Waste", value: "waste" },
+  { label: "Energy", value: "energy" },
+  { label: "Transportation", value: "transportation" },
+  { label: "Food", value: "food" },
+  { label: "Equipment", value: "equipment" },
   { label: "Accomodation", value: "accomodation" }
 ]
 
 
-export const emissionFactor = [
-  {
-    label: "Air travel",
-    value: "air_travel"
-  },
-  {
-    label: "Road travel",
-    value: "road_travel"
-  },
-  {
-    label: "Water treatment",
-    value: "water"
-  },
-  {
-    label: "Water supply",
-    value: "water"
-  },
-  {
-    label: "Waste from mixed plastic",
-    value: "waste"
-  },
-  {
-    label: "Electricity from grid",
-    value: "electricity"
-  },
-  {
-    label: "Office machinery and computers",
-    value: "office_machinery_and_computers"
-  },
-  {
-    label: "Office equipment rental",
-    value: "office_equipment_rental"
-  },
-  {
-    label: "Hotel Stay",
-    value: "hotel_stay"
-  },
-  {
-    label: "Hotel and restaurant services",
-    value: "hotel_and_restaurant_services"
-  }
+// export const emissionFactor = [
+//   {
+//     label: "Air travel",
+//     value: "air_travel"
+//   },
+//   {
+//     label: "Road travel",
+//     value: "road_travel"
+//   },
+//   {
+//     label: "Water treatment",
+//     value: "water"
+//   },
+ 
+//   {
+//     label: "Waste from mixed plastic",
+//     value: "waste"
+//   },
+//   {
+//     label: "Electricity from grid",
+//     value: "electricity"
+//   },
+//   {
+//     label: "Office machinery and computers",
+//     value: "office_machinery_and_computers"
+//   },
+//   {
+//     label: "Office equipment rental",
+//     value: "office_equipment_rental"
+//   },
+//   {
+//     label: "Hotel Stay",
+//     value: "hotel_stay"
+//   },
+//   {
+//     label: "Hotel and restaurant services",
+//     value: "hotel_and_restaurant_services"
+//   }
 
-]
+// ]
+
+export const emissionFactorss = {
+  water: [
+    {
+      label: "Water treatment",
+      value: "water_treatment"
+    },
+    {
+      label: "Water supply",
+      value: "water_supply"
+    }
+  ],
+  waste: [
+    {
+      label: "Waste from mixed plastic",
+      value: "waste_mixed_plastic"
+    },
+  
+  ],
+  energy: [
+    {
+      label: "Electricity from grid",
+      value: "electricity_grid"
+    },
+
+  ],
+  transportation: [
+    {
+      label: "Air travel",
+      value: "air_travel"
+    },
+    {
+      label: "Road travel",
+      value: "road_travel"
+    }
+
+  ],
+  equipment: [
+    {
+      label: "Office machinery and computers",
+      value: "office_machinery_and_computers"
+    },
+    {
+      label: "Office equipment rental",
+      value: "office_equipment_rental"
+    }
+   
+  ],
+  accomodation: [
+    {
+      label: "Hotel Stay",
+      value: "hotel_stay"
+    },
+    {
+      label: "Hotel and restaurant services",
+      value: "hotel_and_restaurant_services"
+    }
+
+  ]
+};
+
+
+
 
 export const emissionUnit = [
   {
     label: "USD",
     value: "usd"
+  },
+  {
+    label: "kWh",
+    value: "kWh"
   },
  
 ]

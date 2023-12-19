@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion } from "framer-motion";
 import {
     fadeIn,
@@ -10,19 +10,19 @@ import {
 } from '../../../../constants/framer';
 import { useDispatch } from 'react-redux';
 import { X } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addUserEmission } from '../../../../services';
 import toast from 'react-hot-toast';
 import { handleAxiosError } from '../../../../utils';
 import { Button, DropDownMenu, SizedBox, TextInput } from '../../../ui';
-import { emissionRegion, emissionFactor, emissionUnit, emissionSource } from '../../../../constants';
+import { emissionRegion, emissionFactorss, emissionUnit, emissionSource } from '../../../../constants';
 import { addEmission } from '../../../../features/emissions/emissionSlice';
-
-
 
 const AddEmission = () => {
     const dispatch = useDispatch();
     const addEmissionRef = useRef();
+    const queryClient = useQueryClient();
+    const [emissionFactors, setEmissionFactors] = useState({});
 
     const [values, setValues] = useState({
         source: {
@@ -43,14 +43,27 @@ const AddEmission = () => {
         },
         emissionValue: ""
     })
-
     const handleChange = (name, value) => {
-        setValues(prevValues => {
+    
+        setValues((prevValues) => {
             const updatedValues = { ...prevValues, [name]: value };
             return updatedValues;
         });
-    }
-
+    
+        if (name === 'source' && value && value.value) {
+            const selectedSource = value.value;
+ 
+            const factors = emissionFactorss[selectedSource] || [];
+    
+            setEmissionFactors((prevFactors) => {
+                const updatedFactors = { ...prevFactors, [selectedSource]: factors };
+                console.log("Updated Emission Factors:", updatedFactors);
+                return updatedFactors;
+            });
+        }
+    };
+    
+    
     const addUserEmissionMutation = useMutation({
         mutationKey: ["add_user_emission"],
         mutationFn: (data) => addUserEmission(data),
@@ -65,6 +78,7 @@ const AddEmission = () => {
                 emissionFactor: { label: "", value: "" },
                 emissionValue: ""
             });
+            queryClient.invalidateQueries(["fetch_emission_data"]);
             dispatch(addEmission(false))
         },
         onError: (e) => toast.error(handleAxiosError(e))
@@ -135,13 +149,21 @@ const AddEmission = () => {
                         options={emissionRegion}
                     />
                     <SizedBox height={"h-6"} />
+                    {/* <DropDownMenu
+                        label="Emission Factor"
+                        name="emissionFactor"
+                        width={"w-[clamp(200px,100%,640px)]"}
+                        value={values.emissionFactor}
+                        valueSetter={handleChange}
+                        options={emissionFactorss}
+                    /> */}
                     <DropDownMenu
                         label="Emission Factor"
                         name="emissionFactor"
                         width={"w-[clamp(200px,100%,640px)]"}
                         value={values.emissionFactor}
                         valueSetter={handleChange}
-                        options={emissionFactor}
+                        options={emissionFactors[values.source?.value] || []}
                     />
                     <SizedBox height={"h-6"} />
                     <DropDownMenu
@@ -162,7 +184,7 @@ const AddEmission = () => {
                         className={isEmissionValueValid() ? '' : 'text-red-500'}
                     />
                     {!isEmissionValueValid() && (
-                       <p className="text-red-500 text-sm">Please enter a valid numeric value for the Emission Value field.</p>
+                        <p className="text-red-500 text-sm">Please enter a valid numeric value for the Emission Value field.</p>
                     )}
                     <SizedBox height={"h-6"} />
                     <Button
@@ -191,3 +213,8 @@ const AddEmission = () => {
 }
 
 export default AddEmission
+
+
+
+
+
