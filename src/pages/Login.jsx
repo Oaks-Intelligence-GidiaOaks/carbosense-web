@@ -45,9 +45,10 @@ const Login = () => {
     onSuccess: (data) => {
       toast.dismiss();
       saveUser(data);
+      console.log(data)
       dispatch(setUser(data.data));
       dispatch(setAccessToken(data.accessToken));
-        navigate("/admin", { replace: true });
+      navigate("/admin", { replace: true });
     },
     onError: (e) => {
       console.log(e);

@@ -62,6 +62,10 @@ export const inviteStaff = async (data) => {
   const response = await axios.post("user/invite_staff", data);
   return await response.data;
 };
+export const createDepartment = async (data) => {
+  const response = await axios.post("department", data);
+  return await response.data;
+};
 
 export const editProfileDetails = async (data) => {
   const response = await axios.put("user/update_user", data);
@@ -85,6 +89,6 @@ export const uploadPicture = async (data) => {
 };
 
 export const addUserEmission = async (data) => {
-  const response = await axios.post("https://test-carbosense.onrender.com/api/v1/emission", data);
+  const response = await axios.post("emission", data);
   return await response.data;
 };

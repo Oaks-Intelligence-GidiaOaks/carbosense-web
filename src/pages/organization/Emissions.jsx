@@ -20,11 +20,14 @@ import { AccountPageShimmer } from "../../primitives/shimmers";
 
 const Emissions = () => {
   const dispatch = useDispatch()
+  const {user} = useSelector((state) => state.user);
+
+  console.log(user, "USER");
   const { showEmissionModal } = useSelector(state => state.emission);
   const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
 
-  const {data, isPending, isSuccess, isError } = useQuery({
+  const { data, isPending, isSuccess,  } = useQuery({
     queryKey: ["user_emission"],
     queryFn: () => axios.get("emission").then((res) => res.data),
     onSuccess: () => setLoading(false),
@@ -35,9 +38,19 @@ const Emissions = () => {
     queryKey: ["yearly_user_emission_data"],
     queryFn: () => axios.get("emission/yearly").then((res) => res.data)
   })
+  
+  // const get_all_department_staff = useQuery({
+  //   queryKey: ["get_all_department_staff"],
+  //   queryFn: () => axios.get(`department/${user._id}`).then((res) => res.data)
+  // })
+
 
  
-
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
 
   return (
     <AnimatePresence mode="wait">
@@ -215,7 +228,7 @@ const Emissions = () => {
                 <div >
                   {data?.source.length &&
                     data.source.slice(0, 3).map((sourceData, i) => {
-                      console.log(sourceData, ": Source Data");
+
                       const totalEmissionValue = sourceData.co2e_total;
                       const percentage = (totalEmissionValue / data.co2e_total) * 100;
 
@@ -226,7 +239,7 @@ const Emissions = () => {
                               {sourceData._id}
                             </h3>
                             <span className="text-sm text-primary-black">
-                              {percentage.toFixed(2)}% of total emissions | Scope 3
+                              {percentage.toFixed(2)}% of total emissions | Scope 2
                             </span>
                           </div>
                           <div className="flex items-center">
@@ -239,6 +252,8 @@ const Emissions = () => {
                       );
                     })}
                 </div>
+
+                
               </div>
             </div>
 
