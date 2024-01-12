@@ -9,17 +9,15 @@ import { AccountPageShimmer } from "../../../primitives/shimmers";
 import { getOrganizationPendingStaff } from "../../../services";
 import { useQuery } from "@tanstack/react-query";
 
-const tabs = ["Pending Invites", "Invited Org Member"];
+const tabs = [ "Invited Org Member",  "Pending Invites"];
 
 const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
-
   const { user } = useSelector((state) => state.user);
 
   const getAllPendingStaff = useQuery({
     queryKey: ["staff"],
     queryFn: () => getOrganizationPendingStaff(),
   });
-
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
@@ -74,66 +72,63 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
           {showInviteForm ? (
             <InviteStaff onClose={() => setShowInviteForm(false)} />
           ) : (
-         
             <div className="overflow-x-scroll scrollbar-hidden">
-            <div className="flex w-full">
-              {tabs.map((tab, i) => (
-                <p
-                  onClick={() => setActiveTab(tab)}
-                  key={i}
-                  className={`${
-                    activeTab === tab
-                      ? " bg-primary-blue hover:opacity-50 text-white"
-                      : "bg-[#E3ECFF] text-primary-black border-primary-blue border "
-                  } flex justify-center items-center border border-solid  text-main poppins-4 px-5 py-2 mr-4 rounded cursor-pointer transit min-w-[200px] whitespace-nowrap`}
-                >
-                  <span className=" text-sm">{tab}</span>
-                </p>
-              ))}
-            </div>
+              <div className="flex w-full">
+                {tabs.map((tab, i) => (
+                  <p
+                    onClick={() => setActiveTab(tab)}
+                    key={i}
+                    className={`${
+                      activeTab === tab
+                        ? " bg-primary-blue hover:opacity-50 text-white"
+                        : "bg-[#E3ECFF] text-primary-black border-primary-blue border "
+                    } flex justify-center items-center border border-solid  text-main poppins-4 px-5 py-2 mr-4 rounded cursor-pointer transit min-w-[200px] whitespace-nowrap`}
+                  >
+                    <span className=" text-sm">{tab}</span>
+                  </p>
+                ))}
+              </div>
             </div>
           )}
-            <div className="mt-4">
-            {activeTab === "Pending Invites" && (
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-               {isSuccess &&
-                 Boolean(staffInfo?.length) &&
-                 staffInfo.map((staffMember) => (
-                   <AllStaffCard
-                     key={staffMember._id}
-                     staffMember={staffMember}
-                   />
-                 ))}
-             </div>
-            )}
-
-            {activeTab === "Invited Org Member" && (
+          <div className="mt-4">
+            {staffInfo ? (
               <>
-                <div> Invited Org Member tab</div>
+                {!showInviteForm && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {activeTab === "Pending Invites" &&
+                      getAllPendingStaff?.data?.data.map((staffMember) => (
+                        <AllStaffCard
+                          key={staffMember._id}
+                          staffMember={staffMember}
+                        />
+                      ))}
+                    {activeTab !== "Pending Invites" &&
+                      isSuccess &&
+                      Boolean(staffInfo?.length) &&
+                      staffInfo.map((staffMember) => (
+                        <AllStaffCard
+                          key={staffMember._id}
+                          staffMember={staffMember}
+                        />
+                      ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {activeTab === "Pending Invites" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {getAllPendingStaff?.data?.data.map((staffMember) => (
+                      <AllStaffCard
+                        key={staffMember._id}
+                        staffMember={staffMember}
+                      />
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>
-
-          {/* <div className="mt-4">
-            {activeTab === "Pending Invites" && (
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-               {isSuccess &&
-                 Boolean(staffInfo?.length) &&
-                 staffInfo.map((staffMember) => (
-                   <AllStaffCard
-                     key={staffMember._id}
-                     staffMember={staffMember}
-                   />
-                 ))}
-             </div>
-            )}
-
-            {activeTab === "Invited Org Member" && (
-              <>
-                <div> Invited Org Member tab</div>
-              </>
-            )}
-          </div> */}
           {!showInviteForm && (
             <div className="flex items-center justify-between my-5">
               <Pagination />
