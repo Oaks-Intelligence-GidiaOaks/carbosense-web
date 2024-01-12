@@ -163,7 +163,7 @@ const Emissions = () => {
                 />
               </div>
 
-              {yearlyEmissionData?.source?.length > 0 && (
+              {yearlyEmissionData?.data?.source?.length > 0 && (
                 <button
                   onClick={() => {
                     dispatch(addEmission(true));
