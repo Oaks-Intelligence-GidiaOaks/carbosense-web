@@ -6,13 +6,20 @@ import { AnimatePresence } from "framer-motion";
 import Pagination from "../../../components/ui/Pagination";
 import { useSelector } from "react-redux";
 import { AccountPageShimmer } from "../../../primitives/shimmers";
+import { getOrganizationPendingStaff } from "../../../services";
+import { useQuery } from "@tanstack/react-query";
 
 const tabs = ["Pending Invites", "Invited Org Member"];
 
 const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
+
   const { user } = useSelector((state) => state.user);
 
-  console.log(staffInfo?._id, "Staff Info");
+  const getAllPendingStaff = useQuery({
+    queryKey: ["staff"],
+    queryFn: () => getOrganizationPendingStaff(),
+  });
+
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
@@ -86,12 +93,11 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
             </div>
             </div>
           )}
-
-          <div className="mt-4">
+            <div className="mt-4">
             {activeTab === "Pending Invites" && (
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                {isSuccess &&
-                 Boolean(staffInfo.length) &&
+                 Boolean(staffInfo?.length) &&
                  staffInfo.map((staffMember) => (
                    <AllStaffCard
                      key={staffMember._id}
@@ -107,6 +113,27 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
               </>
             )}
           </div>
+
+          {/* <div className="mt-4">
+            {activeTab === "Pending Invites" && (
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+               {isSuccess &&
+                 Boolean(staffInfo?.length) &&
+                 staffInfo.map((staffMember) => (
+                   <AllStaffCard
+                     key={staffMember._id}
+                     staffMember={staffMember}
+                   />
+                 ))}
+             </div>
+            )}
+
+            {activeTab === "Invited Org Member" && (
+              <>
+                <div> Invited Org Member tab</div>
+              </>
+            )}
+          </div> */}
           {!showInviteForm && (
             <div className="flex items-center justify-between my-5">
               <Pagination />

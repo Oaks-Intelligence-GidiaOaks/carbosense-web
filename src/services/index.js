@@ -56,6 +56,11 @@ export const fetchAccountInfo = async (accessToken) => {
   return await response.data;
 };
 
+export const getAllOrganizationStaff = async () => {
+  const response = await axios.get(`organisation`);
+  return await response.data;
+}
+
 export const getOrganizationPendingStaff = async () => {
   const response = await axios.get(`organisation/pending`);
   return await response.data;

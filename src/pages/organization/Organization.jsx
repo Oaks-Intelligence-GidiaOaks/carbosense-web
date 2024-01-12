@@ -11,9 +11,10 @@ import {
   getAllDepartmentStaff,
   getOrganizationPendingStaff,
   getAllDepartment,
+  getAllOrganizationStaff,
 } from "../../services";
 import { useSelector } from "react-redux";
-import EmissionReport from "../../components/pageComponents/Emission/EmissionReport";
+// import EmissionReport from "../../components/pageComponents/Emission/EmissionReport";
 
 const Organization = () => {
   const { user } = useSelector((state) => state.user);
@@ -23,14 +24,20 @@ const Organization = () => {
 
   const department_id = departmentData?.data?._id ?? null;
 
+
   const { isLoading, isError, data, isPending, isSuccess } = useQuery({
     queryKey: ["staff"],
     queryFn: () => getOrganizationPendingStaff(),
   });
 
-  const get_All_Department = useQuery({
+  // const get_All_Department = useQuery({
+  //   queryKey: ["department_staff"],
+  //   queryFn: () => getAllDepartment(),
+  // });
+
+  const get_All_Organization_staff = useQuery({
     queryKey: ["department_staff"],
-    queryFn: () => getAllDepartment(),
+    queryFn: () => getAllOrganizationStaff(),
   });
 
   const get_All_Department_staff = useQuery({
@@ -38,7 +45,7 @@ const Organization = () => {
     queryFn: () => getAllDepartmentStaff(department_id),
   });
 
-  const staffInfo = isLoading || isError ? undefined : data.data;
+  const staffInfo = isLoading || isError ? undefined : get_All_Organization_staff?.data;
 
   return (
     <motion.div
@@ -61,7 +68,7 @@ const Organization = () => {
           >
             <div className="py-4">
               <AllStaff
-                staffInfo={staffInfo ?? staffInfo}
+                staffInfo={staffInfo?.data ?? staffInfo?.data}
                 isLoading={isLoading}
                 isPending={isPending}
                 isSuccess={isSuccess}
