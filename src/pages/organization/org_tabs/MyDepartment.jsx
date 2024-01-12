@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
 import Pagination from "../../../components/ui/Pagination";
 import { AnimatePresence } from "framer-motion";
-import InviteStaff from './InviteStaff';
-import CreateDepartment from './CreateDepartment';
+import InviteStaff from "./InviteStaff";
+import CreateDepartment from "./CreateDepartment";
+import { useSelector } from "react-redux";
+import { getAllDepartmentStaff } from "../../../services";
+import { useQuery } from "@tanstack/react-query";
 
 const MyDepartment = () => {
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
-
 
   const handleInviteClick = () => {
     setShowInviteForm(true);
@@ -21,10 +23,9 @@ const MyDepartment = () => {
     setShowBackButton(false);
   };
 
-  
   return (
     <div>
-    <div className="flex item justify-between">
+      <div className="flex item justify-between">
         {showBackButton ? (
           <div
             className="flex items-center gap-4 hover:cursor-pointer"
@@ -41,9 +42,9 @@ const MyDepartment = () => {
         {!showInviteForm && (
           <button
             onClick={handleInviteClick}
-            className="text-[12px] border border-primary-blue text-primary-blue py-[6px] px-2  bg-[#E3ECFF]"
+            className="text-[12px] border rounded border-primary-blue text-primary-blue py-[6px] px-2  bg-[#E3ECFF]"
           >
-           Create Department
+            Create Department
           </button>
         )}
       </div>
@@ -59,16 +60,17 @@ const MyDepartment = () => {
             </div>
           )}
 
-          {!showInviteForm && (<div className="flex items-center justify-between my-5">
-            <Pagination />
-            {/* <div>Loading</div> */}
-          </div>)}
+          {!showInviteForm && (
+            <div className="flex items-center justify-between my-5">
+              <Pagination />
+              {/* <div>Loading</div> */}
+            </div>
+          )}
         </AnimatePresence>
       </div>
-
-      
     </div>
-  )
-}
+  );
+};
 
-export default MyDepartment
+export default MyDepartment;
+

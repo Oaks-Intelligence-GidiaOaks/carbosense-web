@@ -14,6 +14,7 @@ import {
   ActivityLog,
 } from "../pages/organization";
 import RootContainer from "../components/containers/RootContainer";
+import EmissionReport from "../components/pageComponents/Emission/EmissionReport";
 
 // export const router = createBrowserRouter([
 //   // login
@@ -92,6 +93,7 @@ export const router = createBrowserRouter(
         <Route path="account" element={<Account />} />
         <Route path="organization" element={<OrganizationPage />} />
         <Route path="activity" element={<ActivityLog />} />
+        <Route path="report" element={<EmissionReport />} />
         {/* ... etc. */}
       </Route>
     </>
@@ -149,6 +151,10 @@ createBrowserRouter([
       {
         path: "activity",
         element: <ActivityLog />,
+      },
+      {
+        path: "report",
+        element: <EmissionReport />,
       },
     ],
   },

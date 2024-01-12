@@ -74,47 +74,6 @@ export const emissionSource = [
 ]
 
 
-// export const emissionFactor = [
-//   {
-//     label: "Air travel",
-//     value: "air_travel"
-//   },
-//   {
-//     label: "Road travel",
-//     value: "road_travel"
-//   },
-//   {
-//     label: "Water treatment",
-//     value: "water"
-//   },
- 
-//   {
-//     label: "Waste from mixed plastic",
-//     value: "waste"
-//   },
-//   {
-//     label: "Electricity from grid",
-//     value: "electricity"
-//   },
-//   {
-//     label: "Office machinery and computers",
-//     value: "office_machinery_and_computers"
-//   },
-//   {
-//     label: "Office equipment rental",
-//     value: "office_equipment_rental"
-//   },
-//   {
-//     label: "Hotel Stay",
-//     value: "hotel_stay"
-//   },
-//   {
-//     label: "Hotel and restaurant services",
-//     value: "hotel_and_restaurant_services"
-//   }
-
-// ]
-
 export const emissionFactorss = {
   water: [
     {

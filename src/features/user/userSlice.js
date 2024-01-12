@@ -10,13 +10,14 @@ const initialState = {
   accessToken: accessToken,
   refreshToken: refreshToken,
   sessionTimedOut: false,
+  setshowGreetingModal: false,
+  setshowWelcomeBack: false,
   accountActions: {
     editProfile: false,
     changeProfilePic: false,
     deleteAccount: false,
     changePassword: false,
     editOrg: false,
-   
   },
 };
 
@@ -56,7 +57,18 @@ export const userSlice = createSlice({
     editOrg: (state, action) => {
       state.accountActions.editOrg = action.payload;
     },
-  
+    showGreetingModal: (state, action) => {
+      return {
+        ...state,
+        setshowGreetingModal: action.payload
+      }
+    },
+    showWelcomeModal: (state, action) => {
+      return {
+        ...state,
+        setshowWelcomeBack: action.payload
+      }
+    },
 
     resetAccountActions: (state) => {
       state.accountActions = {
@@ -83,6 +95,8 @@ export const {
   deleteAccount,
   editOrg,
   resetAccountActions,
+  showGreetingModal,
+  showWelcomeModal
 } = userSlice.actions;
 
 export default userSlice.reducer;

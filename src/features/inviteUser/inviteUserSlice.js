@@ -1,36 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  showInviteUserScreen: false,
+  invitedStaffEmail: "",
+  invitedStaff: [],
+};
 
-    showInviteUserScreen: false,
-    invitedStaffEmail: "",
-  };
+export const inviteUserSlice = createSlice({
+  name: "inviteUser",
+  initialState,
+  reducers: {
+    addIviteUser: (state, action) => {
+      return {
+        ...state,
+        showInviteUserScreen: action.payload,
+      };
+    },
 
-  export const inviteUserSlice = createSlice({
-    name: "inviteUser",
-    initialState,
-    reducers: {
-        addIviteUser: (state, action) => {
-            return {
-              ...state,
-              showInviteUserScreen: action.payload,
-            };
-          },
-          
-          setInvitedStaffEmail: (state, action) => {
-            return {
-              ...state,
-              invitedStaffEmail: action.payload,
-            };
-          },
-          
-    }
-  })
+    setInvitedStaffEmail: (state, action) => {
+      return {
+        ...state,
+        invitedStaffEmail: action.payload,
+      };
+    },
 
-  export const {
-    addIviteUser,
-    setInvitedStaffEmail
+    addInvitedStaff: (state, action) => {
+      return {
+        ...state,
+        invitedStaff: [...state.invitedStaff, action.payload],
+      };
+    },
+  },
+});
 
-  } = inviteUserSlice.actions;
+export const { addIviteUser, setInvitedStaffEmail, addInvitedStaff  } = inviteUserSlice.actions;
 
-  export default inviteUserSlice.reducer;
+export default inviteUserSlice.reducer;

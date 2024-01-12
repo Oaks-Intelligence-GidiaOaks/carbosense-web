@@ -2,19 +2,22 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, TextInput } from "../../../components/ui";
 import validator from "validator";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { inviteStaff } from "../../../services";
 import toast from "react-hot-toast";
 import { handleAxiosError } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { initialRight, slideLeft } from "../../../constants/framer";
-import { addIviteUser, setInvitedStaffEmail } from "../../../features/inviteUser/inviteUserSlice";
-
-
+import {
+  addInvitedStaff,
+  addIviteUser,
+  setInvitedStaffEmail,
+} from "../../../features/inviteUser/inviteUserSlice";
 
 const InviteStaff = ({ onClose }) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [values, setValues] = useState({
     email: "",
     fullName: "",
@@ -30,19 +33,17 @@ const InviteStaff = ({ onClose }) => {
   const inviteStaffMutation = useMutation({
     mutationKey: ["invite_staff"],
     mutationFn: (data) => inviteStaff(data),
-    onSuccess: () => {
-      // toast.success(`Invite successfully sent to ${values.fullName}`, {
-      //   duration: 5000,
-      // });
+    onSuccess: (data) => {
       dispatch(addIviteUser({ showInviteUserScreen: true }));
       dispatch(setInvitedStaffEmail(values.email));
+      dispatch(addInvitedStaff(data));
       setValues({
         email: "",
         fullName: "",
       });
+      queryClient.invalidateQueries(["staff"]);
     },
     onError: (e) => toast.error(handleAxiosError(e)),
-    
   });
   return (
     <>
@@ -104,11 +105,7 @@ const InviteStaff = ({ onClose }) => {
             callback={() => inviteStaffMutation.mutate(values)}
           />
         </div>
-
-
       </motion.div>
-
-
     </>
   );
 };

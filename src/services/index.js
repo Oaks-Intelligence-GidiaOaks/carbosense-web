@@ -25,7 +25,6 @@ export const verifyOTP = async (data) => {
   const response = await axios.post("user/verify_otp", data, {
     headers: {
       "Content-Type": "application/json",
-     
     },
   });
   return await response.data;
@@ -57,6 +56,21 @@ export const fetchAccountInfo = async (accessToken) => {
   return await response.data;
 };
 
+export const getOrganizationPendingStaff = async () => {
+  const response = await axios.get(`organisation/pending`);
+  return await response.data;
+};
+
+export const getAllDepartment = async () => {
+  const response = await axios.get(`department`);
+  return await response.data;
+}
+
+export const getAllDepartmentStaff = async (id) => {
+  const response = await axios.get(`department/${id}`);
+  return await response.data;
+};
+
 //invite user
 export const inviteStaff = async (data) => {
   const response = await axios.post("user/invite_staff", data);
@@ -79,12 +93,27 @@ export const changePasswordValue = async (data) => {
   const response = await axios.put("user/change_password", data);
   return await response.data;
 };
+
+export const resetPassword = async (data) => {
+  const response = await axios.put("user/reset_password", data);
+  return await response.data;
+};
 export const uploadPicture = async (data) => {
   const response = await axios.put("user/upload_profile_picture", data, {
     headers: {
       "Content-Type": "Multipart/form-data",
     },
   });
+  return await response.data;
+};
+
+export const uploadInvoiceDocument = async (data) => {
+  const response = await axios.post("emission/verify_invoice", data, {
+    headers: {
+      "Content-Type": "Multipart/form-data",
+    },
+  });
+
   return await response.data;
 };
 
