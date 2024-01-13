@@ -9,9 +9,19 @@ import Pagination from "../../components/ui/Pagination";
 import { useSelector } from "react-redux";
 import UserGreeting from "../../components/pageComponents/Account/modals/UserGreeting";
 import UserWelcomeBack from "../../components/pageComponents/Account/modals/UserWelcomeBack";
+import { useQuery } from "@tanstack/react-query";
+import { getAllDepartmentsEmission } from "../../services";
 
 const Dashboard = () => {
-  const { setshowGreetingModal, setshowWelcomeBack } = useSelector((state) => state.user);
+  const { setshowGreetingModal, setshowWelcomeBack } = useSelector(
+    (state) => state.user
+  );
+
+  const deptEmissiionsData = useQuery({
+    queryKey: ["getAllDepartmentsEmission"],
+    queryFn: () => getAllDepartmentsEmission(),
+  });
+
   return (
     <>
       <motion.div
@@ -39,29 +49,20 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="md:px-8 mt-3">
-          <img src={DashboardFrame} alt="" />
+          <img src={DashboardFrame} alt="" className="w-full" />
         </div>
         <div className="px-2 md:px-8">
           <DashboardStats />
-
-          {/* <div className='border mt-4 bg-white border-[#D8DDE8] h-[270px] w-full '>
-          <div className='flex h-full flex-col items-center justify-center'>
-            <h3 className='text-ca-main'>Nothing to Show</h3>
-            <span className=' text-ca-dark-gray mt-2 text-sm'>Upload a new invoice to get started </span>
-            <button className='text-sm mt-4 shadow-md py-2 px-6 rounded-sm transition duration-300 font-light bg-primary-blue border border-ca-blue-dark text-[#FFFFFF]'>Upload your first invoice</button>
-          </div>
-        </div> */}
         </div>
 
         <div className="px-2 md:px-8 mt-4">
           <h3 className="text-primary-black font-medium text-lg mt-2 mb-4">
             Emissions by Department
           </h3>
-          <EmissionsGrid />
+          <EmissionsGrid tableData={deptEmissiionsData?.data} />
 
           <div className="flex items-center justify-between my-5">
             <Pagination />
-            {/* <div>Loading</div> */}
           </div>
         </div>
       </motion.div>

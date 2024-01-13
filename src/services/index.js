@@ -59,7 +59,7 @@ export const fetchAccountInfo = async (accessToken) => {
 export const getAllOrganizationStaff = async () => {
   const response = await axios.get(`organisation`);
   return await response.data;
-}
+};
 
 export const getOrganizationPendingStaff = async () => {
   const response = await axios.get(`organisation/pending`);
@@ -69,7 +69,7 @@ export const getOrganizationPendingStaff = async () => {
 export const getAllDepartment = async () => {
   const response = await axios.get(`department`);
   return await response.data;
-}
+};
 
 export const getAllDepartmentStaff = async (id) => {
   const response = await axios.get(`department/${id}`);
@@ -81,6 +81,7 @@ export const inviteStaff = async (data) => {
   const response = await axios.post("user/invite_staff", data);
   return await response.data;
 };
+
 export const createDepartment = async (data) => {
   const response = await axios.post("department", data);
   return await response.data;
@@ -90,10 +91,12 @@ export const editProfileDetails = async (data) => {
   const response = await axios.put("user/update_user", data);
   return await response.data;
 };
+
 export const editOrgDetails = async (data) => {
   const response = await axios.put("user/update_user", data);
   return await response.data;
 };
+
 export const changePasswordValue = async (data) => {
   const response = await axios.put("user/change_password", data);
   return await response.data;
@@ -103,6 +106,7 @@ export const resetPassword = async (data) => {
   const response = await axios.put("user/reset_password", data);
   return await response.data;
 };
+
 export const uploadPicture = async (data) => {
   const response = await axios.put("user/upload_profile_picture", data, {
     headers: {
@@ -125,4 +129,14 @@ export const uploadInvoiceDocument = async (data) => {
 export const addUserEmission = async (data) => {
   const response = await axios.post("emission", data);
   return await response.data;
+};
+
+export const getUserEmission = async () => {
+  const response = await axios.get("emission");
+  return await response.data;
+};
+
+export const getAllDepartmentsEmission = async () => {
+  const response = await axios.get("emission/all/department");
+  return await response.data.data;
 };

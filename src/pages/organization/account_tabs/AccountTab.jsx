@@ -13,8 +13,8 @@ import {
 } from "../../../features/user/userSlice";
 import PropTypes from "prop-types";
 import { Button, PermissionCard } from "../../../components/ui";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { uploadPicture } from "../../../services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserEmission, uploadPicture } from "../../../services";
 import toast from "react-hot-toast";
 
 const AccountTab = ({ userInfo }) => {
@@ -44,6 +44,50 @@ const AccountTab = ({ userInfo }) => {
     },
     onError: (e) => toast.error(handleAxiosError(e)),
   });
+
+  const emissionsData = useQuery({
+    queryKey: ["getUserEmission"],
+    queryFn: () => getUserEmission(),
+  });
+
+  let scope1;
+  let scope2;
+  let scope3;
+  let total;
+
+  if (emissionsData.isSuccess) {
+    let hasData = emissionsData.data.scope.length > 0;
+    let isScope1 =
+      emissionsData.data.scope.filter((item) => item._id === "scope1").length >
+      0;
+
+    let isScope2 =
+      emissionsData.data.scope.filter((item) => item._id === "scope2").length >
+      0;
+
+    let isScope3 =
+      emissionsData.data.scope.filter((item) => item._id === "scope3").length >
+      0;
+
+    let isTotal = emissionsData.data.co2e_total;
+
+    total = isTotal ? emissionsData.data.co2e_total : 0;
+
+    scope1 = isScope1
+      ? emissionsData.data.scope.filter((item) => item._id === "scope1")?.[0]
+          ?.co2e_total
+      : 0;
+
+    scope2 = isScope2
+      ? emissionsData.data.scope.filter((item) => item._id === "scope2")?.[0]
+          ?.co2e_total
+      : 0;
+
+    scope3 = isScope3
+      ? emissionsData.data.scope.filter((item) => item._id === "scope3")?.[0]
+          ?.co2e_total
+      : 0;
+  }
 
   return (
     <div className="">
@@ -202,7 +246,9 @@ const AccountTab = ({ userInfo }) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {total}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -212,7 +258,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope1}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -222,7 +270,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope2}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -232,7 +282,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope3}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>

@@ -58,21 +58,25 @@ const EmissionsGrid = ({ tableData }) => {
                 fontFamily: "Satoshi !important",
               }}
             >
-              Actions
+              Sources
             </TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {tableData && tableData.length > 0 ? (
             tableData.map((row) => (
               <TableRow
-                key={row.id}
+                key={row._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.first_name}</TableCell>
-                <TableCell>{row.last_name}</TableCell>
-                <TableCell align="center">{row.email}</TableCell>
+                <TableCell>{row.departmentName}</TableCell>
+                <TableCell>{row.percentageContribution}</TableCell>
+                <TableCell>
+                  {`${row.totalEmissions} `}{" "}
+                  <span className="text-[#767676]">tCO2e</span>
+                </TableCell>
+                <TableCell align="center">{row.emissionSources}</TableCell>
               </TableRow>
             ))
           ) : (
@@ -97,5 +101,3 @@ const EmissionsGrid = ({ tableData }) => {
 };
 
 export default EmissionsGrid;
-
-const tableData = [{}];
