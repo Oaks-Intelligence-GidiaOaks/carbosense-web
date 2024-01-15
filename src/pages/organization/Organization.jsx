@@ -14,7 +14,6 @@ import {
   getAllOrganizationStaff,
 } from "../../services";
 import { useSelector } from "react-redux";
-// import EmissionReport from "../../components/pageComponents/Emission/EmissionReport";
 
 const Organization = () => {
   const { user } = useSelector((state) => state.user);
@@ -24,16 +23,10 @@ const Organization = () => {
 
   const department_id = departmentData?.data?._id ?? null;
 
-
   const { isLoading, isError, data, isPending, isSuccess } = useQuery({
     queryKey: ["staff"],
     queryFn: () => getOrganizationPendingStaff(),
   });
-
-  // const get_All_Department = useQuery({
-  //   queryKey: ["department_staff"],
-  //   queryFn: () => getAllDepartment(),
-  // });
 
   const get_All_Organization_staff = useQuery({
     queryKey: ["department_staff"],
@@ -45,7 +38,8 @@ const Organization = () => {
     queryFn: () => getAllDepartmentStaff(department_id),
   });
 
-  const staffInfo = isLoading || isError ? undefined : get_All_Organization_staff?.data;
+  const staffInfo =
+    isLoading || isError ? undefined : get_All_Organization_staff?.data;
 
   return (
     <motion.div

@@ -67,7 +67,7 @@ export const getOrganizationPendingStaff = async () => {
 };
 
 export const getAllDepartment = async () => {
-  const response = await axios.get(`department`);
+  const response = await axios.get("department");
   return await response.data;
 }
 

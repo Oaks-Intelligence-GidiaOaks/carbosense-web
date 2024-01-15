@@ -21,7 +21,7 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
-  const [activeTab, setActiveTab] = useState("Pending Invites");
+  const [activeTab, setActiveTab] = useState("Invited Org Member");
 
   const handleInviteClick = () => {
     setShowInviteForm(true);

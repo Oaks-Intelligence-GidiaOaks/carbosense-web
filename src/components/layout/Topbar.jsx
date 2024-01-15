@@ -20,8 +20,11 @@ const Topbar = () => {
 
   function getCurrentTime() {
     const currentDate = new Date();
+
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();
+
+    console.log(currentHour, "CURRENT HOUR");
 
     // Format the time to HH:MM
     const formattedTime = `${currentHour}:${
@@ -30,6 +33,8 @@ const Topbar = () => {
 
     return formattedTime;
   }
+
+
 
   function getGreeting() {
     const currentHour = new Date().getHours();
