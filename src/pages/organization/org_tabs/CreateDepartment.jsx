@@ -7,7 +7,11 @@ import PropTypes from "prop-types";
 import { handleAxiosError } from "../../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createDepartment, getOrganizationPendingStaff } from "../../../services";
+import {
+  createDepartment,
+  getAllOrganizationStaff,
+  getOrganizationPendingStaff,
+} from "../../../services";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import {
@@ -31,7 +35,7 @@ const CreateDepartment = ({ onClose }) => {
 
   const { data } = useQuery({
     queryKey: ["staff"],
-    queryFn: () => getOrganizationPendingStaff(user._id),
+    queryFn: () => getAllOrganizationStaff(user._id),
   });
 
   // const [departmentData, setDepartmentData] = useState(() => {
@@ -44,7 +48,6 @@ const CreateDepartment = ({ onClose }) => {
 
   const [selectedLabels, setSelectedLabels] = useState([]);
 
-  
   const options = useMemo(() => {
     return (
       data?.data.map((staff) => ({
@@ -54,24 +57,23 @@ const CreateDepartment = ({ onClose }) => {
       })) || []
     );
   }, [data?.data]);
-  
 
   const isAllSelected =
     options.length > 0 && values.staff.length === options.length;
   const handleChange = (name, value) => {
     // Convert a single value to an array
     const selectedValues = Array.isArray(value) ? value : [value];
-  
+
     if (selectedValues.includes("all")) {
       const allStaffIds = options.map((option) => option.value);
       const updatedStaff =
         values.staff.length === allStaffIds.length ? [] : allStaffIds;
-  
+
       setValues({
         ...values,
         [name]: updatedStaff,
       });
-  
+
       setSelectedLabels(
         updatedStaff.map(
           (id) => options.find((opt) => opt.value === id)?.label || ""
@@ -82,7 +84,7 @@ const CreateDepartment = ({ onClose }) => {
         ...values,
         [name]: selectedValues[0], // Assuming `name` is a string
       });
-  
+
       setSelectedLabels(
         selectedValues.map(
           (id) => options.find((opt) => opt.value === id)?.label || ""
@@ -90,7 +92,7 @@ const CreateDepartment = ({ onClose }) => {
       );
     }
   };
-  
+
   const departmentMutation = useMutation({
     mutationKey: ["invite_staff"],
     mutationFn: (data) => createDepartment(data),

@@ -140,3 +140,8 @@ export const getAllDepartmentsEmission = async () => {
   const response = await axios.get("emission/all/department");
   return await response.data.data;
 };
+
+export const getAllDepartments = async () => {
+  const response = await axios.get("department");
+  return await response.data.data;
+};

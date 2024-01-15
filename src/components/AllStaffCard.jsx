@@ -3,28 +3,28 @@ import trenddown from "../assets/icons/trenddown.svg";
 import PropTypes from "prop-types";
 import OrgAdminIcon from "../assets/icons/OrgAdminIcon.svg";
 import { AnimatePresence, motion } from "framer-motion";
-import department from "../assets/icons/department.svg"
+import department from "../assets/icons/department.svg";
 import { initialDown, slideUp } from "../constants/framer";
 import { useSelector } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AllStaffCard = ({ staffMember }) => {
+  console.log(staffMember, "from staff card");
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const navigateToReport = () => {
-  navigate("/admin/report")
-}
+  const navigateToReport = () => {
+    navigate("/admin/report");
+  };
   const {
     fullName,
     email,
     role,
     totalEmissions,
-    trendPercentage,
+    monthlyEmissionsChange,
     isAdmin,
     organizationName,
-    certOfIncorporation
-
+    certOfIncorporation,
   } = staffMember;
   return (
     <motion.div
@@ -53,10 +53,11 @@ const navigateToReport = () => {
         <div className="flex items-center gap-14">
           <div className="flex flex-col gap-1">
             <h2 className="text-sm font-medium">
-              0<span className=" text-primary-gray text-xs">tCO2e</span>
+              {`${totalEmissions || 0} `}
+              <span className=" text-primary-gray text-xs">tCO2e</span>
             </h2>
             <span className="text-[12px] text-primary-gray leading-3">
-              +0% from last month
+              +{monthlyEmissionsChange || 0}% from last month
             </span>
           </div>
           <div>
@@ -67,7 +68,6 @@ const navigateToReport = () => {
 
       <div className="mt-2">
         <div className="py-1 px-2 max-w-[150px] rounded-3xl flex items-center gap-2 bg-[#E3ECFF] border border-[#E3ECFF]">
-
           {staffMember.role === "admin" ? (
             <img src={OrgAdminIcon} alt="" width={12} height={12} />
           ) : (
@@ -81,11 +81,13 @@ const navigateToReport = () => {
       </div>
 
       <div className="mt-3 flex items-center gap-6">
-       
-        <button onClick={navigateToReport} className="text-[11px] rounded hover:opacity-50 whitespace-nowrap border border-primary-blue text-primary-blue py-1 px-2 ">
+        <button
+          onClick={navigateToReport}
+          className="text-[11px] rounded hover:opacity-50 whitespace-nowrap border border-primary-blue text-primary-blue py-1 px-2 "
+        >
           View Emission Report
         </button>
-      
+
         <button className="text-[11px] rounded hover:opacity-50 border border-primary-blue text-primary-blue py-1 px-2">
           Options
         </button>
