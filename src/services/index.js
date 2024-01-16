@@ -139,3 +139,8 @@ export const addUserEmission = async (data) => {
   const response = await axios.post("emission", data);
   return await response.data;
 };
+
+export const getAllDepartments = async () => {
+  const response = await axios.get("department");
+  return await response.data.data;
+};

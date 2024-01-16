@@ -85,7 +85,7 @@ const EmissionsGrid = ({ tableData }) => {
                 fontFamily: "Satoshi !important",
               }}
             >
-              Actions
+              Source
             </TableCell>
           </TableRow>
         </TableHead>
@@ -126,14 +126,12 @@ const EmissionsGrid = ({ tableData }) => {
                   {"tCO2e"}
                 </TableCell>
                 <TableCell
-                  align="center"
-                  sx={{
-                    fontSize: "14px",
-                    fontFamily: "Satoshi !important",
-                    textAlign: "center", 
-                  }}
+                 sx={{
+                  fontSize: "14px",
+                  fontFamily: "Satoshi !important",
+                }}
                 >
-                  <HiOutlineDotsHorizontal className="ml-3" size={24} />
+                  {row.emission_sources}
                 </TableCell>
               </TableRow>
             ))
@@ -160,4 +158,4 @@ const EmissionsGrid = ({ tableData }) => {
 
 export default EmissionsGrid;
 
-const tableData = [{}];
+

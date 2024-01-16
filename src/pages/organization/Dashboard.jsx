@@ -37,6 +37,7 @@ const Dashboard = () => {
     staff_count: item.staffCount,
     percentage_contribution: item.percentageContribution,
     total_emission: item.totalEmissions,
+    emission_sources: item.emissionSources
   }));
 
   return (
