@@ -10,10 +10,11 @@ import { useNavigate} from "react-router-dom";
 
 const AllStaffCard = ({ staffMember }) => {
 
+console.log(staffMember, "STAFF MEMBER");
 const navigate = useNavigate();
 
 const navigateToReport = () => {
-  navigate("/admin/report")
+  navigate(`/admin/report/${staffMember._id}`)
 }
   const {
     fullName,
@@ -23,7 +24,8 @@ const navigateToReport = () => {
     trendPercentage,
     isAdmin,
     organizationName,
-    certOfIncorporation
+    certOfIncorporation,
+  
 
   } = staffMember;
   return (
@@ -53,7 +55,7 @@ const navigateToReport = () => {
         <div className="flex items-center gap-14">
           <div className="flex flex-col gap-1">
             <h2 className="text-sm font-medium">
-              0<span className=" text-primary-gray text-xs">tCO2e</span>
+              {totalEmissions}<span className=" text-primary-gray text-xs">tCO2e</span>
             </h2>
             <span className="text-[12px] text-primary-gray leading-3">
               +0% from last month

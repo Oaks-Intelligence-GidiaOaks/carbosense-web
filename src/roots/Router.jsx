@@ -93,7 +93,7 @@ export const router = createBrowserRouter(
         <Route path="account" element={<Account />} />
         <Route path="organization" element={<OrganizationPage />} />
         <Route path="activity" element={<ActivityLog />} />
-        <Route path="report" element={<EmissionReport />} />
+        <Route path="report/:id" element={<EmissionReport />} />
         {/* ... etc. */}
       </Route>
     </>

@@ -31,7 +31,6 @@ const Emissions = () => {
       axios.get(`emission/?yearFilter=${emissionYear}`).then((res) => res.data),
   });
 
-  console.log(yearlyEmissionData.data, "YEARLY EMISSION DATA")
 
   const yearlyData = useQuery({
     queryKey: ["yearly_user_emission_data"],
@@ -41,11 +40,11 @@ const Emissions = () => {
 
   useEffect(() => {
     yearlyEmissionData.refetch();
-  }, [emissionYear, yearlyEmissionData]);
+  }, []);
 
   useEffect(() => {
     yearlyData.refetch();
-  }, [year, yearlyData]);
+  }, []);
 
   return (
     <AnimatePresence mode="wait">

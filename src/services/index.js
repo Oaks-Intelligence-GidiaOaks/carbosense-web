@@ -65,9 +65,17 @@ export const getOrganizationPendingStaff = async () => {
   const response = await axios.get(`organisation/pending`);
   return await response.data;
 };
+export const getAllDepartmentEmission = async () => {
+  const response = await axios.get(`emission/all/department`);
+  return await response.data;
+};
 
 export const getAllDepartment = async () => {
   const response = await axios.get("department");
+  return await response.data;
+}
+export const getUserEmission = async () => {
+  const response = await axios.get("emission");
   return await response.data;
 }
 
@@ -75,6 +83,11 @@ export const getAllDepartmentStaff = async (id) => {
   const response = await axios.get(`department/${id}`);
   return await response.data;
 };
+
+export const getOneOrganizationStaff = async (id) => {
+  const response = await axios.get(`organisation/staff/${id}`);
+  return await response.data
+}
 
 //invite user
 export const inviteStaff = async (data) => {

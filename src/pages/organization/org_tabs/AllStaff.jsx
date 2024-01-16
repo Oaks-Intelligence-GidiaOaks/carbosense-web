@@ -1,18 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AllStaffCard } from "../../../components";
 import InviteStaff from "./InviteStaff";
 import { HiArrowLeft } from "react-icons/hi2";
 import { AnimatePresence } from "framer-motion";
 import Pagination from "../../../components/ui/Pagination";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AccountPageShimmer } from "../../../primitives/shimmers";
-import { getOrganizationPendingStaff } from "../../../services";
+import {
+  getAllOrganizationStaff,
+  getOrganizationPendingStaff,
+} from "../../../services";
 import { useQuery } from "@tanstack/react-query";
+import { setOrgData } from "../../../features/organization/organizationSlice";
 
-const tabs = [ "Invited Org Member",  "Pending Invites"];
+const tabs = ["Invited Org Member", "Pending Invites"];
 
-const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
+const AllStaff = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const get_All_Organization_staff = useQuery({
+    queryKey: ["department"],
+    queryFn: () => getAllOrganizationStaff(),
+    onSuccess: (data) => {
+      dispatch(setOrgData(data?.data));
+    },
+    refetchOnMount: false,
+    retryOnMount: false,
+    retry: false,
+  });
+
+  useEffect(() => {
+    if (get_All_Organization_staff) {
+      dispatch(setOrgData(get_All_Organization_staff?.data?.data));
+    }
+  }, [get_All_Organization_staff, dispatch]);
 
   const getAllPendingStaff = useQuery({
     queryKey: ["staff"],
@@ -41,7 +62,7 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
 
   return (
     <div>
-      {isPending && <AccountPageShimmer />}
+      {get_All_Organization_staff.isPending && <AccountPageShimmer />}
       <div className="flex item justify-between">
         {showBackButton ? (
           <div
@@ -53,8 +74,10 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
           </div>
         ) : (
           <span className="text-sm text-primary-black">
-            {staffInfo ? staffInfo?.length : 0} Staff in{" "}
-            {formatIndustry(user.organizationName)}
+            {get_All_Organization_staff?.data?.data
+              ? get_All_Organization_staff.data.data?.length
+              : 0}{" "}
+            Staff in {formatIndustry(user.organizationName)}
           </span>
         )}
         {!showInviteForm && (
@@ -91,7 +114,7 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
             </div>
           )}
           <div className="mt-4">
-            {staffInfo ? (
+            {get_All_Organization_staff?.data?.data ? (
               <>
                 {!showInviteForm && (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -103,14 +126,16 @@ const AllStaff = ({ staffInfo, isPending, isSuccess }) => {
                         />
                       ))}
                     {activeTab !== "Pending Invites" &&
-                      isSuccess &&
-                      Boolean(staffInfo?.length) &&
-                      staffInfo.map((staffMember) => (
-                        <AllStaffCard
-                          key={staffMember._id}
-                          staffMember={staffMember}
-                        />
-                      ))}
+                      get_All_Organization_staff.isSuccess &&
+                      Boolean(get_All_Organization_staff.data.data?.length) &&
+                      get_All_Organization_staff.data.data.map(
+                        (staffMember) => (
+                          <AllStaffCard
+                            key={staffMember._id}
+                            staffMember={staffMember}
+                          />
+                        )
+                      )}
                   </div>
                 )}
               </>

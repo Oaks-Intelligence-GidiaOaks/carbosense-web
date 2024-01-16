@@ -53,8 +53,6 @@ const CreateDepartment = ({ onClose }) => {
     staff: [],
   });
 
-  console.log(values, "VALUES")
-
   const [selectedLabels, setSelectedLabels] = useState([]);
 
   const options = useMemo(() => {
@@ -74,7 +72,6 @@ const CreateDepartment = ({ onClose }) => {
 
   const handleChange = (name, value) => {
     if (name === "staff") {
-      // Convert a single value to an array
       const selectedValues = Array.isArray(value) ? value : [value];
   
       if (selectedValues.includes("all")) {

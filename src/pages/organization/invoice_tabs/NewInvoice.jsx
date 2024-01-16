@@ -25,7 +25,8 @@ const NewInvoice = (props) => {
     mutationKey: ["upload_docs"],
     mutationFn: (data) => {
       const formData = new FormData();
-      formData.append("docType", data);
+      formData.append("document", data);
+      formData.append("docType", "invoice");
       return uploadInvoiceDocument(formData);
     },
     onSuccess: () => {

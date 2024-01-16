@@ -7,39 +7,22 @@ import { AllStaff, MyDepartment } from "./org_tabs";
 import { motion } from "framer-motion";
 import { initialUp, slideDown } from "../../constants/framer";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 import {
   getAllDepartmentStaff,
   getOrganizationPendingStaff,
   getAllDepartment,
   getAllOrganizationStaff,
 } from "../../services";
-import { useSelector } from "react-redux";
 
 const Organization = () => {
   const { user } = useSelector((state) => state.user);
-  const departmentData = useSelector(
-    (state) => state.createDepartment.departmentData
-  );
-
-  const department_id = departmentData?.data?._id ?? null;
 
   const { isLoading, isError, data, isPending, isSuccess } = useQuery({
     queryKey: ["staff"],
     queryFn: () => getOrganizationPendingStaff(),
   });
 
-  const get_All_Organization_staff = useQuery({
-    queryKey: ["department_staff"],
-    queryFn: () => getAllOrganizationStaff(),
-  });
-
-  const get_All_Department_staff = useQuery({
-    queryKey: ["department_staff"],
-    queryFn: () => getAllDepartmentStaff(department_id),
-  });
-
-  const staffInfo =
-    isLoading || isError ? undefined : get_All_Organization_staff?.data;
 
   return (
     <motion.div
@@ -62,7 +45,6 @@ const Organization = () => {
           >
             <div className="py-4">
               <AllStaff
-                staffInfo={staffInfo?.data ?? staffInfo?.data}
                 isLoading={isLoading}
                 isPending={isPending}
                 isSuccess={isSuccess}
