@@ -27,8 +27,6 @@ const Dashboard = () => {
     queryFn: () => getUserEmission(),
   });
 
-  
-
   const emissionData = get_all_department_emission.data?.data || [];
 
   const tableData = emissionData.map((item) => ({
@@ -37,7 +35,7 @@ const Dashboard = () => {
     staff_count: item.staffCount,
     percentage_contribution: item.percentageContribution,
     total_emission: item.totalEmissions,
-    emission_sources: item.emissionSources
+    emission_sources: item.emissionSources,
   }));
 
   return (
@@ -71,7 +69,7 @@ const Dashboard = () => {
           <img src={DashboardFrame} alt="" />
         </div>
         <div className="px-2 md:px-8">
-          <DashboardStats emissionData={get_user_emission.data}  />
+          <DashboardStats emissionData={get_user_emission.data} />
         </div>
 
         <div className="px-2 md:px-8 mt-4">

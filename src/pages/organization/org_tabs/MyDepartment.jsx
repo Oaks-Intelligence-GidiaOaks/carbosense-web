@@ -36,7 +36,8 @@ const MyDepartment = () => {
   const [selectedLabels, setSelectedLabels] = useState([]);
 
   const { user } = useSelector((state) => state.user);
-  const { orgData } = useSelector((state) => state.org);
+  const { deptData } = useSelector((state) => state.org);
+
 
   const get_All_Department_staff = useQuery({
     queryKey: ["department_staff"],
@@ -56,12 +57,12 @@ const MyDepartment = () => {
 
   const Options = useMemo(() => {
     return (
-      orgData.map((department) => ({
+      deptData.map((department) => ({
         id: department?._id,
         value: department?.name,
       })) || []
     );
-  }, [orgData]);
+  }, [deptData]);
 
   const optionsValue = Options.map((items) => items.value);
   const optionsLabel = Options.map((items) => items.value);

@@ -7,19 +7,20 @@ import Pagination from "../../../components/ui/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountPageShimmer } from "../../../primitives/shimmers";
 import {
+  getAllDepartment,
   getAllOrganizationStaff,
   getOrganizationPendingStaff,
 } from "../../../services";
 import { useQuery } from "@tanstack/react-query";
-import { setOrgData } from "../../../features/organization/organizationSlice";
+import { setOrgData, setDeptData } from "../../../features/organization/organizationSlice";
 
-const tabs = ["Invited Org Member", "Pending Invites"];
+const tabs = ["Invited Member", "Pending Invites"];
 
 const AllStaff = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const get_All_Organization_staff = useQuery({
-    queryKey: ["department"],
+    queryKey: ["department_staff"],
     queryFn: () => getAllOrganizationStaff(),
     onSuccess: (data) => {
       dispatch(setOrgData(data?.data));
@@ -28,12 +29,30 @@ const AllStaff = () => {
     retryOnMount: false,
     retry: false,
   });
+  const get_All_Departments = useQuery({
+    queryKey: ["department"],
+    queryFn: () => getAllDepartment(),
+    onSuccess: (data) => {
+      dispatch(setDeptData(data?.data));
+    },
+    refetchOnMount: false,
+    retryOnMount: false,
+    retry: false,
+  });
+
+  console.log(get_All_Departments?.data?.data, "Departmenthhhh");
 
   useEffect(() => {
     if (get_All_Organization_staff) {
       dispatch(setOrgData(get_All_Organization_staff?.data?.data));
     }
   }, [get_All_Organization_staff, dispatch]);
+
+  useEffect(() => {
+    if (get_All_Departments) {
+      dispatch(setDeptData(get_All_Departments?.data?.data));
+    }
+  }, [get_All_Departments, dispatch]);
 
   const getAllPendingStaff = useQuery({
     queryKey: ["staff"],

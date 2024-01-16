@@ -181,7 +181,7 @@ const Emissions = () => {
               }}
               className="text-[12px] py-2 rounded hover:opacity-50 text-primary-blue px-2 border border-primary-blue"
             >
-              Upload Emission
+              Upload Invoice
             </button>
           </div>
 
