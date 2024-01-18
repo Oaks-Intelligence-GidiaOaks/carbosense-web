@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { bottombarLink } from "../../data/Navigation";
+// import { bottombarLink } from "../../data/Navigation";
 
-const Bottombar = () => {
+const Bottombar = ({bottombarLink}) => {
   const { pathname } = useLocation();
   return (
     <section className="z-50 flex items-center justify-between bg-bg-ca-light-gray w-full sticky bottom-0  px-5 py-4 md:hidden">

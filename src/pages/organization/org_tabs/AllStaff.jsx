@@ -40,7 +40,6 @@ const AllStaff = () => {
     retry: false,
   });
 
-  console.log(get_All_Departments?.data?.data, "Departmenthhhh");
 
   useEffect(() => {
     if (get_All_Organization_staff) {

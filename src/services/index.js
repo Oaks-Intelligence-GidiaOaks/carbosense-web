@@ -59,7 +59,7 @@ export const fetchAccountInfo = async (accessToken) => {
 export const getAllOrganizationStaff = async () => {
   const response = await axios.get(`organisation`);
   return await response.data;
-}
+};
 
 export const getOrganizationPendingStaff = async () => {
   const response = await axios.get(`organisation/pending`);
@@ -73,11 +73,11 @@ export const getAllDepartmentEmission = async () => {
 export const getAllDepartment = async () => {
   const response = await axios.get("department");
   return await response.data;
-}
+};
 export const getUserEmission = async () => {
   const response = await axios.get("emission");
   return await response.data;
-}
+};
 
 export const getAllDepartmentStaff = async (id) => {
   const response = await axios.get(`department/${id}`);
@@ -86,8 +86,8 @@ export const getAllDepartmentStaff = async (id) => {
 
 export const getOneOrganizationStaff = async (id) => {
   const response = await axios.get(`organisation/staff/${id}`);
-  return await response.data
-}
+  return await response.data;
+};
 
 //invite user
 export const inviteStaff = async (data) => {
@@ -143,4 +143,22 @@ export const addUserEmission = async (data) => {
 export const getAllDepartments = async () => {
   const response = await axios.get("department");
   return await response.data.data;
+};
+
+export const addStaffToAdmin = async (data) => {
+  const response = await axios.post("department/staff", data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.data;
+};
+
+export const assignAdmin = async (data) => {
+  const response = await axios.put("department/assign_hod", data);
+  return await response.data;
+};
+export const removeAdminMutation = async (data) => {
+  const response = await axios.put("department/unassign_hod", data);
+  return await response.data;
 };

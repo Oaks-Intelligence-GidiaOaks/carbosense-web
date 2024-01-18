@@ -35,7 +35,6 @@ const MyDepartment = () => {
   const [selectedValue, setSelectedValue] = React.useState([]);
   const [selectedLabels, setSelectedLabels] = useState([]);
 
-  const { user } = useSelector((state) => state.user);
   const { deptData } = useSelector((state) => state.org);
 
 
@@ -57,7 +56,7 @@ const MyDepartment = () => {
 
   const Options = useMemo(() => {
     return (
-      deptData.map((department) => ({
+      deptData?.map((department) => ({
         id: department?._id,
         value: department?.name,
       })) || []

@@ -6,22 +6,9 @@ import Bottombar from "./Bottombar";
 import Topbar from "./Topbar";
 import { initialUp, slideDown, slideUp } from "../../constants/framer";
 import { ProtectedRoute } from "../../guards";
-import { adminSidebarLinks, adminBottombarLink } from "../../data/Navigation";
+import { staffSidebarLinks, staffBottombarLink } from "../../data/Navigation";
 
-// const AnimatedOutlet = () => {
-//   return (
-//     <motion.div
-//       key={location.pathname}
-//       initial={initialUp}
-//       animate={slideDown}
-//       exit={slideUp}
-//     >
-//       <Outlet />
-//     </motion.div>
-//   );
-// };
-
-const OrganizationLayout = () => {
+const StaffLayout = () => {
   return (
     <ProtectedRoute>
       <motion.div
@@ -30,28 +17,21 @@ const OrganizationLayout = () => {
         exit={slideUp}
         className="w-screen h-screen md:flex overflow-hidden"
       >
-        <Sidebar sidebarLinks={adminSidebarLinks} />
+        <Sidebar sidebarLinks={staffSidebarLinks} />
         <MobileHeader />
         <section className="flex flex-1 h-full bg-bg-ca-gray">
           <div className="w-full overflow-y-auto">
-            <Topbar userType="admin" />
+            <Topbar userType="staff" />
             <AnimatePresence mode="wait">
-              {/* <AnimatedOutlet /> */}
-              {/* <motion.div
-                key={location.pathname}
-                initial={initialUp}
-                animate={slideDown}
-                exit={slideUp}
-              > */}
               <Outlet />
               {/* </motion.div> */}
             </AnimatePresence>
           </div>
         </section>
-        <Bottombar bottombarLink={adminBottombarLink} />
+        <Bottombar bottombarLink={staffBottombarLink} />
       </motion.div>
     </ProtectedRoute>
   );
 };
 
-export default OrganizationLayout;
+export default StaffLayout;

@@ -3,3 +3,4 @@ export { default as ChangePassword } from "./ChangePassword";
 export { default as DeleteAccount } from "./DeleteAccount";
 export { default as OrgProfile } from "./OrgProfile";
 export {default as SuccessInviteModal} from "./SuccessInviteModal";
+export {default as StaffModal} from "./StaffModal";
