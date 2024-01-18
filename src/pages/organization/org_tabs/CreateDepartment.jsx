@@ -9,10 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createDepartment,
-<<<<<<< HEAD
-  getAllOrganizationStaff,
-=======
->>>>>>> test
   getOrganizationPendingStaff,
 } from "../../../services";
 import toast from "react-hot-toast";
@@ -29,7 +25,6 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -69,45 +64,23 @@ const CreateDepartment = ({ onClose }) => {
     );
   }, [data?.data]);
 
- 
   const isAllSelected =
     options.length > 0 && values.staff.length === options.length;
 
-
   const handleChange = (name, value) => {
-<<<<<<< HEAD
-    // Convert a single value to an array
-    const selectedValues = Array.isArray(value) ? value : [value];
-
-    if (selectedValues.includes("all")) {
-      const allStaffIds = options.map((option) => option.value);
-      const updatedStaff =
-        values.staff.length === allStaffIds.length ? [] : allStaffIds;
-
-      setValues({
-        ...values,
-        [name]: updatedStaff,
-      });
-
-      setSelectedLabels(
-        updatedStaff.map(
-          (id) => options.find((opt) => opt.value === id)?.label || ""
-        )
-      );
-=======
     if (name === "staff") {
       const selectedValues = Array.isArray(value) ? value : [value];
-  
+
       if (selectedValues.includes("all")) {
         const allStaffIds = options.map((option) => option.value);
         const updatedStaff =
           values.staff.length === allStaffIds.length ? [] : allStaffIds;
-  
+
         setValues({
           ...values,
           staff: updatedStaff,
         });
-  
+
         setSelectedLabels(
           updatedStaff.map(
             (id) => options.find((opt) => opt.value === id)?.label || ""
@@ -118,40 +91,26 @@ const CreateDepartment = ({ onClose }) => {
         const updatedStaff = values.staff.includes("all")
           ? selectedValues.filter((val) => val !== "all")
           : selectedValues;
-  
+
         setValues({
           ...values,
           staff: updatedStaff,
         });
-  
+
         setSelectedLabels(
           updatedStaff.map(
             (id) => options.find((opt) => opt.value === id)?.label || ""
           )
         );
       }
->>>>>>> test
     } else {
       // Handle the case where the name field is a string
       setValues({
         ...values,
         [name]: value,
       });
-<<<<<<< HEAD
-
-      setSelectedLabels(
-        selectedValues.map(
-          (id) => options.find((opt) => opt.value === id)?.label || ""
-        )
-      );
     }
   };
-=======
-    }
-  };
-  
-  
->>>>>>> test
 
   const departmentMutation = useMutation({
     mutationKey: ["invite_staff"],
