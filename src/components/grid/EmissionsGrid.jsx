@@ -9,12 +9,39 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+
+const getInitials = (departmentName) => {
+  if (!departmentName) return null;
+
+  const words = departmentName.split(" ");
+  const initials = words.map((word) => word[0].toUpperCase()).join("");
+
+  return (
+    <span
+      style={{
+        color: "#9553A0",
+        fontFamily: "Satoshi",
+        fontSize: "16px",
+        fontStyle: "normal",
+        fontWeight: 800,
+        lineHeight: "27.934px",
+        letterSpacing: "-0.594px",
+        marginRight: "2px",
+        backgroundColor: "",
+        padding: "8px",
+        borderRadius: "100%",
+      }}
+    >
+      {initials}
+    </span>
+  );
+};
 
 const EmissionsGrid = ({ tableData }) => {
   return (
     <TableContainer
       sx={{
-        maxHeight: "250px",
         fontFamily: "Satoshi !important",
         boxShadow: "none",
         borderRadius: 0,
@@ -58,7 +85,7 @@ const EmissionsGrid = ({ tableData }) => {
                 fontFamily: "Satoshi !important",
               }}
             >
-              Sources
+              Source
             </TableCell>
           </TableRow>
         </TableHead>
@@ -70,13 +97,43 @@ const EmissionsGrid = ({ tableData }) => {
                 key={row._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{row.departmentName}</TableCell>
-                <TableCell>{row.percentageContribution}</TableCell>
                 <TableCell>
-                  {`${row.totalEmissions} `}{" "}
-                  <span className="text-[#767676]">tCO2e</span>
+                  <div>
+                    <h3 className=" text-primary-black font-medium">
+                      {" "}
+                      {getInitials(row.department_name)} {row.department_name}
+                    </h3>
+                    <span className=" ml-[8px] text-primary-gray">
+                      {row.staff_count} team members
+                    </span>
+                  </div>
                 </TableCell>
-                <TableCell align="center">{row.emissionSources}</TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: "14px",
+                    fontFamily: "Satoshi !important",
+                    color: "#219468",
+                  }}
+                >
+                  {row.percentage_contribution}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: "14px",
+                    fontFamily: "Satoshi !important",
+                  }}
+                >
+                  <span style={{ fontWeight: 700 }}>{row.total_emission}</span>{" "}
+                  {"tCO2e"}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: "14px",
+                    fontFamily: "Satoshi !important",
+                  }}
+                >
+                  {row.emission_sources}
+                </TableCell>
               </TableRow>
             ))
           ) : (
@@ -101,3 +158,5 @@ const EmissionsGrid = ({ tableData }) => {
 };
 
 export default EmissionsGrid;
+
+const tableData = [{}];

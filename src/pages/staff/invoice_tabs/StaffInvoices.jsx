@@ -9,7 +9,7 @@ import axios from "axios";
 import { uploadInvoiceDocument } from "../../../services";
 import toast from "react-hot-toast";
 
-const NewInvoice = (props) => {
+const StaffInvoices = (props) => {
   const wrapperRef = useRef(null);
   const queryClient = useQueryClient();
 
@@ -59,7 +59,6 @@ const NewInvoice = (props) => {
     setFileList(null);
     props.onFileChange(null);
   };
-
   return (
     <>
       <div className="flex items-center gap-6 mb-4">
@@ -139,7 +138,6 @@ const NewInvoice = (props) => {
             >
               x
             </span>
-            
           </div>
         </div>
       ) : null}
@@ -147,8 +145,8 @@ const NewInvoice = (props) => {
   );
 };
 
-NewInvoice.propTypes = {
+StaffInvoices.propTypes = {
   onFileChange: PropTypes.func,
 };
 
-export default NewInvoice;
+export default StaffInvoices;

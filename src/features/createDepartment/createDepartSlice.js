@@ -1,11 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import secureLocalStorage from "react-secure-storage";
 
-const departmentData = secureLocalStorage.getItem("DAT")
 
 const initialState = {
   showCreateDepartmentScreen: false,
-  departmentData: departmentData,
+  departmentData: null
 };
 
 export const createDepartmentSlice = createSlice({

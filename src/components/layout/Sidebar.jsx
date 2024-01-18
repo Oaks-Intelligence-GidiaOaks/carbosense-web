@@ -1,11 +1,11 @@
 import React from "react";
 import mobileLogo from "../../assets/mobileLogo.svg";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { sidebarLinks } from "../../data/Navigation";
+// import { sidebarLinks } from "../../data/Navigation";
 import { useSelector } from "react-redux";
 import { generateInitials } from "../../utils";
 
-const Sidebar = () => {
+const Sidebar = ({sidebarLinks}) => {
   const { user } = useSelector((state) => state.user);
 
   const { pathname } = useLocation();

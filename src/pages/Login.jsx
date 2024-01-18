@@ -53,25 +53,19 @@ const Login = () => {
       console.log(isFirstUser, "First User");
       toast.dismiss();
       saveUser(data);
-      // console.log(data);
-      // dispatch(setShowResetPasswordDialog(true));
-      // dispatch(setUser(data.data));
-      // dispatch(setAccessToken(data.accessToken));
-      // navigate("/admin", { replace: true });
+  
       if (data.message === "Reset your Password" && validator.isEmail(data.data)) {
         dispatch(setShowResetPasswordDialog(true));
       } else {
         saveUser(data);
         dispatch(setUser(data.data));
         dispatch(setAccessToken(data.accessToken));
-        navigate("/admin", { replace: true });
-
-        // if (isFirstUser) {
-        //   dispatch(showGreetingModal(true));
-        // } else {
-        //   dispatch(showWelcomeModal(true));
-        // }
-
+  
+        if (data.data.role === "admin") {
+          navigate("/admin", { replace: true });
+        } else if (data.data.role === "staff") {
+          navigate("/staff", { replace: true });
+        }
       }
     },
     onError: (e) => {

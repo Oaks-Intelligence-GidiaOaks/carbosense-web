@@ -7,8 +7,17 @@ import department from "../assets/icons/department.svg";
 import { initialDown, slideUp } from "../constants/framer";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { StaffModal } from "./pageComponents/Account/modals";
 
 const AllStaffCard = ({ staffMember }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentlyOpenCard, setCurrentlyOpenCard] = useState(null);
+  const modalRef = useRef(null);
+  const navigate = useNavigate();
+  const navigateToReport = () => {
+    navigate(`/admin/report/${staffMember._id}`);
+  };
   console.log(staffMember, "from staff card");
 
   const navigate = useNavigate();
@@ -26,12 +35,50 @@ const AllStaffCard = ({ staffMember }) => {
     organizationName,
     certOfIncorporation,
   } = staffMember;
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentlyOpenCard(null);
+  };
+
+  const openModal = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+    setCurrentlyOpenCard(staffMember._id);
+  };
+
+  const closeOnCardClick = () => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (
+        isModalOpen &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target)
+      ) {
+        setIsModalOpen(false);
+        setCurrentlyOpenCard(null);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isModalOpen]);
+
   return (
     <motion.div
+      onClick={closeOnCardClick}
       initial={initialDown}
       animate={slideUp}
       exit={initialDown}
-      className="bg-white px-2 py-5"
+      className="bg-white px-2 py-5  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
     >
       <div className="flex items-center gap-2">
         <img src={image} alt="" className="h-10 w-10 rounded-full bg-cover" />
@@ -65,17 +112,16 @@ const AllStaffCard = ({ staffMember }) => {
           </div>
         </div>
       </div>
-
       <div className="mt-2">
         <div className="py-1 px-2 max-w-[150px] rounded-3xl flex items-center gap-2 bg-[#E3ECFF] border border-[#E3ECFF]">
-          {staffMember.role === "admin" ? (
+          {staffMember.isHod ? (
             <img src={OrgAdminIcon} alt="" width={12} height={12} />
           ) : (
             <img src={department} alt="" width={12} height={12} />
           )}
 
           <span className="text-[12px] font-medium text-primary-black">
-            Member
+            {staffMember.isHod ? "Head of Department" : "Member"}
           </span>
         </div>
       </div>
@@ -88,10 +134,23 @@ const AllStaffCard = ({ staffMember }) => {
           View Emission Report
         </button>
 
-        <button className="text-[11px] rounded hover:opacity-50 border border-primary-blue text-primary-blue py-1 px-2">
+        <button
+          onClick={(e) => openModal(e)}
+          className="text-[11px] rounded hover:opacity-50 border border-primary-blue text-primary-blue py-1 px-2"
+        >
           Options
         </button>
       </div>
+
+      {isModalOpen && (
+        <div ref={modalRef}>
+          <StaffModal
+            staffID={staffMember._id}
+            staffMember={staffMember}
+            closeModal={closeModal}
+          />
+        </div>
+      )}
     </motion.div>
   );
 };

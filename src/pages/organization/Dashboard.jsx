@@ -3,32 +3,61 @@ import DashboardFrame from "../../assets/icons/DashboardFrame.svg";
 import alertcircle from "../../assets/icons/alertcircle.svg";
 import { DashboardStats } from "../../components";
 import { EmissionsGrid } from "../../components/grid";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { initialUp, slideDown } from "../../constants/framer";
 import Pagination from "../../components/ui/Pagination";
 import { useSelector } from "react-redux";
 import UserGreeting from "../../components/pageComponents/Account/modals/UserGreeting";
 import UserWelcomeBack from "../../components/pageComponents/Account/modals/UserWelcomeBack";
 import { useQuery } from "@tanstack/react-query";
+<<<<<<< HEAD
 import { getAllDepartmentsEmission } from "../../services";
+=======
+import { getAllDepartmentEmission, getUserEmission } from "../../services";
+import { AccountPageShimmer } from "../../primitives/shimmers";
+>>>>>>> test
 
 const Dashboard = () => {
   const { setshowGreetingModal, setshowWelcomeBack } = useSelector(
     (state) => state.user
   );
 
+<<<<<<< HEAD
   const deptEmissiionsData = useQuery({
     queryKey: ["getAllDepartmentsEmission"],
     queryFn: () => getAllDepartmentsEmission(),
   });
 
+=======
+  const get_all_department_emission = useQuery({
+    queryKey: ["department_emission"],
+    queryFn: () => getAllDepartmentEmission(),
+  });
+  const get_user_emission = useQuery({
+    queryKey: ["user_emission"],
+    queryFn: () => getUserEmission(),
+  });
+
+  const emissionData = get_all_department_emission.data?.data || [];
+
+  const tableData = emissionData.map((item) => ({
+    id: item._id,
+    department_name: item.departmentName,
+    staff_count: item.staffCount,
+    percentage_contribution: item.percentageContribution,
+    total_emission: item.totalEmissions,
+    emission_sources: item.emissionSources,
+  }));
+
+>>>>>>> test
   return (
-    <>
+    <AnimatePresence mode="wait">
+      {get_all_department_emission.isPending && <AccountPageShimmer />}
       <motion.div
         initial={initialUp}
         animate={slideDown}
         exit={initialUp}
-        className="pb-36 md:mb-10"
+        className="mb-20 lg:mb-0"
       >
         <div className="md:px-8">
           <div className="bg-[#FFFFFF] border-l-[6px] h-[60px] border-l-[#FF331E] flex items-center justify-between pr-6">
@@ -52,15 +81,23 @@ const Dashboard = () => {
           <img src={DashboardFrame} alt="" className="w-full" />
         </div>
         <div className="px-2 md:px-8">
+<<<<<<< HEAD
           <DashboardStats />
+=======
+          <DashboardStats emissionData={get_user_emission.data} />
+>>>>>>> test
         </div>
 
         <div className="px-2 md:px-8 mt-4">
           <h3 className="text-primary-black font-medium text-lg mt-2 mb-4">
             Emissions by Department
           </h3>
+<<<<<<< HEAD
           <EmissionsGrid tableData={deptEmissiionsData?.data} />
+=======
+>>>>>>> test
 
+          <EmissionsGrid tableData={tableData} />
           <div className="flex items-center justify-between my-5">
             <Pagination />
           </div>
@@ -68,7 +105,7 @@ const Dashboard = () => {
       </motion.div>
       {setshowGreetingModal && <UserGreeting />}
       {setshowWelcomeBack && <UserWelcomeBack />}
-    </>
+    </AnimatePresence>
   );
 };
 

@@ -7,7 +7,11 @@ import { AllStaff, MyDepartment } from "../../../pages/organization/org_tabs";
 import { motion } from "framer-motion";
 import { initialUp, slideDown } from "../../../constants/framer";
 import { useQuery } from "@tanstack/react-query";
-import { getAllDepartmentStaff, getOrganizationPendingStaff } from "../../../services";
+import {
+  getAllDepartmentStaff,
+  getOneOrganizationStaff,
+  getOrganizationPendingStaff,
+} from "../../../services";
 import { useSelector } from "react-redux";
 import { RxDividerVertical } from "react-icons/rx";
 import png from "../../../assets/icons/png_file.svg";
@@ -15,24 +19,22 @@ import jpg from "../../../assets/icons/jpg_file.svg";
 import jpeg from "../../../assets/icons/jpeg_file.svg";
 import pdf from "../../../assets/icons/pdf_file.svg";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useParams } from "react-router-dom";
 
 const EmissionReport = () => {
-  //   const { user } = useSelector((state) => state.user);
-  //   const departmentData = useSelector((state) => state.createDepartment.departmentData);
+  const { id } = useParams();
 
-  //   const staff_id = departmentData?.data?._id ?? null;
+  const {
+    isLoading,
+    isError,
+    data: organizationStaffData,
+    error,
+  } = useQuery({
+    queryKey: ["reports", id],
+    queryFn: () => getOneOrganizationStaff(id),
+  });
 
-  //   const { isLoading, isError, data, error, isPending, isSuccess } = useQuery({
-  //     queryKey: ["staff"],
-  //     queryFn: () => getOrganizationStaff(user._id),
-  //   });
-
-  //   const get_All_Department_staff = useQuery({
-  //     queryKey: ["department_staff"],
-  //     queryFn: () => getAllDepartmentStaff(user._id),
-  //   });
-
-  //   const staffInfo = isLoading || isError ? undefined : data.data;
+  console.log(organizationStaffData, "DATA");
 
   return (
     <motion.div
@@ -65,10 +67,10 @@ const EmissionReport = () => {
                       />
                       <div>
                         <h2 className=" text-primary-black text-sm">
-                          David Orobosa (You)
+                        {organizationStaffData?.data?.fullName}
                         </h2>
                         <span className=" text-primary-gray text-xs">
-                          Data Analysis
+                         {organizationStaffData?.data?.organizationName}
                         </span>
                       </div>
                     </div>

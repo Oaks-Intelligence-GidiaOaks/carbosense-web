@@ -4,7 +4,8 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import { Login, Register } from "../pages";
-import { OrganizationLayout } from "../components/layout";
+import { OrganizationLayout, StaffLayout } from "../components/layout";
+
 import {
   Dashboard,
   Emissions,
@@ -13,67 +14,16 @@ import {
   OrganizationPage,
   ActivityLog,
 } from "../pages/organization";
+
+import {
+  StaffDashboard,
+  StaffActivityLog,
+  StaffEmission,
+  StaffAccount,
+  StaffInvoice,
+} from "../pages/staff";
 import RootContainer from "../components/containers/RootContainer";
 import EmissionReport from "../components/pageComponents/Emission/EmissionReport";
-
-// export const router = createBrowserRouter([
-//   // login
-//   {
-//     path: "/",
-//     element: <RootContainer />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Login />,
-//       },
-//     ],
-//   },
-//   // registere
-//   {
-//     path: "/register",
-//     element: <RootContainer />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Register />,
-//       },
-//     ],
-//   },
-//   // admin
-//   {
-//     path: "/admin",
-//     element: <OrganizationLayout />,
-//     children: [
-//       {
-//         path: "/admin",
-//         element: <Dashboard />,
-//       },
-//       {
-//         path: "emissions",
-//         element: <Emissions />,
-//       },
-//       {
-//         path: "invoice",
-//         element: <Invoice />,
-//       },
-//       {
-//         path: "account",
-//         element: <Account />,
-//       },
-//       {
-//         path: "organization",
-//         element: <OrganizationPage />,
-
-//       },
-//       {
-//         path: "activity",
-//         element: <ActivityLog />,
-
-//       },
-
-//     ],
-//   },
-// ]);
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -93,8 +43,18 @@ export const router = createBrowserRouter(
         <Route path="account" element={<Account />} />
         <Route path="organization" element={<OrganizationPage />} />
         <Route path="activity" element={<ActivityLog />} />
-        <Route path="report" element={<EmissionReport />} />
+        <Route path="report/:id" element={<EmissionReport />} />
         {/* ... etc. */}
+      </Route>
+
+      {/* Staff routes */}
+      <Route path="/staff" element={<StaffLayout />}>
+        <Route index element={<StaffDashboard />} />
+        <Route path="emissions" element={<StaffEmission />} />
+        <Route path="invoice" element={<StaffInvoice />} />
+        <Route path="account" element={<StaffAccount />} />
+        <Route path="activity" element={<StaffActivityLog />} />
+     
       </Route>
     </>
   )
@@ -158,4 +118,34 @@ createBrowserRouter([
       },
     ],
   },
+
+    // Staff routes
+    {
+      path: "/staff",
+      element: <StaffLayout />,
+      children: [
+        {
+          path: "/staff",
+          element: <StaffDashboard />,
+        },
+        {
+          path: "emissions",
+          element: <StaffEmission />,
+        },
+        {
+          path: "invoice",
+          element: <StaffInvoice />,
+        },
+        {
+          path: "account",
+          element: <StaffAccount />,
+        },
+   
+        {
+          path: "activity",
+          element: <StaffActivityLog />,
+        },
+   
+      ],
+    },
 ]);

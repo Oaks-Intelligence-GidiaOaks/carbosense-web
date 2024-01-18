@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createDepartment,
+<<<<<<< HEAD
   getAllOrganizationStaff,
+=======
+>>>>>>> test
   getOrganizationPendingStaff,
 } from "../../../services";
 import toast from "react-hot-toast";
-import secureLocalStorage from "react-secure-storage";
 import {
   setDepartmentData,
   setDepartmentScreen,
@@ -28,6 +30,18 @@ import {
   Select,
 } from "@mui/material";
 
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+export const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 const CreateDepartment = ({ onClose }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -38,9 +52,6 @@ const CreateDepartment = ({ onClose }) => {
     queryFn: () => getAllOrganizationStaff(user._id),
   });
 
-  // const [departmentData, setDepartmentData] = useState(() => {
-  //   return secureLocalStorage.getItem("DAT") || null;
-  // });
   const [values, setValues] = useState({
     name: "",
     staff: [],
@@ -58,9 +69,13 @@ const CreateDepartment = ({ onClose }) => {
     );
   }, [data?.data]);
 
+ 
   const isAllSelected =
     options.length > 0 && values.staff.length === options.length;
+
+
   const handleChange = (name, value) => {
+<<<<<<< HEAD
     // Convert a single value to an array
     const selectedValues = Array.isArray(value) ? value : [value];
 
@@ -79,11 +94,50 @@ const CreateDepartment = ({ onClose }) => {
           (id) => options.find((opt) => opt.value === id)?.label || ""
         )
       );
+=======
+    if (name === "staff") {
+      const selectedValues = Array.isArray(value) ? value : [value];
+  
+      if (selectedValues.includes("all")) {
+        const allStaffIds = options.map((option) => option.value);
+        const updatedStaff =
+          values.staff.length === allStaffIds.length ? [] : allStaffIds;
+  
+        setValues({
+          ...values,
+          staff: updatedStaff,
+        });
+  
+        setSelectedLabels(
+          updatedStaff.map(
+            (id) => options.find((opt) => opt.value === id)?.label || ""
+          )
+        );
+      } else {
+        // Check if "Select All" is currently selected and remove it from the staff list
+        const updatedStaff = values.staff.includes("all")
+          ? selectedValues.filter((val) => val !== "all")
+          : selectedValues;
+  
+        setValues({
+          ...values,
+          staff: updatedStaff,
+        });
+  
+        setSelectedLabels(
+          updatedStaff.map(
+            (id) => options.find((opt) => opt.value === id)?.label || ""
+          )
+        );
+      }
+>>>>>>> test
     } else {
+      // Handle the case where the name field is a string
       setValues({
         ...values,
-        [name]: selectedValues[0], // Assuming `name` is a string
+        [name]: value,
       });
+<<<<<<< HEAD
 
       setSelectedLabels(
         selectedValues.map(
@@ -92,6 +146,12 @@ const CreateDepartment = ({ onClose }) => {
       );
     }
   };
+=======
+    }
+  };
+  
+  
+>>>>>>> test
 
   const departmentMutation = useMutation({
     mutationKey: ["invite_staff"],
@@ -178,6 +238,7 @@ const CreateDepartment = ({ onClose }) => {
                 fontSize: "16px",
               }}
               renderValue={() => selectedLabels.join(", ")}
+              MenuProps={MenuProps}
             >
               <MenuItem value="all">
                 <ListItemIcon>

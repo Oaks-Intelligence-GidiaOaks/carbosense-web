@@ -65,14 +65,27 @@ export const getOrganizationPendingStaff = async () => {
   const response = await axios.get(`organisation/pending`);
   return await response.data;
 };
+export const getAllDepartmentEmission = async () => {
+  const response = await axios.get(`emission/all/department`);
+  return await response.data;
+};
 
 export const getAllDepartment = async () => {
-  const response = await axios.get(`department`);
+  const response = await axios.get("department");
+  return await response.data;
+};
+export const getUserEmission = async () => {
+  const response = await axios.get("emission");
   return await response.data;
 };
 
 export const getAllDepartmentStaff = async (id) => {
   const response = await axios.get(`department/${id}`);
+  return await response.data;
+};
+
+export const getOneOrganizationStaff = async (id) => {
+  const response = await axios.get(`organisation/staff/${id}`);
   return await response.data;
 };
 
@@ -131,17 +144,25 @@ export const addUserEmission = async (data) => {
   return await response.data;
 };
 
-export const getUserEmission = async () => {
-  const response = await axios.get("emission");
-  return await response.data;
-};
-
-export const getAllDepartmentsEmission = async () => {
-  const response = await axios.get("emission/all/department");
-  return await response.data.data;
-};
-
 export const getAllDepartments = async () => {
   const response = await axios.get("department");
   return await response.data.data;
+};
+
+export const addStaffToAdmin = async (data) => {
+  const response = await axios.post("department/staff", data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.data;
+};
+
+export const assignAdmin = async (data) => {
+  const response = await axios.put("department/assign_hod", data);
+  return await response.data;
+};
+export const removeAdminMutation = async (data) => {
+  const response = await axios.put("department/unassign_hod", data);
+  return await response.data;
 };
