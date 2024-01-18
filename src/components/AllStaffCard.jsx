@@ -20,11 +20,6 @@ const AllStaffCard = ({ staffMember }) => {
   };
   console.log(staffMember, "from staff card");
 
-  const navigate = useNavigate();
-
-  const navigateToReport = () => {
-    navigate("/admin/report");
-  };
   const {
     fullName,
     email,

@@ -10,25 +10,14 @@ import { useSelector } from "react-redux";
 import UserGreeting from "../../components/pageComponents/Account/modals/UserGreeting";
 import UserWelcomeBack from "../../components/pageComponents/Account/modals/UserWelcomeBack";
 import { useQuery } from "@tanstack/react-query";
-<<<<<<< HEAD
-import { getAllDepartmentsEmission } from "../../services";
-=======
 import { getAllDepartmentEmission, getUserEmission } from "../../services";
 import { AccountPageShimmer } from "../../primitives/shimmers";
->>>>>>> test
 
 const Dashboard = () => {
   const { setshowGreetingModal, setshowWelcomeBack } = useSelector(
     (state) => state.user
   );
 
-<<<<<<< HEAD
-  const deptEmissiionsData = useQuery({
-    queryKey: ["getAllDepartmentsEmission"],
-    queryFn: () => getAllDepartmentsEmission(),
-  });
-
-=======
   const get_all_department_emission = useQuery({
     queryKey: ["department_emission"],
     queryFn: () => getAllDepartmentEmission(),
@@ -49,7 +38,6 @@ const Dashboard = () => {
     emission_sources: item.emissionSources,
   }));
 
->>>>>>> test
   return (
     <AnimatePresence mode="wait">
       {get_all_department_emission.isPending && <AccountPageShimmer />}
@@ -81,21 +69,13 @@ const Dashboard = () => {
           <img src={DashboardFrame} alt="" className="w-full" />
         </div>
         <div className="px-2 md:px-8">
-<<<<<<< HEAD
-          <DashboardStats />
-=======
           <DashboardStats emissionData={get_user_emission.data} />
->>>>>>> test
         </div>
 
         <div className="px-2 md:px-8 mt-4">
           <h3 className="text-primary-black font-medium text-lg mt-2 mb-4">
             Emissions by Department
           </h3>
-<<<<<<< HEAD
-          <EmissionsGrid tableData={deptEmissiionsData?.data} />
-=======
->>>>>>> test
 
           <EmissionsGrid tableData={tableData} />
           <div className="flex items-center justify-between my-5">
