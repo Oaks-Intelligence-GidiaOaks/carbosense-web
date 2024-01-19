@@ -53,7 +53,9 @@ const Login = () => {
     mutationKey: ["register_organization"],
     mutationFn: (data) => loginUser(data),
     onSuccess: (data) => {
-      let notVerified = data.message === "Not verified";
+      let notVerified =
+        data.message === "Not verified" ||
+        data.message === "Reset your Password";
 
       if (notVerified) {
         navigate("/admin");
