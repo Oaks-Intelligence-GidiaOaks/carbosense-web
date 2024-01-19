@@ -8,16 +8,19 @@ const Tabs = ({ children }) => {
     setActiveTab(newActiveTab);
   };
 
+  console.log(children);
+
   return (
     <div className=" md:px-8 mt-6">
       <div className="flex md:max-w-xl justify-between border-b border-gray-300">
-        {children.map((child) => (
+        {children?.map((child) => (
           <button
             key={child.props.label.text}
-            className={`${activeTab === child.props.label.text
-              ? "border-b-2 border-primary-blue "
-              : ""
-              } flex-1 text-primary-black text-xs md:text-sm py-2`}
+            className={`${
+              activeTab === child.props.label.text
+                ? "border-b-2 border-primary-blue "
+                : ""
+            } flex-1 text-primary-black text-xs md:text-sm py-2`}
             onClick={(e) => handleClick(e, child.props.label.text)}
           >
             <div className="flex items-center gap-2">
@@ -30,7 +33,9 @@ const Tabs = ({ children }) => {
       <div className="py-4">
         {children.map((child) => {
           if (child.props.label.text === activeTab) {
-            return <div key={child.props.label.text}>{child.props.children}</div>;
+            return (
+              <div key={child.props.label.text}>{child.props.children}</div>
+            );
           }
           return null;
         })}
@@ -51,6 +56,3 @@ const Tab = ({ label, icon, children }) => {
   );
 };
 export { Tabs, Tab };
-
-
-

@@ -78,9 +78,9 @@ const Dashboard = () => {
           </h3>
 
           <EmissionsGrid tableData={tableData} />
-          <div className="flex items-center justify-between my-5">
+          {/* <div className="flex items-center justify-between my-5">
             <Pagination />
-          </div>
+          </div> */}
         </div>
       </motion.div>
       {setshowGreetingModal && <UserGreeting />}

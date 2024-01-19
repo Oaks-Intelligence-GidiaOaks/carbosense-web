@@ -12,7 +12,10 @@ import {
   getOrganizationPendingStaff,
 } from "../../../services";
 import { useQuery } from "@tanstack/react-query";
-import { setOrgData, setDeptData } from "../../../features/organization/organizationSlice";
+import {
+  setOrgData,
+  setDeptData,
+} from "../../../features/organization/organizationSlice";
 
 const tabs = ["Invited Member", "Pending Invites"];
 
@@ -39,7 +42,6 @@ const AllStaff = () => {
     retryOnMount: false,
     retry: false,
   });
-
 
   useEffect(() => {
     if (get_All_Organization_staff) {
@@ -172,12 +174,6 @@ const AllStaff = () => {
               </>
             )}
           </div>
-          {!showInviteForm && (
-            <div className="flex items-center justify-between my-5">
-              <Pagination />
-              {/* <div>Loading</div> */}
-            </div>
-          )}
         </AnimatePresence>
       </div>
     </div>

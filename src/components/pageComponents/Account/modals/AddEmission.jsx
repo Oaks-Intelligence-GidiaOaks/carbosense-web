@@ -20,6 +20,7 @@ import {
   emissionFactorss,
   emissionUnit,
   emissionSource,
+  countries,
 } from "../../../../constants";
 import { addEmission } from "../../../../features/emissions/emissionSlice";
 
@@ -46,8 +47,10 @@ const AddEmission = () => {
       label: "",
       value: "",
     },
-    emissionValue: "",
+    emissionValue: "1000",
+    document: null,
   });
+
   const handleChange = (name, value) => {
     setValues((prevValues) => {
       const updatedValues = { ...prevValues, [name]: value };
@@ -98,6 +101,7 @@ const AddEmission = () => {
         typeof values.emissionValue === "number"
           ? values.emissionValue
           : parseFloat(values.emissionValue),
+      document: values.document,
     };
 
     addUserEmissionMutation.mutate(submissionObject);
@@ -106,6 +110,7 @@ const AddEmission = () => {
   const isEmissionValueValid = () => {
     return /^\d+(\.\d+)?$/.test(values.emissionValue);
   };
+
   return (
     <motion.div
       initial={invisible}
@@ -149,15 +154,7 @@ const AddEmission = () => {
           />
 
           <SizedBox height={"h-6"} />
-          <DropDownMenu
-            label="Country /Region of Emission"
-            name="emissionRegion"
-            width={"w-[clamp(200px,100%,640px)]"}
-            value={values.emissionRegion}
-            valueSetter={handleChange}
-            options={emissionRegion}
-          />
-          <SizedBox height={"h-6"} />
+
           <DropDownMenu
             label="Emission Factor"
             name="emissionFactor"
@@ -167,6 +164,17 @@ const AddEmission = () => {
             options={emissionFactors[values.source?.value] || []}
           />
           <SizedBox height={"h-6"} />
+
+          <DropDownMenu
+            label="Country /Region of Emission"
+            name="emissionRegion"
+            width={"w-[clamp(200px,100%,640px)]"}
+            value={values.emissionRegion}
+            valueSetter={handleChange}
+            options={countries[values.emissionFactor?.value] || []}
+          />
+          <SizedBox height={"h-6"} />
+
           <DropDownMenu
             label="Emission Unit"
             name="emissionUnit"
@@ -176,13 +184,13 @@ const AddEmission = () => {
             options={emissionUnit}
           />
           <SizedBox height={"h-6"} />
-          <TextInput
-            label="Value of Emission Generated"
-            name="emissionValue"
-            value={values.emissionValue}
-            valueSetter={handleChange}
-            width={"w-[clamp(200px,100%,640px)]"}
-            className={isEmissionValueValid() ? "" : "text-red-500"}
+
+          <input
+            type="file"
+            className=""
+            onChange={(e) =>
+              setValues((prev) => ({ ...prev, document: e.target.files[0] }))
+            }
           />
           {!isEmissionValueValid() && (
             <p className="text-red-500 text-sm">

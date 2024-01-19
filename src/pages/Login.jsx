@@ -21,7 +21,12 @@ import toast from "react-hot-toast";
 import { XCircle } from "lucide-react";
 import { handleAxiosError, saveUser } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken, setUser, showGreetingModal, showWelcomeModal } from "../features/user/userSlice";
+import {
+  setAccessToken,
+  setUser,
+  showGreetingModal,
+  showWelcomeModal,
+} from "../features/user/userSlice";
 import secureLocalStorage from "react-secure-storage";
 import { setShowResetPasswordDialog } from "../features/resetPassword/resetPasswordSlice";
 import ResetPassword from "../components/pageComponents/Account/modals/ResetPassword";
@@ -32,7 +37,6 @@ const Login = () => {
   const { showResetPasswordDialog } = useSelector(
     (state) => state.resetPassword
   );
-
 
   const [credentials, setCredentials] = useState({
     email: "",
@@ -49,18 +53,27 @@ const Login = () => {
     mutationKey: ["register_organization"],
     mutationFn: (data) => loginUser(data),
     onSuccess: (data) => {
+      let notVerified = data.message === "Not verified";
+
+      if (notVerified) {
+        navigate("/admin");
+      }
+
       const isFirstUser = data.data.firstUse;
       console.log(isFirstUser, "First User");
       toast.dismiss();
       saveUser(data);
-  
-      if (data.message === "Reset your Password" && validator.isEmail(data.data)) {
+
+      if (
+        data.message === "Reset your Password" &&
+        validator.isEmail(data.data)
+      ) {
         dispatch(setShowResetPasswordDialog(true));
       } else {
         saveUser(data);
         dispatch(setUser(data.data));
         dispatch(setAccessToken(data.accessToken));
-  
+
         if (data.data.role === "admin") {
           navigate("/admin", { replace: true });
         } else if (data.data.role === "staff") {

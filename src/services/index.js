@@ -140,7 +140,18 @@ export const uploadInvoiceDocument = async (data) => {
 };
 
 export const addUserEmission = async (data) => {
-  const response = await axios.post("emission", data);
+  const emissionData = new FormData();
+
+  emissionData.append("document", data.document);
+  emissionData.append("emissionFactor", data.emissionFactor);
+  emissionData.append("emissionRegion", data.emissionRegion);
+  emissionData.append("emissionUnit", data.emissionUnit);
+  emissionData.append("emissionValue", data.emissionValue);
+  emissionData.append("source", data.source);
+
+  const response = await axios.post("emission", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return await response.data;
 };
 
@@ -164,5 +175,14 @@ export const assignAdmin = async (data) => {
 };
 export const removeAdminMutation = async (data) => {
   const response = await axios.put("department/unassign_hod", data);
+  return await response.data;
+};
+
+export const getUserInvoices = async () => {
+  const response = await axios.get("emission/read_invoices");
+  return await response.data;
+};
+export const getOrganisationInvoices = async () => {
+  const response = await axios.get("emission/read_organisation_invoices");
   return await response.data;
 };

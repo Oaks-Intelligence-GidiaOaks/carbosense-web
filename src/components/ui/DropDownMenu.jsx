@@ -32,12 +32,15 @@ const DropDownMenu = ({
 
   useOutsideCloser(controlRef, isFocused, setIsFocused);
 
-  const focusedLabelStyle = `left-2 top-0 text-sm ${labelBg ?? "bg-white"} ${labelColor ?? "text-primary-black"
-    }`;
-  const focusedBorderStyle = `placeholder:opacity-1 ${borderColor ?? "border-primary-blue"
-    } ${isError ? "focus:outline-[red]" : "focus:outline-primary-blue"}`;
-  const focusedDropDownStyle = `${borderColor ?? "border-primary-blue"} ${isError ? "focus:outline-[red]" : "focus:outline-primary-blue"
-    } outline outline-primary-blue border-[1px] outline-[1.5px] transition-all`;
+  const focusedLabelStyle = `left-2 top-0 text-sm ${labelBg ?? "bg-white"} ${
+    labelColor ?? "text-primary-black"
+  }`;
+  const focusedBorderStyle = `placeholder:opacity-1 ${
+    borderColor ?? "border-primary-blue"
+  } ${isError ? "focus:outline-[red]" : "focus:outline-primary-blue"}`;
+  const focusedDropDownStyle = `${borderColor ?? "border-primary-blue"} ${
+    isError ? "focus:outline-[red]" : "focus:outline-primary-blue"
+  } outline outline-primary-blue border-[1px] outline-[1.5px] transition-all`;
   const errorLabelStyle = "text-[red_!important]";
   const errorBorderStyle = "border-[red_!important]";
   const errorFocusedStyle =
@@ -46,7 +49,8 @@ const DropDownMenu = ({
   return (
     <div
       className={twMerge(
-        `border-solid border-[#ACB7BC] relative font-satoshi ${!radius ? "rounded-md" : "rounded-none"
+        `border-solid border-[#ACB7BC] relative font-satoshi ${
+          !radius ? "rounded-md" : "rounded-none"
         }`,
         `${!border ? "border" : "border-0"}`,
         `${width ?? "w-[240px]"}`,
@@ -84,26 +88,30 @@ const DropDownMenu = ({
           // }}
 
           onBlur={() => {
-            if (Array.isArray(options) && options.every((option) => option.label !== controlValue)) {
+            if (
+              Array.isArray(options) &&
+              options.every((option) => option.label !== controlValue)
+            ) {
               valueSetter(name, null);
               setControlValue("");
             }
           }}
-
           readOnly={!allowFiltering}
           // onChange={(e) => setControlValue(e.target.value)}
           onChange={(e) => {
             console.log("Input Value:", e.target.value);
             setControlValue(e.target.value);
           }}
-
           className={twMerge(
-            `${textSize ?? null} outline-0 flex-1 font-satoshi ${padding ?? "py-4"
-            } pl-5 pr-12 text-ellipsis overflow-hidden ${!radius ? "rounded-md" : "rounded-none"
+            `${textSize ?? null} outline-0 flex-1 font-satoshi ${
+              padding ?? "py-4"
+            } pl-5 pr-12 text-ellipsis overflow-hidden ${
+              !radius ? "rounded-md" : "rounded-none"
             } w-[240px] cursor-pointer ${bgColor ?? "bg-white"} `,
-            `${isFocused
-              ? focusedBorderStyle
-              : "outline-none placeholder:text-transparent"
+            `${
+              isFocused
+                ? focusedBorderStyle
+                : "outline-none placeholder:text-transparent"
             }`,
             `${isError ? errorBorderStyle : null}`,
             `${isError && isFocused ? errorFocusedStyle : null}`
@@ -112,14 +120,16 @@ const DropDownMenu = ({
         />{" "}
         <button
           className={twMerge(
-            `flex justify-center items-center w-12 ${!radius ? "rounded-md" : "rounded-none"
+            `flex justify-center items-center w-12 ${
+              !radius ? "rounded-md" : "rounded-none"
             } ${bgColor ?? "bg-white"}`
           )}
         >
           <img
             src={chevronDown}
-            className={`cursor-pointer p-[2px] rotate-180 w-6 hover:bg-gray-300 rounded-full transition-all ${isFocused ? "rotate-0" : null
-              }`}
+            className={`cursor-pointer p-[2px] rotate-180 w-6 hover:bg-gray-300 rounded-full transition-all ${
+              isFocused ? "rotate-0" : null
+            }`}
           />
         </button>
       </div>
@@ -136,12 +146,27 @@ const DropDownMenu = ({
           >
             {allowFiltering
               ? options
-                .filter((option) =>
-                  option?.label
-                    .toLowerCase()
-                    .includes(controlValue.toLowerCase())
-                )
-                .map((option, index) => (
+                  .filter((option) =>
+                    option?.label
+                      .toLowerCase()
+                      .includes(controlValue.toLowerCase())
+                  )
+                  .map((option, index) => (
+                    <li
+                      className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
+                      key={index}
+                      onClick={() => {
+                        setControlValue(option?.label);
+                        valueSetter(name, {
+                          label: option?.label,
+                          value: option?.value,
+                        });
+                      }}
+                    >
+                      {option?.label}
+                    </li>
+                  ))
+              : options.map((option, index) => (
                   <li
                     className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
                     key={index}
@@ -155,22 +180,7 @@ const DropDownMenu = ({
                   >
                     {option?.label}
                   </li>
-                ))
-              : options.map((option, index) => (
-                <li
-                  className="p-2 cursor-pointer hover:bg-gray-200 transition-all"
-                  key={index}
-                  onClick={() => {
-                    setControlValue(option?.label);
-                    valueSetter(name, {
-                      label: option?.label,
-                      value: option?.value,
-                    });
-                  }}
-                >
-                  {option?.label}
-                </li>
-              ))}
+                ))}
           </motion.ul>
         )}
       </AnimatePresence>

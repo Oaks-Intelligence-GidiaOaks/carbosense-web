@@ -1,23 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import InvoiceFrame from "../../assets/icons/InvoiceFrame.svg";
 import myinvoice from "../../assets/icons/MyInvoice.svg";
 import orgInvoice from "../../assets/icons/OrgInvoice.svg";
-import invoice from "../../assets/icons/invoice.svg";
 import { Tabs, Tab } from "../../components/Tabs";
-import StaffInvoices from "./invoice_tabs/StaffInvoices.jsx";
 import { motion } from "framer-motion";
-import {
-  fadeIn,
-  fadeOut,
-  initialUp,
-  invisible,
-  slideDown,
-} from "../../constants/framer.js";
-import { ImageConfig } from "../../components/config/ImageConfig.js";
+import { initialUp, slideDown } from "../../constants/framer.js";
+import MyInvoice from "../organization/invoice_tabs/MyInvoice.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { getUserInvoices } from "../../services/index.js";
 
 const StaffInvoice = () => {
-  const onFileChange = (files) => {
-    console.log(files);
+  const userInvoicesData = useQuery({
+    queryKey: ["getInvoices"],
+    queryFn: async () => getUserInvoices(),
+  });
+
+  const UserInvoicesList = () => {
+    if (userInvoicesData.isLoading) {
+      return <div> Loading....</div>;
+    }
+
+    if (userInvoicesData.isError) {
+      return <div>Error Occured...</div>;
+    }
+
+    return (
+      <div className="py-4 flex flex-wrap gap-3">
+        {userInvoicesData.data.data?.map((inv, i) => (
+          <MyInvoice docName={inv.name} docType="png" url={inv.url} />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -35,21 +48,11 @@ const StaffInvoice = () => {
         <Tabs>
           <Tab
             label={{
-              text: "New Invoice",
-              icon: <img src={invoice} alt="" width={12} height={12} />,
-            }}
-          >
-            <div className="py-4">
-              <StaffInvoices onFileChange={(files) => onFileChange(files)} />
-            </div>
-          </Tab>
-          <Tab
-            label={{
               text: "My Invoices",
               icon: <img src={myinvoice} alt="" width={12} height={12} />,
             }}
           >
-            <div className="py-4">{/* <MyInvoice /> */}</div>
+            <UserInvoicesList />
           </Tab>
           <Tab
             label={{
@@ -57,7 +60,9 @@ const StaffInvoice = () => {
               icon: <img src={orgInvoice} alt="" width={12} height={12} />,
             }}
           >
-            <div className="py-4">{/* <OrgInvoice /> */}</div>
+            <div className="py-4">
+              <UserInvoicesList />
+            </div>
           </Tab>
         </Tabs>
       </div>

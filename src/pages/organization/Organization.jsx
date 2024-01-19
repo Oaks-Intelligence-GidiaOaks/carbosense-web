@@ -8,12 +8,7 @@ import { motion } from "framer-motion";
 import { initialUp, slideDown } from "../../constants/framer";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import {
-  getAllDepartmentStaff,
-  getOrganizationPendingStaff,
-  getAllDepartment,
-  getAllOrganizationStaff,
-} from "../../services";
+import { getOrganizationPendingStaff } from "../../services";
 
 const Organization = () => {
   const { user } = useSelector((state) => state.user);
@@ -22,7 +17,6 @@ const Organization = () => {
     queryKey: ["staff"],
     queryFn: () => getOrganizationPendingStaff(),
   });
-
 
   return (
     <motion.div
