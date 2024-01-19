@@ -55,12 +55,12 @@ export const departments = [
 ];
 
 export const emissionRegion = [
-  { label: "Sweden", value: "SWE" },
+  { label: "Sweden", value: "SE" },
   { label: "United Kingdom", value: "GB" },
-  { label: "France", value: "FRA" },
+  { label: "France", value: "FR" },
   { label: "Denmark", value: "DK" },
   { label: "United States", value: "US" },
-  { label: "Canada", value: "CAN" },
+  { label: "Canada", value: "CA" },
 ];
 
 export const emissionSource = [
@@ -160,14 +160,14 @@ export const emissionUnit = [
 ];
 
 export const countries = {
-  fuel: [{ label: "Canada", value: "CAN" }],
+  fuel: [{ label: "Canada", value: "CA" }],
   heat_and_steam: [
     { label: "Denmark", value: "DK" },
     { label: "United Kingdom", value: "GB" },
-    { label: "France", value: "FRA" },
+    { label: "France", value: "FR" },
   ],
   electricity_from_grid: [
-    { label: "Canada", value: "CAN" },
+    { label: "Canada", value: "CA" },
     { label: "United States", value: "US" },
     { label: "United Kingdom", value: "GB" },
   ],
@@ -176,28 +176,28 @@ export const countries = {
   water_supply: [{ label: "United Kingdom", value: "GB" }],
   waste_from_recycled_mixed_plastic: [{ label: "United States", value: "US" }],
   hotel_stay: [
-    { label: "Canada", value: "CAN" },
+    { label: "Canada", value: "CA" },
     { label: "United Kingdom", value: "GB" },
     { label: "United States", value: "US" },
   ],
   hotel_and_restaurant_services: [
-    { label: "Canada", value: "CAN" },
+    { label: "Canada", value: "CA" },
     { label: "United Kingdom", value: "GB" },
-    { label: "France", value: "FRA" },
+    { label: "France", value: "FR" },
     { label: "United States", value: "US" },
   ],
   office_machinery_and_computers: [
-    { label: "Canada", value: "CAN" },
+    { label: "Canada", value: "CA" },
     { label: "Denmark", value: "DK" },
-    { label: "France", value: "FRA" },
+    { label: "France", value: "FR" },
     { label: "United Kingdom", value: "GB" },
     { label: "United States", value: "US" },
   ],
   office_equipment_rental: [
     { label: "Denmark", value: "DK" },
-    { label: "France", value: "FRA" },
+    { label: "France", value: "FR" },
     { label: "United Kingdom", value: "GB" },
-    { label: "Canada", value: "CAN" },
+    { label: "Canada", value: "CA" },
     { label: "United States", value: "US" },
   ],
 };
