@@ -5,7 +5,11 @@ import { AnimatePresence } from "framer-motion";
 import InviteStaff from "./InviteStaff";
 import CreateDepartment from "./CreateDepartment";
 import { useSelector } from "react-redux";
-import { getAllDepartment, getAllDepartmentStaff, getAllOrganizationStaff } from "../../../services";
+import {
+  getAllDepartment,
+  getAllDepartmentStaff,
+  getAllOrganizationStaff,
+} from "../../../services";
 import { useQuery } from "@tanstack/react-query";
 import {
   Checkbox,
@@ -37,12 +41,10 @@ const MyDepartment = () => {
 
   const { deptData } = useSelector((state) => state.org);
 
-
   const get_All_Department_staff = useQuery({
     queryKey: ["department_staff"],
     queryFn: () => getAllOrganizationStaff(),
   });
-
 
   const handleInviteClick = () => {
     setShowInviteForm(true);
@@ -110,9 +112,7 @@ const MyDepartment = () => {
           </div>
         ) : (
           <div>
-            <span className="text-sm text-primary-black">
-              0 Staff Total in Escrow Tech
-            </span>
+            <span className="text-sm text-primary-black">Department Staff</span>
           </div>
         )}
         {!showInviteForm && (
@@ -124,11 +124,10 @@ const MyDepartment = () => {
           </button>
         )}
       </div>
-      {!showInviteForm && (
+      {/* {!showInviteForm && (
         <div>
           <FormControl sx={{ width: "30%" }}>
-
-          <InputLabel
+            <InputLabel
               sx={{
                 color: "text-gray-600",
                 fontWeight: "light",
@@ -136,7 +135,7 @@ const MyDepartment = () => {
               }}
               id="demo-simple-select-label"
             >
-          Select Department Staff
+              Select Department Staff
             </InputLabel>
             <Select
               value={selectedValue}
@@ -167,7 +166,7 @@ const MyDepartment = () => {
             </Select>
           </FormControl>
         </div>
-      )}
+      )} */}
 
       <div className="mt-4">
         <AnimatePresence mode="sync">
@@ -181,12 +180,11 @@ const MyDepartment = () => {
             </div>
           )}
 
-          {!showInviteForm && (
+          {/* {!showInviteForm && (
             <div className="flex items-center justify-between my-5">
               <Pagination />
-              {/* <div>Loading</div> */}
             </div>
-          )}
+          )} */}
         </AnimatePresence>
       </div>
     </div>

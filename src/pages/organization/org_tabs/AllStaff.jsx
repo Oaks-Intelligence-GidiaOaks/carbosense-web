@@ -22,6 +22,7 @@ const tabs = ["Invited Member", "Pending Invites"];
 const AllStaff = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+
   const get_All_Organization_staff = useQuery({
     queryKey: ["department_staff"],
     queryFn: () => getAllOrganizationStaff(),
@@ -32,6 +33,12 @@ const AllStaff = () => {
     retryOnMount: false,
     retry: false,
   });
+
+  const getAllPendingStaff = useQuery({
+    queryKey: ["staff"],
+    queryFn: () => getOrganizationPendingStaff(),
+  });
+
   const get_All_Departments = useQuery({
     queryKey: ["department"],
     queryFn: () => getAllDepartment(),
@@ -54,11 +61,6 @@ const AllStaff = () => {
       dispatch(setDeptData(get_All_Departments?.data?.data));
     }
   }, [get_All_Departments, dispatch]);
-
-  const getAllPendingStaff = useQuery({
-    queryKey: ["staff"],
-    queryFn: () => getOrganizationPendingStaff(),
-  });
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);

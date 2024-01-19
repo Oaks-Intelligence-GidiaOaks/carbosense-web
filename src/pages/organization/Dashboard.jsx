@@ -10,7 +10,11 @@ import { useSelector } from "react-redux";
 import UserGreeting from "../../components/pageComponents/Account/modals/UserGreeting";
 import UserWelcomeBack from "../../components/pageComponents/Account/modals/UserWelcomeBack";
 import { useQuery } from "@tanstack/react-query";
-import { getAllDepartmentEmission, getUserEmission } from "../../services";
+import {
+  getAllDepartmentEmission,
+  getOrganisationEmission,
+  getUserEmission,
+} from "../../services";
 import { AccountPageShimmer } from "../../primitives/shimmers";
 
 const Dashboard = () => {
@@ -24,7 +28,7 @@ const Dashboard = () => {
   });
   const get_user_emission = useQuery({
     queryKey: ["user_emission"],
-    queryFn: () => getUserEmission(),
+    queryFn: () => getOrganisationEmission(),
   });
 
   const emissionData = get_all_department_emission.data?.data || [];

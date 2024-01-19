@@ -2,11 +2,37 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editOrg } from "../../../features/user/userSlice";
 import { HiOutlinePencil } from "react-icons/hi";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getAllOrganizationStaff,
+  getOrganisationEmission,
+} from "../../../services";
 
 const OrgInfoTab = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.user);
+
+  const organisationEmission = useQuery({
+    queryKey: ["getOrganisationEmission"],
+    queryFn: async () => getOrganisationEmission(),
+  });
+
+  const allOrganisationStaff = useQuery({
+    queryKey: ["getAllOrganizationStaff"],
+    queryFn: async () => getAllOrganizationStaff(),
+  });
+
+  let totalEmissions;
+  let totalStaff;
+
+  if (organisationEmission.isSuccess) {
+    totalEmissions = organisationEmission.data.co2e_total || 0;
+  }
+
+  if (allOrganisationStaff.isSuccess) {
+    totalStaff = allOrganisationStaff.data.count || 0;
+  }
 
   return (
     <div>
@@ -79,13 +105,15 @@ const OrgInfoTab = () => {
               <span className="text-sm text-primary-gray">
                 Total Org Emissions
               </span>
-              <span className="text-sm text-primary-black">0</span>
+              <span className="text-sm text-primary-black">
+                {totalEmissions} tC02e
+              </span>
             </div>
             <div className="flex items-center justify-between border p-3">
               <span className="text-sm text-primary-gray">
                 Total Org members
               </span>
-              <span className="text-sm text-primary-black">0</span>
+              <span className="text-sm text-primary-black">{totalStaff}</span>
             </div>
             <div className="flex items-center justify-between border p-3">
               <span className="text-sm text-primary-gray">Created on</span>

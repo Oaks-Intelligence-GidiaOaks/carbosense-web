@@ -57,11 +57,13 @@ const CreateDepartment = ({ onClose }) => {
 
   const options = useMemo(() => {
     return (
-      data?.data.map((staff) => ({
-        id: staff._id,
-        value: staff._id,
-        label: staff.fullName,
-      })) || []
+      data?.data
+        .filter((it) => !it.departmentId)
+        .map((staff) => ({
+          id: staff._id,
+          value: staff._id,
+          label: staff.fullName,
+        })) || []
     );
   }, [data?.data]);
 

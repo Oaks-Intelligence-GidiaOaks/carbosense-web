@@ -71,16 +71,16 @@ const StaffDashboard = () => {
           <DashboardStats emissionData={get_user_emission.data} />
         </div>
 
-        <div className="px-2 md:px-8 mt-4">
+        {/* <div className="px-2 md:px-8 mt-4">
           <h3 className="text-primary-black font-medium text-lg mt-2 mb-4">
             Emissions by Department
-          </h3>
+          </h3> */}
 
-          <EmissionsGrid tableData={tableData} />
-          {/* <div className="flex items-center justify-between my-5">
+        {/* <EmissionsGrid tableData={tableData} /> */}
+        {/* <div className="flex items-center justify-between my-5">
           <Pagination />
         </div> */}
-        </div>
+        {/* </div> */}
       </motion.div>
       {setshowGreetingModal && <UserGreeting />}
       {setshowWelcomeBack && <UserWelcomeBack />}

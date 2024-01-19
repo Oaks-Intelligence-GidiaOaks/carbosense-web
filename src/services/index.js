@@ -78,6 +78,10 @@ export const getUserEmission = async () => {
   const response = await axios.get("emission");
   return await response.data;
 };
+export const getOrganisationEmission = async () => {
+  const response = await axios.get("emission/organisation");
+  return await response.data;
+};
 
 export const getAllDepartmentStaff = async (id) => {
   const response = await axios.get(`department/${id}`);

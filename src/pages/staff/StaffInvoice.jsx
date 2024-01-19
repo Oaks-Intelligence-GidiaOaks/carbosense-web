@@ -45,26 +45,12 @@ const StaffInvoice = () => {
       </div>
 
       <div className="px-2 md:px-0">
-        <Tabs>
-          <Tab
-            label={{
-              text: "My Invoices",
-              icon: <img src={myinvoice} alt="" width={12} height={12} />,
-            }}
-          >
-            <UserInvoicesList />
-          </Tab>
-          <Tab
-            label={{
-              text: "Org Invoices",
-              icon: <img src={orgInvoice} alt="" width={12} height={12} />,
-            }}
-          >
-            <div className="py-4">
-              <UserInvoicesList />
-            </div>
-          </Tab>
-        </Tabs>
+        <div className="px-7 py-3">
+          <div className="border-b-2 border-black text-xl pb-2 w-fit">
+            My Invoices
+          </div>
+          <UserInvoicesList />
+        </div>
       </div>
     </motion.div>
   );

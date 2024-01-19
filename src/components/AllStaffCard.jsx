@@ -28,6 +28,7 @@ const AllStaffCard = ({ staffMember }) => {
     monthlyEmissionsChange,
     isAdmin,
     organizationName,
+    departmentName,
     certOfIncorporation,
   } = staffMember;
 
@@ -83,7 +84,7 @@ const AllStaffCard = ({ staffMember }) => {
             <span className=" text-primary-gray text-[12px]"></span>
           </h3>
           <span className=" text-primary-gray text-[12px] leading-3">
-            {organizationName}
+            {departmentName || "Not Assigned"}
           </span>
         </div>
       </div>
@@ -137,7 +138,7 @@ const AllStaffCard = ({ staffMember }) => {
         </button>
       </div>
 
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <div ref={modalRef}>
           <StaffModal
             staffID={staffMember._id}
@@ -145,7 +146,7 @@ const AllStaffCard = ({ staffMember }) => {
             closeModal={closeModal}
           />
         </div>
-      )}
+      )} */}
     </motion.div>
   );
 };
