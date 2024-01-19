@@ -135,8 +135,24 @@ export const uploadInvoiceDocument = async (data) => {
   return await response.data;
 };
 
+// export const addUserEmission = async (data) => {
+//   const response = await axios.post("emission", data);
+//   return await response.data;
+// };
+
 export const addUserEmission = async (data) => {
-  const response = await axios.post("emission", data);
+  const emissionData = new FormData();
+
+  emissionData.append("document", data.document);
+  emissionData.append("emissionFactor", data.emissionFactor);
+  emissionData.append("emissionRegion", data.emissionRegion);
+  emissionData.append("emissionUnit", data.emissionUnit);
+  emissionData.append("emissionValue", data.emissionValue);
+  emissionData.append("source", data.source);
+
+  const response = await axios.post("emission", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return await response.data;
 };
 

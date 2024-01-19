@@ -34,7 +34,7 @@ const Invoice = () => {
 
       <div className="px-2 md:px-0">
         <Tabs>
-          <Tab
+          {/* <Tab
             label={{
               text: "New Invoice",
               icon: <img src={invoice} alt="" width={12} height={12} />,
@@ -43,7 +43,7 @@ const Invoice = () => {
             <div className="py-4">
               <NewInvoice onFileChange={(files) => onFileChange(files)}/>
             </div>
-          </Tab>
+          </Tab> */}
           <Tab
             label={{
               text: "My Invoices",
