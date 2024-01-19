@@ -72,9 +72,9 @@ const AccountTab = ({ userInfo }) => {
               </div>
             </div>
             <div className="">
-              <div className="flex items-center justify-between">
+              <div className="flex gap-6 items-center justify-between">
                 <span className="text-sm text-primary-gray">Email</span>
-                <span className="text-sm text-primary-black">
+                <span className="text-sm text-primary-black truncate">
                   {userInfo.role !== "admin"
                     ? userInfo?.email
                     : userInfo?.personalEmail}
@@ -198,7 +198,7 @@ const AccountTab = ({ userInfo }) => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 md:gap-4 mt-4 p-4 md:p-6 bg-white">
+      <div className="grid  lg:grid-cols-2 gap-6 lg:gap-4 mt-4 p-4 lg:p-6 bg-white">
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">

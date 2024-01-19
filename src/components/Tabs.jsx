@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 const Tabs = ({ children }) => {
-  const [activeTab, setActiveTab] = useState(children[0].props.label.text);
+  const tabsArray = React.Children.toArray(children);
+  const [activeTab, setActiveTab] = useState(tabsArray[0].props.label.text);
 
   const handleClick = (e, newActiveTab) => {
     e.preventDefault();
@@ -10,8 +11,8 @@ const Tabs = ({ children }) => {
 
   return (
     <div className=" md:px-8 mt-6">
-      <div className="flex md:max-w-xl justify-between border-b border-gray-300">
-        {children.map((child) => (
+      <div className="flex w-full justify-between border-b border-gray-300">
+        {tabsArray?.map((child) => (
           <button
             key={child.props.label.text}
             className={`${activeTab === child.props.label.text
@@ -28,7 +29,7 @@ const Tabs = ({ children }) => {
         ))}
       </div>
       <div className="py-4">
-        {children.map((child) => {
+        {tabsArray.map((child) => {
           if (child.props.label.text === activeTab) {
             return <div key={child.props.label.text}>{child.props.children}</div>;
           }

@@ -7,6 +7,8 @@ import SizedBox from "./SizedBox";
 import Spinner from "./Spinner";
 import TextButton from "./TextButton";
 import PermissionCard from "./PermissionCard";
+import MultiSelectDropDown from "./MultiSelectDropDown";
+import YearDropDown from "./YearDropDown";
 
 export {
   TextInput,
@@ -18,4 +20,6 @@ export {
   Spinner,
   TextButton,
   PermissionCard,
+  MultiSelectDropDown,
+  YearDropDown
 };

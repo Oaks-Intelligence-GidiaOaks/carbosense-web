@@ -52,6 +52,7 @@ const Account = () => {
       retry: false,
     });
 
+    // console.log(data.data)
   // update user data on refetch
   useEffect(() => {
     if (data) {
