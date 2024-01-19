@@ -5,7 +5,8 @@ const initialState = {
   staffMember: null,
   showAddToDepartment: false,
   showMakeAdmin: false,
-  showRemoveAdmin: false
+  showRemoveAdmin: false,
+  showDeleteStaff: false,
 };
 
 export const staffSlice = createSlice({
@@ -30,8 +31,12 @@ export const staffSlice = createSlice({
     removeAdmin: (state, action) => {
       state.showRemoveAdmin = action.payload;
     },
+
+    deleteStaff: (state, action) => {
+      state.showDeleteStaff = action.payload;
+    }
   },
 });
 
-export const { updateStaff, makeAdmin, addToDepart, removeAdmin } = staffSlice.actions;
+export const { updateStaff, makeAdmin, deleteStaff, addToDepart, removeAdmin } = staffSlice.actions;
 export default staffSlice.reducer;

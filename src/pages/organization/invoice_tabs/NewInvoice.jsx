@@ -34,7 +34,7 @@ const NewInvoice = (props) => {
         duration: 5000,
         id: "profile-updated",
       });
-      queryClient.invalidateQueries(["fetch_account_info"]);
+      queryClient.invalidateQueries(["invoice"]);
     },
     onError: (e) => toast.error(handleAxiosError(e)),
   });

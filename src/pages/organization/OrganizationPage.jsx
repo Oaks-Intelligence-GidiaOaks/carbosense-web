@@ -8,6 +8,7 @@ import SuccessCreateDepartmentModal from "../../components/pageComponents/Accoun
 import AddStaffToDepartment from "../../components/pageComponents/Account/modals/AddStaffToDepartment";
 import MakeAdmin from "../../components/pageComponents/Account/modals/MakeAdmin";
 import RemoveAdmin from "../../components/pageComponents/Account/modals/RemoveAdmin";
+import DeleteStaffModal from "../../components/pageComponents/Account/modals/DeleteStaffModal";
 
 const OrganizationPage = () => {
   const { showInviteUserScreen } = useSelector((state) => state.inviteUser);
@@ -17,6 +18,7 @@ const OrganizationPage = () => {
   const { showAddToDepartment } = useSelector((state) => state.staff);
   const { showMakeAdmin } = useSelector((state) => state.staff);
   const { showRemoveAdmin } = useSelector((state) => state.staff);
+  const { showDeleteStaff } = useSelector((state) => state.staff);
 
   return (
     <>
@@ -28,6 +30,7 @@ const OrganizationPage = () => {
       {showAddToDepartment && <AddStaffToDepartment />}
       {showMakeAdmin && <MakeAdmin />}
       {showRemoveAdmin && <RemoveAdmin />}
+      {showDeleteStaff && <DeleteStaffModal />}
     </>
   );
 };

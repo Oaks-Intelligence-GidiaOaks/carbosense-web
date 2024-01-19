@@ -144,9 +144,25 @@ export const getAllDepartments = async () => {
   const response = await axios.get("department");
   return await response.data.data;
 };
+export const readInvoice = async () => {
+  const response = await axios.get("emission/read_invoices");
+  return await response.data.data;
+};
+export const readOrgInvoice = async () => {
+  const response = await axios.get("emission/read_organisation_invoices");
+  return await response.data.data;
+};
 
 export const addStaffToAdmin = async (data) => {
   const response = await axios.post("department/staff", data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.data;
+};
+export const removeDepartmentStaff = async (data) => {
+  const response = await axios.delete("department/staff", { data }, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -158,6 +174,7 @@ export const assignAdmin = async (data) => {
   const response = await axios.put("department/assign_hod", data);
   return await response.data;
 };
+
 export const removeAdminMutation = async (data) => {
   const response = await axios.put("department/unassign_hod", data);
   return await response.data;

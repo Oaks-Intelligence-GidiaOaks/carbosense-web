@@ -4,7 +4,8 @@ import {
   addToDepart,
   updateStaff,
   makeAdmin,
-  removeAdmin
+  removeAdmin,
+  deleteStaff,
 } from "../../../../features/staff/staffSlice";
 
 const StaffModal = ({ staffID, staffMember, closeModal }) => {
@@ -14,7 +15,7 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
     dispatch(updateStaff({ staffID, staffMember }));
     dispatch(addToDepart(true));
   };
- 
+
   const handleAdminAction = () => {
     if (staffMember.isHod) {
       dispatch(updateStaff({ staffID, staffMember }));
@@ -25,13 +26,15 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
     }
   };
 
+  const handleDeleteStaff = () => {
+    dispatch(updateStaff({ staffID, staffMember }));
+    dispatch(deleteStaff(true));
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center">
       <div>
-        <div
-        
-        className="bg-white p-2 rounded-lg flex flex-col">
+        <div className="bg-white p-2 rounded-lg flex flex-col">
           <h2 className=" font-semibold mb-2 text-sm">Staff Actions</h2>
 
           <button
@@ -49,10 +52,10 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
           </button>
 
           <button
-            onClick={closeModal}
+            onClick={handleDeleteStaff}
             className=" text-white bg-red-700 mt-2 p-1 hover:opacity-30 rounded  text-xs cursor-pointer"
           >
-            Close
+            Remove Staff
           </button>
         </div>
       </div>

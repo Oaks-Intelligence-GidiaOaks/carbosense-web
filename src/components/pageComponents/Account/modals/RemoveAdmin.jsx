@@ -98,18 +98,16 @@ const RemoveAdmin = () => {
                 <SizedBox height={"h-2"} />
 
                 <div className="flex items-center gap-4 mt-4">
+                  <button
+                    onClick={() => dispatch(removeAdmin(false))}
+                    className=" text-primary-blue border border-primary-blue hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300
+       rounded-none h-8 px-3 flex items-center justify-center text-xs font-medium"
+                  >
+                    Cancel
+                  </button>
+
                   <Button
-                    content="Close"
-                    bgColor="bg-white"
-                    width="w-[clamp(80px,20%,120px)]"
-                    height="h-8"
-                    borderStyle="border border-primary-blue"
-                    textColor=" text-primary-blue"
-                    textSize="text-xs"
-                    callback={() => dispatch(removeAdmin(false))}
-                  />
-                  <Button
-                    content="Yes, Proceed"
+                    content="Proceed"
                     width="w-[clamp(80px,20%,120px)]"
                     height="h-8"
                     textSize="text-xs"

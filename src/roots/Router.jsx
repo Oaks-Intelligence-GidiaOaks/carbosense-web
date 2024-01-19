@@ -54,7 +54,6 @@ export const router = createBrowserRouter(
         <Route path="invoice" element={<StaffInvoice />} />
         <Route path="account" element={<StaffAccount />} />
         <Route path="activity" element={<StaffActivityLog />} />
-     
       </Route>
     </>
   )
@@ -119,33 +118,32 @@ createBrowserRouter([
     ],
   },
 
-    // Staff routes
-    {
-      path: "/staff",
-      element: <StaffLayout />,
-      children: [
-        {
-          path: "/staff",
-          element: <StaffDashboard />,
-        },
-        {
-          path: "emissions",
-          element: <StaffEmission />,
-        },
-        {
-          path: "invoice",
-          element: <StaffInvoice />,
-        },
-        {
-          path: "account",
-          element: <StaffAccount />,
-        },
-   
-        {
-          path: "activity",
-          element: <StaffActivityLog />,
-        },
-   
-      ],
-    },
+  // Staff routes
+  {
+    path: "/staff",
+    element: <StaffLayout />,
+    children: [
+      {
+        path: "/staff",
+        element: <StaffDashboard />,
+      },
+      {
+        path: "emissions",
+        element: <StaffEmission />,
+      },
+      {
+        path: "invoice",
+        element: <StaffInvoice />,
+      },
+      {
+        path: "account",
+        element: <StaffAccount />,
+      },
+
+      {
+        path: "activity",
+        element: <StaffActivityLog />,
+      },
+    ],
+  },
 ]);

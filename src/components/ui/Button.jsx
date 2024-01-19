@@ -16,6 +16,8 @@ const Button = ({
   textSize,
   spinnerSize,
 }) => {
+
+
   return (
     <button
       disabled={isLoading ?? disabled}
@@ -28,7 +30,8 @@ const Button = ({
         textSize ?? null,
         hoverColor ?? "hover:bg-[#3030ac]",
         disabled ? "bg-[#a9a9a9] hover:bg-[#a9a9a9] cursor-not-allowed" : null,
-        textColor ?? "text-white"
+        textColor ?? "text-white",
+       
       )}
       onClick={callback}
     >

@@ -60,7 +60,7 @@ const AllStaff = () => {
 
   const [showInviteForm, setShowInviteForm] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
-  const [activeTab, setActiveTab] = useState("Invited Org Member");
+  const [activeTab, setActiveTab] = useState("Invited Member");
 
   const handleInviteClick = () => {
     setShowInviteForm(true);

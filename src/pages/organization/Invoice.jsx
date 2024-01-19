@@ -17,6 +17,7 @@ import { ImageConfig } from "../../components/config/ImageConfig.js";
 
 const Invoice = () => {
 
+
   const onFileChange = (files) => {
     console.log(files);
   }
