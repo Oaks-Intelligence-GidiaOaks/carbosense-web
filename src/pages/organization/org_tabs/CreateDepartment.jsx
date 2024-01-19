@@ -168,7 +168,11 @@ const CreateDepartment = ({ onClose }) => {
           </span>
         </div>
 
-        <div className="flex gap-x-6">
+        <div className="max-w-md lg:max-w-3xl ">
+
+          <div className="flex gap-x-6 ">
+
+         
           <TextInput
             value={values.name}
             name={"name"}
@@ -226,9 +230,10 @@ const CreateDepartment = ({ onClose }) => {
               ))}
             </Select>
           </FormControl>
-        </div>
 
-        <div className="flex justify-end mt-4 gap-x-4">
+          </div>
+
+          <div className="flex justify-end mt-4 gap-x-4">
           <Button
             content="Cancel"
             bgColor="bg-white"
@@ -256,6 +261,10 @@ const CreateDepartment = ({ onClose }) => {
             callback={handleCreateDepartment}
           />
         </div>
+        </div>
+
+        
+    
       </motion.div>
     </>
   );

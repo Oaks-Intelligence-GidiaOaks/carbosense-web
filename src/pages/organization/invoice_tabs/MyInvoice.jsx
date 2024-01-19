@@ -20,7 +20,7 @@ const MyInvoice = () => {
           {data?.map((item) => (
             <div
               key={item.name}
-              className=" flex hover:opacity-60 flex-col w-fit border border-solid border-[#D8DDE8] bg-gray-100 items-center  gap-x-2"
+              className=" flex hover:opacity-60 flex-col w-36 border border-solid border-[#D8DDE8] bg-gray-100 items-center  gap-x-2"
             >
               <img src={item.url} alt="" className=" h-36 bg-cover w-36" />
 

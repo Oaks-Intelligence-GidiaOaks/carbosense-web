@@ -51,7 +51,7 @@ const Organization = () => {
               />
             </div>
           </Tab>
-          {/* <Tab
+          <Tab
             label={{
               text: "Department",
               icon: <img src={department} alt="" width={12} height={12} />,
@@ -60,7 +60,7 @@ const Organization = () => {
             <div className="py-4">
               <MyDepartment />
             </div>
-          </Tab> */}
+          </Tab>
         </Tabs>
       </div>
     </motion.div>

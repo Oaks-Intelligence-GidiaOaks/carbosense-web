@@ -13,10 +13,10 @@ import { Button, SizedBox } from "../../../ui";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDepart } from "../../../../features/staff/staffSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addStaffToAdmin } from "../../../../services";
 import { handleAxiosError } from "../../../../utils";
+import axios from "axios";
 
-const AddStaffToDepartment = () => {
+const AssisgnRole = () => {
   const addInviteUserRef = useRef();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
@@ -24,15 +24,24 @@ const AddStaffToDepartment = () => {
   const [isSuccessful, setIsSuccessful] = useState(false);
 
   const payload = {
-    departmentId: staffMember.departmentId,
-    staffId: staffMember._id,
+    role: "staff",
   };
+
+  console.log(staffMember, "STAFF MEMBER");
+
+   const assignRole = async () => {
+    const response = await axios.put(`organisation/assign_role/${staffMember._id}`);
+  
+    return await response.data;
+  };
+
+  const staffName = staffMember.fullName;
 
   const add_staff_department = useMutation({
     mutationKey: ["make_admin"],
-    mutationFn: async (data) => addStaffToAdmin(data),
+    mutationFn: async (data) => assignRole(data),
     onSuccess: (data) => {
-      if (data.message === "Staff added to department successfully") {
+      if (data.message === `${staffName} successfully changed role`) {
         setIsSuccessful(true);
       }
       queryClient.invalidateQueries(["department_staff"]);
@@ -75,8 +84,8 @@ const AddStaffToDepartment = () => {
                 }`}
               >
                 {isSuccessful
-                  ? `Staff member successfully added to ${staffMember.organizationName} `
-                  : "Add Staff to Department"}
+                  ? `Successfully changed role for ${staffMember.fullName} `
+                  : "Assign Role"}
               </h2>
               <div className="mt-4">
                 <p className="text-sm text-justify text-primary-gray">
@@ -112,4 +121,4 @@ const AddStaffToDepartment = () => {
   );
 };
 
-export default AddStaffToDepartment;
+export default AssisgnRole;

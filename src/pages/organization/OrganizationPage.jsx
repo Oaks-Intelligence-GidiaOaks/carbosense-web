@@ -5,10 +5,10 @@ import { initialUp, slideDown } from "../../constants/framer";
 import { SuccessInviteModal } from "../../components/pageComponents/Account/modals";
 import { useSelector } from "react-redux";
 import SuccessCreateDepartmentModal from "../../components/pageComponents/Account/modals/SuccessCreateDepartmentModal";
-import AddStaffToDepartment from "../../components/pageComponents/Account/modals/AddStaffToDepartment";
 import MakeAdmin from "../../components/pageComponents/Account/modals/MakeAdmin";
 import RemoveAdmin from "../../components/pageComponents/Account/modals/RemoveAdmin";
 import DeleteStaffModal from "../../components/pageComponents/Account/modals/DeleteStaffModal";
+import AssisgnRole from "../../components/pageComponents/Account/modals/AssignRole";
 
 const OrganizationPage = () => {
   const { showInviteUserScreen } = useSelector((state) => state.inviteUser);
@@ -27,7 +27,7 @@ const OrganizationPage = () => {
       </motion.div>
       {showInviteUserScreen && <SuccessInviteModal />}
       {showCreateDepartmentScreen && <SuccessCreateDepartmentModal />}
-      {showAddToDepartment && <AddStaffToDepartment />}
+      {showAddToDepartment && <AssisgnRole />}
       {showMakeAdmin && <MakeAdmin />}
       {showRemoveAdmin && <RemoveAdmin />}
       {showDeleteStaff && <DeleteStaffModal />}

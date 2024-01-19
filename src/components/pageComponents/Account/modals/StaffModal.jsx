@@ -41,14 +41,14 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
             onClick={handleAddStaffToDepartment}
             className=" bg-primary-blue hover:bg-opacity-30 text-white p-1 text-xs rounded w-full"
           >
-            Add to Department
+            Assign Admin Role
           </button>
 
           <button
             onClick={handleAdminAction}
             className=" bg-primary-blue hover:bg-opacity-30 text-white text-xs mt-2 p-1  rounded w-full"
           >
-            {staffMember.isHod ? "Unassigned Admin" : "Make Admin"}
+            {staffMember.isHod ? "Remove HOD" : "Make HOD"}
           </button>
 
           <button

@@ -5,7 +5,11 @@ import { AnimatePresence } from "framer-motion";
 import InviteStaff from "./InviteStaff";
 import CreateDepartment from "./CreateDepartment";
 import { useSelector } from "react-redux";
-import { getAllDepartment, getAllDepartmentStaff, getAllOrganizationStaff } from "../../../services";
+import {
+  getAllDepartment,
+  getAllDepartmentStaff,
+  getAllOrganizationStaff,
+} from "../../../services";
 import { useQuery } from "@tanstack/react-query";
 import {
   Checkbox,
@@ -37,12 +41,10 @@ const MyDepartment = () => {
 
   const { deptData } = useSelector((state) => state.org);
 
-
   const get_All_Department_staff = useQuery({
     queryKey: ["department_staff"],
     queryFn: () => getAllOrganizationStaff(),
   });
-
 
   const handleInviteClick = () => {
     setShowInviteForm(true);
@@ -99,94 +101,10 @@ const MyDepartment = () => {
 
   return (
     <div>
-      <div className="flex item justify-between mb-3">
-        {showBackButton ? (
-          <div
-            className="flex items-center gap-4 hover:cursor-pointer"
-            onClick={handleBackClick}
-          >
-            <HiArrowLeft />
-            <span className="text-sm">Back</span>
-          </div>
-        ) : (
-          <div>
-            <span className="text-sm text-primary-black">
-              0 Staff Total in Escrow Tech
-            </span>
-          </div>
-        )}
-        {!showInviteForm && (
-          <button
-            onClick={handleInviteClick}
-            className="text-[12px] border rounded border-primary-blue text-primary-blue py-[6px] px-2  bg-[#E3ECFF]"
-          >
-            Create Department
-          </button>
-        )}
-      </div>
-      {!showInviteForm && (
-        <div>
-          <FormControl sx={{ width: "30%" }}>
-
-          <InputLabel
-              sx={{
-                color: "text-gray-600",
-                fontWeight: "light",
-                fontSize: "16px",
-              }}
-              id="demo-simple-select-label"
-            >
-          Select Department Staff
-            </InputLabel>
-            <Select
-              value={selectedValue}
-              multiple
-              id="multi-select"
-              onChange={handleValue}
-              renderValue={() => selectedLabels.join(", ")}
-              MenuProps={MenuProps}
-              label="Select Department Staff"
-            >
-              <MenuItem value="all">
-                <ListItemIcon>
-                  <Checkbox checked={isAllSelected}></Checkbox>
-                </ListItemIcon>
-                <ListItemText primary="Select All"></ListItemText>
-              </MenuItem>
-              {Options.map((options) => (
-                <MenuItem key={options.id} value={options.value}>
-                  <ListItemIcon>
-                    <Checkbox
-                      name="select-checkbox"
-                      checked={selectedValue.includes(options.value)}
-                    ></Checkbox>
-                  </ListItemIcon>
-                  <ListItemText primary={options.value}></ListItemText>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-      )}
-
+     
       <div className="mt-4">
         <AnimatePresence mode="sync">
-          {showInviteForm ? (
-            <CreateDepartment onClose={() => setShowInviteForm(false)} />
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {get_All_Department_staff?.data?.data.map((staffMember) => (
-                <AllStaffCard key={staffMember._id} staffMember={staffMember} />
-              ))}
-            </div>
-          )}
-
-          {!showInviteForm && (
-            <div className="flex items-center justify-between my-5">
-              <Pagination />
-              {/* <div>Loading</div> */}
-            </div>
-          )}
+          <CreateDepartment onClose={() => setShowInviteForm(false)} />
         </AnimatePresence>
       </div>
     </div>

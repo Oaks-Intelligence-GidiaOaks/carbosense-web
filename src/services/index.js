@@ -169,20 +169,17 @@ export const readOrgInvoice = async () => {
   return await response.data.data;
 };
 
-export const addStaffToAdmin = async (data) => {
-  const response = await axios.post("department/staff", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return await response.data;
-};
+
 export const removeDepartmentStaff = async (data) => {
-  const response = await axios.delete("department/staff", { data }, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await axios.delete(
+    "department/staff",
+    { data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return await response.data;
 };
 
