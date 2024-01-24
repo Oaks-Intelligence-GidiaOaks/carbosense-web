@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -32,7 +32,9 @@ const Login = () => {
   const { showResetPasswordDialog } = useSelector(
     (state) => state.resetPassword
   );
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
+ 
 
   const [credentials, setCredentials] = useState({
     email: "",
@@ -131,6 +133,17 @@ const Login = () => {
 
     return false;
   }, [submitForm.isPending, credentials.email, credentials.password]);
+
+  useEffect(() => {
+    const updateYear = () => {
+      setCurrentYear(new Date().getFullYear());
+    };
+
+    updateYear();
+    const intervalId = setInterval(updateYear, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>
@@ -232,6 +245,12 @@ const Login = () => {
           />
         </div>
       </main>
+
+      <div className="mt-20 md:mt-0">
+        <p className=" absolute bottom-0 left-0 z-30 text-sm w-full p-3 text-center gap-10 text-primary-black">
+          Copyright &copy; Escrow-Tech Limited {currentYear}. All Rights Reserved.
+        </p>
+      </div>
       {showResetPasswordDialog && <ResetPassword />}
     </>
   );

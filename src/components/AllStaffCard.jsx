@@ -74,7 +74,7 @@ const AllStaffCard = ({ staffMember }) => {
       initial={initialDown}
       animate={slideUp}
       exit={initialDown}
-      className="bg-white px-2 py-5  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+      className="bg-white px-2 py-5  border-gray-200 rounded-lg shadow overflow-hidden"
     >
       <div className="flex items-center gap-2">
         <img src={image} alt="" className="h-10 w-10 rounded-full bg-cover" />

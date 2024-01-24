@@ -71,6 +71,9 @@ const Illustration = ({
           <OnboardingProgress steps={4} step={step} />
         ) : null}
       </div>
+
+
+      
     </div>
   );
 };

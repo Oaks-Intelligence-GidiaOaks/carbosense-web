@@ -15,13 +15,43 @@ import { deleteStaff } from "../../../../features/staff/staffSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { assignAdmin, removeDepartmentStaff } from "../../../../services";
 import { handleAxiosError } from "../../../../utils";
+import {
+  Checkbox,
+  FormControl,
+  InputLabel,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Select,
+} from "@mui/material";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+export const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const DeleteStaffModal = () => {
+
   const deleteStaffRef = useRef();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const { staffMember } = useSelector((state) => state.staff);
+  const {deptData} = useSelector((state) => state.org);
+
+  const [values, setValues] = useState({
+    
+  })
+
+
+
+  console.log(deptData, "Department Data");
   const [isSuccessful, setIsSuccessful] = useState(false);
 
   const StaffName = staffMember.fullName;
@@ -78,7 +108,7 @@ const DeleteStaffModal = () => {
               >
                 {isSuccessful
                   ? `${StaffName} was removed from department successfully`
-                  : "Remove Department Staff"}
+                  : "Add Staff to a Department"}
               </h2>
 
               <div className="mt-4">
@@ -88,6 +118,59 @@ const DeleteStaffModal = () => {
                   as a Staff of {staffMember.organizationName}. This action
                   cannot be undone!
                 </p>
+
+
+                <FormControl sx={{ width: "100%" }}>
+            <InputLabel
+              sx={{
+                color: "text-gray-600",
+                fontWeight: "light",
+                fontSize: "16px",
+              }}
+              id="demo-simple-select-label"
+            >
+              {" "}
+              Select Staff
+            </InputLabel>
+            <Select
+              multiple
+              value={Array.isArray(values.staff) ? values.staff : []}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(event) => handleChange("staff", event.target.value)}
+              label="Select Staff"
+              sx={{
+                color: "text-gray-600",
+                fontWeight: "light",
+                fontSize: "16px",
+              }}
+              renderValue={() => selectedLabels.join(", ")}
+              MenuProps={MenuProps}
+            >
+              <MenuItem value="all">
+                <ListItemIcon>
+                  <Checkbox checked={isAllSelected}></Checkbox>
+                </ListItemIcon>
+                <ListItemText primary="Select All"></ListItemText>
+              </MenuItem>
+              {options.map((option) => (
+                <MenuItem key={option.id} value={option.value}>
+                  <ListItemIcon>
+                    <Checkbox
+                      name="select-checkbox"
+                      checked={
+                        Array.isArray(values.staff) &&
+                        values.staff.includes(option.value)
+                      }
+                    ></Checkbox>
+                  </ListItemIcon>
+                  <ListItemText primary={option.label}></ListItemText>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+
                 <SizedBox height={"h-2"} />
 
                 <div className="flex items-center gap-4 mt-4">

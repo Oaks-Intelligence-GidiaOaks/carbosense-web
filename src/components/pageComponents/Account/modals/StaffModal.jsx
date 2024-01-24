@@ -35,8 +35,6 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
     <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center">
       <div>
         <div className="bg-white p-2 rounded-lg flex flex-col">
-          <h2 className=" font-semibold mb-2 text-sm">Staff Actions</h2>
-
           <button
             onClick={handleAddStaffToDepartment}
             className=" bg-primary-blue hover:bg-opacity-30 text-white p-1 text-xs rounded w-full"
