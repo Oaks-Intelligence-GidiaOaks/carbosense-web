@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "../components/ui";
 import PropTypes from "prop-types";
-import carbosenseLogo from "../assets/carbosense_logo.svg";
+import carbosense_logo  from "../assets/carbosense_logo.svg";
 import globe from "../assets/globe.svg";
 import registrationSubmitted from "../assets/registration_submitted.svg";
 import arrowBack from "../assets/icons/arrow_back.svg";
@@ -642,12 +642,14 @@ const Register = () => {
     <>
       <main className="relative h-screen bg-white">
         <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
-          <Link to={"/"}>
+        <Link to={"/"} className="flex items-center gap-3">
             <img
-              src={carbosenseLogo}
+              src={carbosense_logo}
               alt="logo"
               className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
             />
+
+            <h3 className=" font-bold text-3xl">Carbosense</h3>
           </Link>
         </header>
         {/* form and graphic */}

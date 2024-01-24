@@ -15,7 +15,7 @@ const MyInvoice = () => {
   return (
     <AnimatePresence mode="wait">
       {isPending && <AccountPageShimmer />}
-      {isSuccess && data && (
+      {isSuccess && data.length ?  (
         <div className="grid grid-cols-5 gap-4 bg-white p-6">
           {data?.map((item) => (
             <div
@@ -29,6 +29,10 @@ const MyInvoice = () => {
               </span>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="">
+          <h3 className="">No invoice to display</h3>
         </div>
       )}
 

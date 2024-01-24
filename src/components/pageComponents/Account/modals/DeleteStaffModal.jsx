@@ -13,7 +13,7 @@ import { Button, SizedBox } from "../../../ui";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteStaff } from "../../../../features/staff/staffSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { assignAdmin, removeDepartmentStaff } from "../../../../services";
+import { addStaffToDepartment } from "../../../../services";
 import { handleAxiosError } from "../../../../utils";
 import {
   Checkbox,
@@ -37,34 +37,37 @@ export const MenuProps = {
 };
 
 const DeleteStaffModal = () => {
-
   const deleteStaffRef = useRef();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const { staffMember } = useSelector((state) => state.staff);
-  const {deptData} = useSelector((state) => state.org);
-
-  const [values, setValues] = useState({
-    
-  })
-
-
-
-  console.log(deptData, "Department Data");
+  const { deptData } = useSelector((state) => state.org);
   const [isSuccessful, setIsSuccessful] = useState(false);
+
+  const [values, setValues] = React.useState({
+    staffId: staffMember._id,
+    departmentId: "",
+  });
+
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      departmentId: event.target.value,
+    });
+  };
 
   const StaffName = staffMember.fullName;
   const payload = {
-    departmentId: staffMember.departmentId,
+    departmentId: values.departmentId,
     staffId: staffMember._id,
   };
 
   const remove_department_staff = useMutation({
     mutationKey: ["delete_staff"],
-    mutationFn: async (data) => removeDepartmentStaff(data),
+    mutationFn: async (data) => addStaffToDepartment(data),
     onSuccess: (data) => {
-      if (data.message === "Staff removed from department successfully") {
+      if (data.message === "Staff added to department successfully") {
         setIsSuccessful(true);
       }
       queryClient.invalidateQueries(["department_staff"]);
@@ -79,13 +82,12 @@ const DeleteStaffModal = () => {
       animate={fadeIn}
       exit={fadeOut}
       className="fixed p-4 inset-0 w-screen h-screen bg-modal-black backdrop-blur-sm overflow-y-auto"
-      onClick={(e) =>
-        deleteStaffRef.current &&
-        !deleteStaffRef.current.contains(e.target) &&
-        dispatch(deleteStaff(false))
-      }
+      // onClick={(e) =>
+      //   deleteStaffRef.current &&
+      //   !deleteStaffRef.current.contains(e.target) &&
+      //   dispatch(deleteStaff(false))
+      // }
     >
-      {" "}
       <motion.div
         ref={deleteStaffRef}
         initial={initialDown}
@@ -107,69 +109,34 @@ const DeleteStaffModal = () => {
                 }`}
               >
                 {isSuccessful
-                  ? `${StaffName} was removed from department successfully`
+                  ? `${StaffName} was successfully added`
                   : "Add Staff to a Department"}
               </h2>
 
               <div className="mt-4">
-                <p className="text-sm text-justify text-primary-gray">
-                  You wish to remove{" "}
+                <p className="text-sm text-justify mb-4 text-primary-gray">
+                  Select the Department you wish to add{" "}
                   <span className="font-medium">{staffMember.fullName}</span>.
-                  as a Staff of {staffMember.organizationName}. This action
-                  cannot be undone!
                 </p>
-
-
-                <FormControl sx={{ width: "100%" }}>
-            <InputLabel
-              sx={{
-                color: "text-gray-600",
-                fontWeight: "light",
-                fontSize: "16px",
-              }}
-              id="demo-simple-select-label"
-            >
-              {" "}
-              Select Staff
-            </InputLabel>
-            <Select
-              multiple
-              value={Array.isArray(values.staff) ? values.staff : []}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              onChange={(event) => handleChange("staff", event.target.value)}
-              label="Select Staff"
-              sx={{
-                color: "text-gray-600",
-                fontWeight: "light",
-                fontSize: "16px",
-              }}
-              renderValue={() => selectedLabels.join(", ")}
-              MenuProps={MenuProps}
-            >
-              <MenuItem value="all">
-                <ListItemIcon>
-                  <Checkbox checked={isAllSelected}></Checkbox>
-                </ListItemIcon>
-                <ListItemText primary="Select All"></ListItemText>
-              </MenuItem>
-              {options.map((option) => (
-                <MenuItem key={option.id} value={option.value}>
-                  <ListItemIcon>
-                    <Checkbox
-                      name="select-checkbox"
-                      checked={
-                        Array.isArray(values.staff) &&
-                        values.staff.includes(option.value)
-                      }
-                    ></Checkbox>
-                  </ListItemIcon>
-                  <ListItemText primary={option.label}></ListItemText>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Select Department
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values.departmentId}
+                    label="Select Department"
+                    onChange={handleChange}
+                    MenuProps={MenuProps}
+                  >
+                    {deptData.map((department) => (
+                      <MenuItem key={department._id} value={department._id}>
+                        {department.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
                 <SizedBox height={"h-2"} />
 

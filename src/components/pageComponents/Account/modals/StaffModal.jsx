@@ -39,7 +39,7 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
             onClick={handleAddStaffToDepartment}
             className=" bg-primary-blue hover:bg-opacity-30 text-white p-1 text-xs rounded w-full"
           >
-            Assign Admin Role
+            Assign admin role
           </button>
 
           <button
@@ -51,9 +51,9 @@ const StaffModal = ({ staffID, staffMember, closeModal }) => {
 
           <button
             onClick={handleDeleteStaff}
-            className=" text-white bg-red-700 mt-2 p-1 hover:opacity-30 rounded  text-xs cursor-pointer"
+            className=" text-white bg-primary-blue mt-2 p-1 hover:opacity-30 rounded  text-xs cursor-pointer"
           >
-            Remove Staff
+            Assign to department
           </button>
         </div>
       </div>

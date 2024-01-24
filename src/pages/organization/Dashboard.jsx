@@ -18,6 +18,9 @@ const Dashboard = () => {
     (state) => state.user
   );
 
+  const {user} = useSelector((state) => state.user);
+  console.log(user, "USER");
+
   const get_all_department_emission = useQuery({
     queryKey: ["department_emission"],
     queryFn: () => getAllDepartmentEmission(),

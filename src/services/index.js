@@ -135,11 +135,6 @@ export const uploadInvoiceDocument = async (data) => {
   return await response.data;
 };
 
-// export const addUserEmission = async (data) => {
-//   const response = await axios.post("emission", data);
-//   return await response.data;
-// };
-
 export const addUserEmission = async (data) => {
   const emissionData = new FormData();
 
@@ -169,17 +164,8 @@ export const readOrgInvoice = async () => {
   return await response.data.data;
 };
 
-
-export const removeDepartmentStaff = async (data) => {
-  const response = await axios.delete(
-    "department/staff",
-    { data },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+export const addStaffToDepartment = async (data) => {
+  const response = await axios.post("department/staff", data);
   return await response.data;
 };
 

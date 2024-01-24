@@ -1,5 +1,5 @@
 import React from "react";
-import mobileLogo from "../../assets/mobileLogo.svg";
+import carbosense_logo from "../../assets/carbosense_logo.svg";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // import { sidebarLinks } from "../../data/Navigation";
 import { useSelector } from "react-redux";
@@ -13,9 +13,15 @@ const Sidebar = ({sidebarLinks}) => {
   return (
     <nav className="leftsidebar">
       <div className="flex flex-col gap-11">
-        <Link to="/" className="flex gap-3 items-center">
-          <img src={mobileLogo} alt="logo" width={178.06} height={37.39} />
-        </Link>
+      <Link to={"/"} className="flex items-center gap-3">
+            <img
+              src={carbosense_logo}
+              alt="logo"
+              className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
+            />
+
+            <h3 className=" font-bold text-2xl">Carbosense</h3>
+          </Link>
 
         <ul className="flex flex-col gap-1">
           {sidebarLinks.map((link) => {

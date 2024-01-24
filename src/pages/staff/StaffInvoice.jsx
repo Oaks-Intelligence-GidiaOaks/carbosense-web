@@ -14,6 +14,8 @@ import {
   slideDown,
 } from "../../constants/framer.js";
 import { ImageConfig } from "../../components/config/ImageConfig.js";
+import MyInvoice from "../organization/invoice_tabs/MyInvoice.jsx";
+import OrgInvoice from "../organization/invoice_tabs/OrgInvoice.jsx";
 
 const StaffInvoice = () => {
   const onFileChange = (files) => {
@@ -33,7 +35,7 @@ const StaffInvoice = () => {
 
       <div className="px-2 md:px-0">
         <Tabs>
-          <Tab
+          {/* <Tab
             label={{
               text: "New Invoice",
               icon: <img src={invoice} alt="" width={12} height={12} />,
@@ -42,14 +44,14 @@ const StaffInvoice = () => {
             <div className="py-4">
               <StaffInvoices onFileChange={(files) => onFileChange(files)} />
             </div>
-          </Tab>
+          </Tab> */}
           <Tab
             label={{
               text: "My Invoices",
               icon: <img src={myinvoice} alt="" width={12} height={12} />,
             }}
           >
-            <div className="py-4">{/* <MyInvoice /> */}</div>
+            <div className="py-4"><MyInvoice /></div>
           </Tab>
           <Tab
             label={{
@@ -57,7 +59,7 @@ const StaffInvoice = () => {
               icon: <img src={orgInvoice} alt="" width={12} height={12} />,
             }}
           >
-            <div className="py-4">{/* <OrgInvoice /> */}</div>
+            <div className="py-4"><OrgInvoice /></div>
           </Tab>
         </Tabs>
       </div>
