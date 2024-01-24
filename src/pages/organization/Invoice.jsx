@@ -13,8 +13,62 @@ import {
   invisible,
   slideDown,
 } from "../../constants/framer.js";
+import { ImageConfig } from "../../components/config/ImageConfig.js";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getOrganisationInvoices,
+  getUserInvoices,
+} from "../../services/index.js";
 
 const Invoice = () => {
+  const userInvoicesData = useQuery({
+    queryKey: ["getInvoices"],
+    queryFn: async () => getUserInvoices(),
+  });
+
+  const orgInvoicesData = useQuery({
+    queryKey: ["getOrganisationInvoices"],
+    queryFn: async () => getOrganisationInvoices(),
+  });
+
+  const OrgInvoicesList = () => {
+    if (orgInvoicesData.isLoading) {
+      // spinner
+      return <div> Loading....</div>;
+    }
+
+    if (orgInvoicesData.isError) {
+      // error code
+      return <div>Error Occured...</div>;
+    }
+
+    return (
+      <div className="py-4 flex flex-wrap gap-3">
+        {orgInvoicesData.data.data?.map((inv, i) => (
+          <MyInvoice docName={inv.name} docType="png" url={inv.url} />
+        ))}
+      </div>
+    );
+  };
+
+  const UserInvoicesList = () => {
+    if (userInvoicesData.isLoading) {
+      return <div> Loading....</div>;
+    }
+
+    if (userInvoicesData.isError) {
+      return <div>Error Occured...</div>;
+    }
+
+    return (
+      <div className="py-4 flex flex-wrap gap-3">
+        {userInvoicesData.data.data?.map((inv, i) => (
+          <MyInvoice docName={inv.name} docType="png" url={inv.url} />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <motion.div
       initial={initialUp}
@@ -30,23 +84,11 @@ const Invoice = () => {
         <Tabs>
           <Tab
             label={{
-              text: "New Invoice",
-              icon: <img src={invoice} alt="" width={12} height={12} />,
-            }}
-          >
-            <div className="py-4">
-              <NewInvoice />
-            </div>
-          </Tab>
-          <Tab
-            label={{
               text: "My Invoices",
               icon: <img src={myinvoice} alt="" width={12} height={12} />,
             }}
           >
-            <div className="py-4">
-              <MyInvoice />
-            </div>
+            <UserInvoicesList />
           </Tab>
           <Tab
             label={{
@@ -55,7 +97,7 @@ const Invoice = () => {
             }}
           >
             <div className="py-4">
-              <OrgInvoice />
+              <OrgInvoicesList />
             </div>
           </Tab>
         </Tabs>

@@ -66,7 +66,7 @@ const DropDownMenu = ({
       <label
         className={twMerge(
           `pointer-events-none transition-all absolute top-1/2 px-2 -translate-y-1/2 text-[${labelColor}] left-2 text-gray-600`,
-          isFocused || value?.value.trim().length > 0
+          isFocused || value?.value?.trim().length > 0
             ? focusedLabelStyle
             : null,
           isError ? errorLabelStyle : null
@@ -80,14 +80,28 @@ const DropDownMenu = ({
           type="text"
           name={name}
           // onFocus={() => setIsFocused(true)}
+          // onBlur={() => {
+          //   if (options.every((option) => option.label !== controlValue)) {
+          //     valueSetter(name, null);
+          //     setControlValue("");
+          //   }
+          // }}
+
           onBlur={() => {
-            if (options.every((option) => option.label !== controlValue)) {
+            if (
+              Array.isArray(options) &&
+              options.every((option) => option.label !== controlValue)
+            ) {
               valueSetter(name, null);
               setControlValue("");
             }
           }}
           readOnly={!allowFiltering}
-          onChange={(e) => setControlValue(e.target.value)}
+          // onChange={(e) => setControlValue(e.target.value)}
+          onChange={(e) => {
+            console.log("Input Value:", e.target.value);
+            setControlValue(e.target.value);
+          }}
           className={twMerge(
             `${textSize ?? null} outline-0 flex-1 font-satoshi ${
               padding ?? "py-4"
@@ -127,7 +141,7 @@ const DropDownMenu = ({
             exit={initialUp}
             className={twMerge(
               `${optionsBgColor ?? "bg-white"}`,
-              `overflow-y-scroll absolute z-[1] top-[110%] rounded-md w-full shadow-md h-[150px] dropdown-menu`
+              `overflow-y-scroll absolute z-50 top-[110%] rounded-md w-full shadow-md h-[150px] dropdown-menu`
             )}
           >
             {allowFiltering

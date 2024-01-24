@@ -54,4 +54,152 @@ export const departments = [
   },
 ];
 
+export const emissionRegion = [
+  { label: "Sweden", value: "SE" },
+  { label: "United Kingdom", value: "GB" },
+  { label: "France", value: "FR" },
+  { label: "Denmark", value: "DK" },
+  { label: "United States", value: "US" },
+  { label: "Canada", value: "CA" },
+];
+
+export const emissionSource = [
+  { label: "Water", value: "water" },
+  { label: "Waste", value: "waste" },
+  { label: "Energy", value: "energy" },
+  { label: "Transportation", value: "transport" },
+  { label: "Food", value: "food" },
+  { label: "Equipment", value: "equipment" },
+  { label: "Accomodation", value: "accomodation" },
+];
+
+export const emissionFactorss = {
+  water: [
+    // {
+    //   label: "Water treatment",
+    //   value: "water",
+    // },
+    {
+      label: "Water supply",
+      value: "water_supply",
+    },
+  ],
+  waste: [
+    {
+      label: "Waste from mixed plastic",
+      value: "waste_from_recycled_mixed_plastic",
+    },
+  ],
+  energy: [
+    {
+      label: "Electricity from grid",
+      value: "electricity_from_grid",
+    },
+    {
+      label: "Fuel On site",
+      value: "fuel",
+    },
+    {
+      label: "Heat and steam",
+      value: "heat_and_steam",
+    },
+  ],
+  transportation: [
+    {
+      label: "Air travel",
+      value: "air_travel",
+    },
+    {
+      label: "Road travel",
+      value: "road_travel",
+    },
+  ],
+  equipment: [
+    {
+      label: "Office machinery and computers",
+      value: "office_machinery_and_computers",
+    },
+    {
+      label: "Office equipment rental",
+      value: "office_equipment_rental",
+    },
+  ],
+  accomodation: [
+    {
+      label: "Hotel Stay",
+      value: "hotel_stay",
+    },
+    {
+      label: "Hotel and restaurant services",
+      value: "hotel_and_restaurant_services",
+    },
+  ],
+};
+
+export const emissionUnit = [
+  {
+    label: "USD",
+    value: "usd",
+  },
+  {
+    label: "kWh",
+    value: "kWh",
+  },
+  {
+    label: "t",
+    value: "t",
+  },
+  {
+    label: "km",
+    value: "km",
+  },
+  {
+    label: "l",
+    value: "l",
+  },
+];
+
+export const countries = {
+  fuel: [{ label: "Canada", value: "CA" }],
+  heat_and_steam: [
+    { label: "Denmark", value: "DK" },
+    { label: "United Kingdom", value: "GB" },
+    { label: "France", value: "FR" },
+  ],
+  electricity_from_grid: [
+    { label: "Canada", value: "CA" },
+    { label: "United States", value: "US" },
+    { label: "United Kingdom", value: "GB" },
+  ],
+  road_travel: [{ label: "United Kingdom", value: "GB" }],
+  air_travel: [{ label: "United Kingdom", value: "GB" }],
+  water_supply: [{ label: "United Kingdom", value: "GB" }],
+  waste_from_recycled_mixed_plastic: [{ label: "United States", value: "US" }],
+  hotel_stay: [
+    { label: "Canada", value: "CA" },
+    { label: "United Kingdom", value: "GB" },
+    { label: "United States", value: "US" },
+  ],
+  hotel_and_restaurant_services: [
+    { label: "Canada", value: "CA" },
+    { label: "United Kingdom", value: "GB" },
+    { label: "France", value: "FR" },
+    { label: "United States", value: "US" },
+  ],
+  office_machinery_and_computers: [
+    { label: "Canada", value: "CA" },
+    { label: "Denmark", value: "DK" },
+    { label: "France", value: "FR" },
+    { label: "United Kingdom", value: "GB" },
+    { label: "United States", value: "US" },
+  ],
+  office_equipment_rental: [
+    { label: "Denmark", value: "DK" },
+    { label: "France", value: "FR" },
+    { label: "United Kingdom", value: "GB" },
+    { label: "Canada", value: "CA" },
+    { label: "United States", value: "US" },
+  ],
+};
+
 export const acceptedOrgFileTypes = ["png", "jpg", "jpeg", "pdf"];

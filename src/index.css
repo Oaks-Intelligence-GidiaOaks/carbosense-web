@@ -135,6 +135,12 @@ td[aria-colindex="96"] {
   font-size: 10px !important;
 }
 
+.scrollbar-hidden::-webkit-scrollbar {
+  appearance: none;
+  height: 0;
+  width: 0;
+}
+
 /* To specify background color and font size */
 .custom-datepicker .e-input-group-icon:last-child {
 }
@@ -158,4 +164,8 @@ td[aria-colindex="96"] {
   border-radius: 8px !important; 
 }
 
+.drop-file-input:hover,
+.drop-file-input.dragover {
+  opacity: 0.6;
+}
 

@@ -20,7 +20,9 @@ const MobileHeader = () => {
                             <img src={user} alt="" width={20} />
                         </Link>
                         <img src={helpCircleGray} alt="" width={20} />
-                        <img src={notify} alt="" width={20} />
+                        <Link to="/admin/activity" >
+                            <img src={notify} alt="" width={20} />
+                        </Link>
                     </div>
                 </div>
             </section>

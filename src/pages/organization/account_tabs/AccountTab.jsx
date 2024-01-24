@@ -13,8 +13,12 @@ import {
 } from "../../../features/user/userSlice";
 import PropTypes from "prop-types";
 import { Button, PermissionCard } from "../../../components/ui";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { uploadPicture } from "../../../services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getOrganisationEmission,
+  getUserEmission,
+  uploadPicture,
+} from "../../../services";
 import toast from "react-hot-toast";
 
 const AccountTab = ({ userInfo }) => {
@@ -45,6 +49,32 @@ const AccountTab = ({ userInfo }) => {
     onError: (e) => toast.error(handleAxiosError(e)),
   });
 
+  const emissionData = useQuery({
+    queryKey: ["getOrganisationEmission"],
+    queryFn: () => getOrganisationEmission(),
+  });
+
+  let totalEmisions;
+  let scope1_total;
+  let scope2_total;
+  let scope3_total;
+
+  if (emissionData.isSuccess) {
+    totalEmisions = emissionData?.data.co2e_total || 0;
+
+    scope1_total =
+      emissionData?.data.scope.filter((it) => it._id === "scope1")?.[0]
+        ?.co2e_total || 0;
+
+    scope2_total =
+      emissionData?.data.scope.filter((it) => it._id === "scope2")?.[0]
+        ?.co2e_total || 0;
+
+    scope3_total =
+      emissionData?.data.scope.filter((it) => it._id === "scope3")?.[0]
+        ?.co2e_total || 0;
+  }
+
   return (
     <div className="">
       <div className="grid md:grid-cols-7 gap-4">
@@ -72,9 +102,9 @@ const AccountTab = ({ userInfo }) => {
               </div>
             </div>
             <div className="">
-              <div className="flex items-center justify-between">
+              <div className="flex gap-6 items-center justify-between">
                 <span className="text-sm text-primary-gray">Email</span>
-                <span className="text-sm text-primary-black">
+                <span className="text-sm text-primary-black truncate">
                   {userInfo.role !== "admin"
                     ? userInfo?.email
                     : userInfo?.personalEmail}
@@ -198,11 +228,13 @@ const AccountTab = ({ userInfo }) => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 md:gap-4 mt-4 p-4 md:p-6 bg-white">
+      <div className="grid  lg:grid-cols-2 gap-6 lg:gap-4 mt-4 p-4 lg:p-6 bg-white">
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {totalEmisions}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -212,7 +244,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope1_total}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -222,7 +256,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope2_total}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
@@ -232,7 +268,9 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">0</h3>
+              <h3 className="font-medium text-primary-black text-base">
+                {scope3_total}
+              </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
             </div>
