@@ -232,8 +232,8 @@ const AccountTab = ({ userInfo }) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">
-                {totalEmisions}
+              <h3 className="font-medium text-primary-black text-sm">
+                {totalEmisions?.toFixed(3)}
               </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
@@ -244,8 +244,8 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">
-                {scope1_total}
+              <h3 className="font-medium text-primary-black text-sm">
+                {scope1_total?.toFixed(3)}
               </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
@@ -256,8 +256,8 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">
-                {scope2_total}
+              <h3 className="font-medium text-primary-black text-sm">
+                {scope2_total?.toFixed(3)}
               </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />
@@ -268,8 +268,8 @@ const AccountTab = ({ userInfo }) => {
           </div>
           <div className="bg-white p-3 h-[80px]  border border-[#D8DDE8] flex flex-col gap-1 items-center justify-center">
             <div className="flex items-center gap-2">
-              <h3 className="font-medium text-primary-black text-base">
-                {scope3_total}
+              <h3 className="font-medium text-primary-black text-sm">
+                {scope3_total?.toFixed(3)}
               </h3>
               <span className="text-sm text-primary-gray">tCO2e</span>
               <img src={alertcircle} alt="" width={18} height={18} />

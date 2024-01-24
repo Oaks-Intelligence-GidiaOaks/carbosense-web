@@ -87,30 +87,7 @@ const Emissions = () => {
     departmentsData.isSuccess &&
     !departmentsData.data.length;
 
-  // if (noData) {
-  //   return (
-  //     <div className="bg-white md:mx-8 mt-4 h-[570px] lg:h-[272px] flex items-center justify-center  px-2 ">
-  //       <div className="flex flex-col gap-3 items-center justify-center">
-  //         <div className="flex items-center justify-center flex-col mb-4">
-  //           <h2 className="text-lg font-medium text-primary-black">
-  //             Nothing to Show
-  //           </h2>
-  //           <span className=" text-primary-gray text-sm">
-  //             Tell us more about your Emmission
-  //           </span>
-  //         </div>
-  //         <button
-  //           onClick={() => {
-  //             dispatch(addEmission(true));
-  //           }}
-  //           className="text-sm text-white bg-primary-blue py-2 px-4 border border-primary-blue"
-  //         >
-  //           Upload your first invoice
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  console.log(yearlyEmissionData.data);
 
   return (
     <AnimatePresence mode="wait">
@@ -256,8 +233,7 @@ const Emissions = () => {
                               {sourceData._id}
                             </h3>
                             <span className="text-sm text-primary-black">
-                              {percentage.toFixed(2)}% of total emissions |
-                              Scope 2
+                              {percentage.toFixed(2)}% of total emissions
                             </span>
                           </div>
                           <div className="flex items-center">
