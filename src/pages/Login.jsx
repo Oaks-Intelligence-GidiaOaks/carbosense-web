@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "../components/ui";
 import carbosense_logo from "../assets/carbosense_logo.svg";
+import escro_tech from "../assets/escro_tech.svg";
 import rocketLaunch from "../assets/rocket_launch.svg";
 import { Illustration } from "../components/containers";
 import { AnimatePresence, motion } from "framer-motion";
@@ -152,7 +153,7 @@ const Login = () => {
     <>
       <main className="relative h-screen bg-white min-[770px]:overflow-hidden">
         <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
-        <Link to={"/"} className="flex items-center gap-3">
+          <Link to={"/"} className="flex items-center gap-3">
             <img
               src={carbosense_logo}
               alt="logo"
@@ -253,7 +254,16 @@ const Login = () => {
 
       <div className="mt-20 md:mt-0">
         <p className=" absolute bottom-0 left-0 z-30 text-sm w-full p-3 text-center gap-10 text-primary-black">
-          Copyright &copy; Escrow-Tech Limited {currentYear}. All Rights Reserved.
+          <div className="flex items-center justify-center gap-1">
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-1">
+                <span>A product of</span>
+                <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                <span>Escrow-Tech Limited</span>
+              </div>
+              <span> Copyright &copy; 2023. All Rights Reserved.</span>
+            </div>
+          </div>
         </p>
       </div>
       {showResetPasswordDialog && <ResetPassword />}
