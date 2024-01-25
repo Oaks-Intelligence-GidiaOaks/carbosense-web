@@ -259,7 +259,7 @@ const Login = () => {
               <div className="flex items-center gap-1">
                 <span>A product of</span>
                 <img src={escro_tech} alt="logo" className=" w-4 h-4" />
-                <span>Escrow-Tech Limited</span>
+                <span>Escrow-Tech</span>
               </div>
               <span> Copyright &copy; 2023. All Rights Reserved.</span>
             </div>

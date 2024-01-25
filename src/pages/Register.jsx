@@ -81,7 +81,7 @@ const RegisterOrg = ({
         </h1>
         <SizedBox height="h-2" />
         <h1 className="text-primary-black w-[70%]">
-          Create a Carbosense account for your organization
+        Create a Carbosense account for your organization
         </h1>
         <div className="mt-6 w-full flex-col flex items-center">
           <TextInput
@@ -705,15 +705,14 @@ const Register = () => {
           />
         </div>
       </main>
-
       <div className="mt-20 md:mt-0">
-        <p className=" absolute bottom-0 left-0 z-30 text-sm w-full p-3 text-center gap-10 text-primary-black">
+        <p className=" absolute bottom-0 left-0 z-30 text-sm w-full  p-3 text-center gap-10 text-primary-black">
           <div className="flex items-center justify-center gap-1">
             <div className="flex flex-col items-center">
               <div className="flex items-center gap-1">
                 <span>A product of</span>
                 <img src={escro_tech} alt="logo" className=" w-4 h-4" />
-                <span>Escrow-Tech Limited</span>
+                <span>Escrow-Tech</span>
               </div>
               <span> Copyright &copy; 2023. All Rights Reserved.</span>
             </div>
