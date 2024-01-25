@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { companySizes, industries } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   Button,
   DropDownMenu,
@@ -11,7 +12,7 @@ import {
   TextInput,
 } from "../components/ui";
 import PropTypes from "prop-types";
-import carbosenseLogo from "../assets/carbosense_logo.svg";
+import carbosense_logo from "../assets/carbosense_logo.svg";
 import globe from "../assets/globe.svg";
 import registrationSubmitted from "../assets/registration_submitted.svg";
 import arrowBack from "../assets/icons/arrow_back.svg";
@@ -80,7 +81,7 @@ const RegisterOrg = ({
         </h1>
         <SizedBox height="h-2" />
         <h1 className="text-primary-black w-[70%]">
-          Create a Carbosense account for your organization
+        Create a Carbosense account for your organization
         </h1>
         <div className="mt-6 w-full flex-col flex items-center">
           <TextInput
@@ -609,6 +610,7 @@ const SetupAccount = ({
 const Register = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState("forward");
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   // register org form
   const [regForm, setRegForm] = useState({
@@ -627,56 +629,59 @@ const Register = () => {
   });
 
   return (
-    <main className="relative h-screen bg-white">
-      <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
-        <Link to={"/"}>
-          <img
-            src={carbosenseLogo}
-            alt="logo"
-            className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
-          />
-        </Link>
-      </header>
-      {/* form and graphic */}
-      <div className="flex h-full max-w-[1440px] mx-auto">
-        {/* form */}
-        <AnimatePresence mode="wait">
-          {step === 1 && (
-            <RegisterOrg
-              key="register_org"
-              stepSetter={setStep}
-              step={step}
-              direction={direction}
-              setDirection={setDirection}
-              form={regForm}
-              formSetter={setRegForm}
+    <>
+      <main className="relative h-screen bg-white">
+        <header className="max-w-[1440px] mx-auto fixed z-10 top-0 left-1/2 -translate-x-1/2 px-2 min-[770px]:pl-[5%] min-[1560px]:pl-[3%] pt-4 pb-2 w-full bg-white flex justify-center items-center min-[770px]:justify-start max-[770px]:after:content('') max-[770px]:after:block max-[770px]:after:w-[200%] max-[770px]:after:h-[200%] max-[770px]:after:absolute max-[770px]:after:-z-10 max-[770px]:after:-translate-y-1/4 max-[770px]:after:bg-primary-blue max-[770px]:after:rounded-b-[100%]">
+          <Link to={"/"} className="flex items-center gap-3">
+            <img
+              src={carbosense_logo}
+              alt="logo"
+              className="max-w-[150px] min-[770px]:max-w-[200px] brightness-0 invert min-[770px]:invert-0 min-[770px]:brighness-50"
             />
-          )}
-          {step === 2 && (
-            <VerifyOrg
-              key="verify_org"
-              stepSetter={setStep}
-              step={step}
-              direction={direction}
-              setDirection={setDirection}
-              form={regForm}
-              formSetter={setRegForm}
-            />
-          )}
-          {step === 3 && (
-            <SetupAccount
-              key="setup_account"
-              stepSetter={setStep}
-              step={step}
-              direction={direction}
-              setDirection={setDirection}
-              form={regForm}
-              formSetter={setRegForm}
-            />
-          )}
 
-          {/* Removed from flow */}
-          {/* {step === 4 && (
+            <h3 className=" font-bold text-3xl">Carbosense</h3>
+          </Link>
+        </header>
+        {/* form and graphic */}
+        <div className="flex h-full max-w-[1440px] mx-auto">
+          {/* form */}
+          <AnimatePresence mode="wait">
+            {step === 1 && (
+              <RegisterOrg
+                key="register_org"
+                stepSetter={setStep}
+                step={step}
+                direction={direction}
+                setDirection={setDirection}
+                form={regForm}
+                formSetter={setRegForm}
+              />
+            )}
+            {step === 2 && (
+              <VerifyOrg
+                key="verify_org"
+                stepSetter={setStep}
+                step={step}
+                direction={direction}
+                setDirection={setDirection}
+                form={regForm}
+                formSetter={setRegForm}
+              />
+            )}
+            {step === 3 && (
+              <SetupAccount
+                key="setup_account"
+                stepSetter={setStep}
+                step={step}
+                direction={direction}
+                setDirection={setDirection}
+                form={regForm}
+                formSetter={setRegForm}
+              />
+            )}
+
+            {/* Removed from flow */}
+            {/* {step === 4 && (
             <VerifyEmail
               key="verify_email"
               stepSetter={setStep}
@@ -688,18 +693,20 @@ const Register = () => {
             />
           )} */}
 
-          {/* graphic */}
-        </AnimatePresence>
-        <Illustration
-          title="Join Forward-Thinking Organizations That Care About Our Planet's Future."
-          subTitle="Track and improve your carbon footprint to contribute to a better future. Actively stay dedicated to making a positive impact on the environment."
-          graphic={step !== 4 ? globe : registrationSubmitted}
-          stage={step !== 4 ? "register" : "registration_complete"}
-          showOnboardingProgress={true}
-          step={step}
-        />
-      </div>
-    </main>
+            {/* graphic */}
+          </AnimatePresence>
+          <Illustration
+            title="Join Forward-Thinking Organizations That Care About Our Planet's Future."
+            subTitle="Track and improve your carbon footprint to contribute to a better future. Actively stay dedicated to making a positive impact on the environment."
+            graphic={step !== 4 ? globe : registrationSubmitted}
+            stage={step !== 4 ? "register" : "registration_complete"}
+            showOnboardingProgress={true}
+            step={step}
+          />
+        </div>
+      </main>
+     
+    </>
   );
 };
 
