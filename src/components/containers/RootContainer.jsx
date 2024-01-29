@@ -11,6 +11,8 @@ const AnimatedOutlet = () => {
 };
 
 const RootContainer = () => {
+
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <AnimatePresence mode="wait">
@@ -19,7 +21,7 @@ const RootContainer = () => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-20 md:mt-0">
+      <div className="mt-20 md:mt-0 hidden sm:block">
         <p className=" absolute max-w-2xl bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
           <div className="flex items-center justify-center gap-1">
             <div className="flex flex-col items-center">
@@ -28,7 +30,7 @@ const RootContainer = () => {
                 <img src={escro_tech} alt="logo" className=" w-4 h-4" />
                 <span>Escrow-Tech</span>
               </div>
-              <span> Copyright &copy; 2023. All Rights Reserved.</span>
+              <span> Copyright &copy; {currentYear}. All Rights Reserved.</span>
             </div>
           </div>
         </p>
