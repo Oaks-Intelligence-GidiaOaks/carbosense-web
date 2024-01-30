@@ -45,7 +45,7 @@ const RegisterOrg = ({
   formSetter,
 }) => {
   const navigate = useNavigate();
-  const currentYear = new Date().getFullYear();
+  
 
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
@@ -614,7 +614,7 @@ const SetupAccount = ({
 const Register = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState("forward");
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const currentYear = new Date().getFullYear();
 
   // register org form
   const [regForm, setRegForm] = useState({
