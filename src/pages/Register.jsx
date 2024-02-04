@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { companySizes, industries } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
+import escro_tech from "../assets/escro_tech.svg";
 
 import {
   Button,
@@ -44,6 +45,7 @@ const RegisterOrg = ({
   formSetter,
 }) => {
   const navigate = useNavigate();
+  
 
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
@@ -69,78 +71,80 @@ const RegisterOrg = ({
   ]);
 
   return (
-    <motion.div
-      initial={direction === "forward" ? initialRight : initialLeft}
-      animate={direction === "forward" ? slideLeft : slideRight}
-      exit={exitLeft}
-      className="flex-col pt-14 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
-    >
-      <div className="flex h-full flex-col items-center pt-14 flex-1">
-        <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
-          Register your org
-        </h1>
-        <SizedBox height="h-2" />
-        <h1 className="text-primary-black w-[70%]">
-        Create a Carbosense account for your organization
-        </h1>
-        <div className="mt-6 w-full flex-col flex items-center">
-          <TextInput
-            bgColor="bg-white"
-            label="Organization Name"
-            name="organizationName"
-            value={form.organizationName}
-            valueSetter={setFormValue}
-            width="w-[70%]"
-          />
-          <SizedBox height="h-6" />
-          <TextInput
-            bgColor="bg-white"
-            label="Company email"
-            name="companyEmail"
-            value={form.companyEmail}
-            valueSetter={setFormValue}
-            width="w-[70%]"
-          />
-          <SizedBox height="h-6" />
-          <DropDownMenu
-            label="Select Industry"
-            name="industry"
-            value={form.industry}
-            valueSetter={setFormValue}
-            width="w-[70%]"
-            options={industries}
-          />
-          <SizedBox height="h-6" />
-          <DropDownMenu
-            label="Company Size"
-            name="companySize"
-            value={form.companySize}
-            valueSetter={setFormValue}
-            width="w-[70%]"
-            options={companySizes}
-          />
-          <SizedBox height="h-6" />
-          <Button
-            disabled={isButtonDisabled}
-            width="w-[70%]"
-            content="Next"
-            callback={() => {
-              setDirection(() => "forward");
-              stepSetter(2);
-            }}
-          />
-          <SizedBox height="h-6" />
-          <div className="w-[70%] pb-10 flex justify-start">
-            <span className="whitespace-nowrap">
-              {"Already have an account?"}
-            </span>
-            &nbsp;
-            <TextButton content={"Sign in"} callback={() => navigate("/")} />
+    <>
+      <motion.div
+        initial={direction === "forward" ? initialRight : initialLeft}
+        animate={direction === "forward" ? slideLeft : slideRight}
+        exit={exitLeft}
+        className="flex-col pt-14 flex-1 min-[760px]:flex-[0.4] h-full items-stretch justify-center"
+      >
+        <div className="flex h-full flex-col items-center pt-14 flex-1">
+          <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
+            Register your org 
+          </h1>
+          <SizedBox height="h-2" />
+          <h1 className="text-primary-black w-[70%]">
+            Create a Carbosense account for your organization
+          </h1>
+          <div className="mt-6 w-full flex-col flex items-center">
+            <TextInput
+              bgColor="bg-white"
+              label="Organization Name"
+              name="organizationName"
+              value={form.organizationName}
+              valueSetter={setFormValue}
+              width="w-[70%]"
+            />
+            <SizedBox height="h-6" />
+            <TextInput
+              bgColor="bg-white"
+              label="Company email"
+              name="companyEmail"
+              value={form.companyEmail}
+              valueSetter={setFormValue}
+              width="w-[70%]"
+            />
+            <SizedBox height="h-6" />
+            <DropDownMenu
+              label="Select Industry"
+              name="industry"
+              value={form.industry}
+              valueSetter={setFormValue}
+              width="w-[70%]"
+              options={industries}
+            />
+            <SizedBox height="h-6" />
+            <DropDownMenu
+              label="Company Size"
+              name="companySize"
+              value={form.companySize}
+              valueSetter={setFormValue}
+              width="w-[70%]"
+              options={companySizes}
+            />
+            <SizedBox height="h-6" />
+            <Button
+              disabled={isButtonDisabled}
+              width="w-[70%]"
+              content="Next"
+              callback={() => {
+                setDirection(() => "forward");
+                stepSetter(2);
+              }}
+            />
+            <SizedBox height="h-6" />
+            <div className="w-[70%] pb-10 flex justify-start">
+              <span className="whitespace-nowrap">
+                {"Already have an account?"}
+              </span>
+              &nbsp;
+              <TextButton content={"Sign in"} callback={() => navigate("/")} />
+            </div>
           </div>
+          <SizedBox height="h-10" />
         </div>
-        <SizedBox height="h-10" />
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 };
 const VerifyOrg = ({
@@ -610,7 +614,7 @@ const SetupAccount = ({
 const Register = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState("forward");
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const currentYear = new Date().getFullYear();
 
   // register org form
   const [regForm, setRegForm] = useState({
@@ -704,8 +708,23 @@ const Register = () => {
             step={step}
           />
         </div>
+      <div className="mt-60 max-[300px]:mt-0 md:mt-0 sm:hidden">
+        <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
+          <div className="flex items-center justify-center gap-1">
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-1">
+                <span>A product of</span>
+                <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                <span>Escrow-Tech</span>
+              </div>
+              <span> Copyright &copy; {currentYear}. All Rights Reserved.</span>
+            </div>
+          </div>
+        </p>
+      </div>
       </main>
-     
+
+
     </>
   );
 };
