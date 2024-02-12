@@ -268,7 +268,7 @@ const Login = () => {
       </main>
       {showResetPasswordDialog && <ResetPassword />}
 
-      <div className="mt-40 min-[578px]:mt-0 md:mt-0 sm:hidden bg-white">
+      {/* <div className="mt-40 min-[578px]:mt-0 md:mt-0 sm:hidden bg-white">
         <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
           <div className="flex items-center justify-center gap-1">
             <div className="flex flex-col items-center">
@@ -281,7 +281,7 @@ const Login = () => {
             </div>
           </div>
         </p>
-      </div>
+      </div> */}
     </>
   );
 };
