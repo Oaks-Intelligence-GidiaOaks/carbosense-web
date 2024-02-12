@@ -175,7 +175,7 @@ const Login = () => {
               className="flex mt-28 sm:mt-0 pt-20 flex-1 min-[760px]:flex-[0.4] min-h-full items-center justify-center"
               // className="flex pt-14 flex-[0.4] h-full items-center justify-center"
             >
-              <div className="flex flex-col items-center justify-center flex-1">
+              <div className="flex flex-col items-center justify-center flex-1 bg-white">
                 <h1 className="text-2xl min-[770px]:text-3xl font-semibold text-primary-black">
                   Sign In
                 </h1>
@@ -240,7 +240,7 @@ const Login = () => {
                   </div>
                   <SizedBox height="h-8" />
 
-                  <div className="mt-40 max-[300px]:mt-0 md:mt-0 sm:hidden absolute bottom-0 right-0 left-0">
+                  <div className="mt-40 max-[300px]:mt-0 md:mt-0 bg-white sm:hidden absolute bottom-0 right-0 left-0">
                     <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
                       <div className="flex items-center justify-center gap-1">
                         <div className="flex flex-col items-center">
