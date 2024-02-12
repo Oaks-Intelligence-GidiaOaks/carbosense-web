@@ -661,7 +661,7 @@ const Register = () => {
           </Link>
         </header>
         {/* form and graphic */}
-        <div className="flex h-full max-w-[1440px] mx-auto overflow-y-scroll">
+        <div className="flex h-full max-w-[1440px] mx-auto overflow-y-scroll bg-white">
   
 
         
