@@ -661,9 +661,13 @@ const Register = () => {
           </Link>
         </header>
         {/* form and graphic */}
-        <div className="flex h-full max-w-[1440px] mx-auto">
-          {/* form */}
+        <div className="flex h-full max-w-[1440px] mx-auto overflow-y-scroll">
+  
+
+        
           <AnimatePresence mode="wait">
+
+            
             {step === 1 && (
               <RegisterOrg
                 key="register_org"
@@ -697,24 +701,23 @@ const Register = () => {
                 formSetter={setRegForm}
               />
             )}
-
-            {/* Removed from flow */}
-            {/* {step === 4 && (
-            <VerifyEmail
-              key="verify_email"
-              stepSetter={setStep}
-              step={step}
-              direction={direction}
-              setDirection={setDirection}
-              form={regForm}
-              formSetter={setRegForm}
-            />
-          )} */}
-
-            {/* graphic */}
-
-
-
+            <div className="mt-40  max-[300px]:mt-0 md:mt-0 sm:hidden absolute bg-white bottom-0 top-[500px] right-0 left-0">
+              <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
+                <div className="flex items-center justify-center gap-1">
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center gap-1">
+                      <span>A product of</span>
+                      <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                      <span>Escrow-Tech</span>
+                    </div>
+                    <span>
+                      {" "}
+                      Copyright &copy; {currentYear}. All Rights Reserved.
+                    </span>
+                  </div>
+                </div>
+              </p>
+            </div>
           </AnimatePresence>
           <Illustration
             title="Join Forward-Thinking Organizations That Care About Our Planet's Future."
@@ -725,23 +728,6 @@ const Register = () => {
             step={step}
           />
         </div>
-        {/* <div className="mt-60 max-[300px]:mt-0 md:mt-0 sm:hidden bg-white">
-          <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
-            <div className="flex items-center justify-center gap-1">
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-1">
-                  <span>A product of</span>
-                  <img src={escro_tech} alt="logo" className=" w-4 h-4" />
-                  <span>Escrow-Tech</span>
-                </div>
-                <span>
-                  {" "}
-                  Copyright &copy; {currentYear}. All Rights Reserved.
-                </span>
-              </div>
-            </div>
-          </p>
-        </div> */}
       </main>
     </>
   );

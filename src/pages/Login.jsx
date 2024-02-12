@@ -261,11 +261,8 @@ const Login = () => {
                       </div>
                     </p>
                   </div>
-          
                 </div>
               </div>
-
-              
 
               <SizedBox height="h-8" />
               <div className="hidden absolute pb-2 left-0 right-0 bottom-0 justify-center sm:block">
