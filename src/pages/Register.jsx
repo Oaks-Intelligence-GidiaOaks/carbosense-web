@@ -722,7 +722,23 @@ const Register = () => {
             step={step}
           />
         </div>
-      
+        <div className="mt-60 max-[300px]:mt-0 md:mt-0 sm:hidden bg-white">
+          <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
+            <div className="flex items-center justify-center gap-1">
+              <div className="flex flex-col items-center">
+                <div className="flex items-center gap-1">
+                  <span>A product of</span>
+                  <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                  <span>Escrow-Tech</span>
+                </div>
+                <span>
+                  {" "}
+                  Copyright &copy; {currentYear}. All Rights Reserved.
+                </span>
+              </div>
+            </div>
+          </p>
+        </div>
       </main>
     </>
   );
