@@ -240,6 +240,21 @@ const Login = () => {
                   </div>
                 </div>
               </div>
+              <SizedBox height="h-8" />
+              <div className="hidden absolute pb-2 left-0 right-0 bottom-0 justify-center sm:block">
+                <div className="flex justify-center">
+                  <div className="flex gap-1 flex-wrap items-center justify-center">
+                    <div className="flex items-center gap-1">
+                      <span className="text-sm">A product of</span>
+                      <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                      <span className="text-sm">Escrow-Tech. </span>
+                    </div>
+                    <span className="text-sm">
+                      Copyright &copy; {currentYear}. All Rights Reserved.
+                    </span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
           {/* graphic */}
@@ -252,8 +267,6 @@ const Login = () => {
         </div>
       </main>
       {showResetPasswordDialog && <ResetPassword />}
-
-
 
       <div className="mt-40 min-[578px]:mt-0 md:mt-0 sm:hidden">
         <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
