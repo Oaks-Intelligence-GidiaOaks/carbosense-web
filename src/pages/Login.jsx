@@ -172,14 +172,14 @@ const Login = () => {
               initial={initialLeft}
               animate={slideRight}
               exit={exitLeft}
-              className="flex pt-20 flex-1 min-[760px]:flex-[0.4] min-h-full items-center justify-center"
+              className="flex mt-28 sm:mt-0 pt-20 flex-1 min-[760px]:flex-[0.4] min-h-full items-center justify-center"
               // className="flex pt-14 flex-[0.4] h-full items-center justify-center"
             >
-              <div className="flex flex-col items-center justify-center flex-1">
+              <div className="flex flex-col items-center justify-center flex-1 bg-white">
                 <h1 className="text-2xl min-[770px]:text-3xl font-semibold text-primary-black">
                   Sign In
                 </h1>
-                <div className="mt-10 w-full flex-col flex items-center">
+                <div className="mt-10 w-full flex-col  flex items-center">
                   <TextInput
                     bgColor="bg-white"
                     label="Email address"
@@ -230,7 +230,7 @@ const Login = () => {
                     }
                   />
                   <SizedBox height="h-8" />
-                  <div className="w-[clamp(240px,60%,600px)] flex justify-center">
+                  <div className="w-[clamp(240px,60%,600px)] flex justify-center pb-40 sm:pb-0">
                     <span>{"Don't have an account?"}</span>
                     &nbsp;
                     <TextButton
@@ -238,11 +238,50 @@ const Login = () => {
                       callback={() => navigate("/register")}
                     />
                   </div>
+                  <SizedBox height="h-8" />
+
+                  <div className="mt-40 max-[300px]:mt-0 md:mt-0 bg-white sm:hidden absolute bottom-0 right-0 left-0">
+                    <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
+                      <div className="flex items-center justify-center gap-1">
+                        <div className="flex flex-col items-center">
+                          <div className="flex items-center gap-1">
+                            <span>A product of</span>
+                            <img
+                              src={escro_tech}
+                              alt="logo"
+                              className=" w-4 h-4"
+                            />
+                            <span>Escrow-Tech</span>
+                          </div>
+                          <span>
+                            {" "}
+                            Copyright &copy; {currentYear}. All Rights Reserved.
+                          </span>
+                        </div>
+                      </div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <SizedBox height="h-8" />
+              <div className="hidden absolute pb-2 left-0 right-0 bottom-0 justify-center sm:block">
+                <div className="flex justify-center">
+                  <div className="flex gap-1 flex-wrap items-center justify-center">
+                    <div className="flex items-center gap-1">
+                      <span className="text-sm">A product of</span>
+                      <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                      <span className="text-sm">Escrow-Tech. </span>
+                    </div>
+                    <span className="text-sm">
+                      Copyright &copy; {currentYear}. All Rights Reserved.
+                    </span>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
-          {/* graphic */}
+
           <Illustration
             title="Take control of your environmental impact by tracking your carbon footprint"
             subTitle="Use Carbosense to unlock your potential to make a lasting difference in the world by adopting a more eco-conscious lifestyle."
@@ -252,23 +291,6 @@ const Login = () => {
         </div>
       </main>
       {showResetPasswordDialog && <ResetPassword />}
-
-
-
-      <div className="mt-40 min-[578px]:mt-0 md:mt-0 sm:hidden">
-        <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
-          <div className="flex items-center justify-center gap-1">
-            <div className="flex flex-col items-center">
-              <div className="flex items-center gap-1">
-                <span>A product of</span>
-                <img src={escro_tech} alt="logo" className=" w-4 h-4" />
-                <span>Escrow-Tech</span>
-              </div>
-              <span> Copyright &copy; {currentYear}. All Rights Reserved.</span>
-            </div>
-          </div>
-        </p>
-      </div>
     </>
   );
 };

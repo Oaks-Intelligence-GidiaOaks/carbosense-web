@@ -45,7 +45,7 @@ const RegisterOrg = ({
   formSetter,
 }) => {
   const navigate = useNavigate();
-  
+  const currentYear = new Date().getFullYear();
 
   const setFormValue = (name, value) => {
     formSetter((prev) => ({ ...prev, [name]: value }));
@@ -80,7 +80,7 @@ const RegisterOrg = ({
       >
         <div className="flex h-full flex-col items-center pt-14 flex-1">
           <h1 className="text-3xl font-semibold text-primary-black w-[70%]">
-            Register your org 
+            Register your org
           </h1>
           <SizedBox height="h-2" />
           <h1 className="text-primary-black w-[70%]">
@@ -141,7 +141,21 @@ const RegisterOrg = ({
               <TextButton content={"Sign in"} callback={() => navigate("/")} />
             </div>
           </div>
-          <SizedBox height="h-10" />
+          <SizedBox height="h-8" />
+          <div className="hidden sm:block pb-2">
+            <div className="flex justify-center">
+              <div className="flex gap-1 flex-wrap items-center justify-center">
+                <div className="flex items-center gap-1">
+                  <span className="text-sm">A product of</span>
+                  <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                  <span className="text-sm">Escrow-Tech. </span>
+                </div>
+                <span className="text-sm">
+                  Copyright &copy; {currentYear}. All Rights Reserved.
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </motion.div>
     </>
@@ -647,9 +661,13 @@ const Register = () => {
           </Link>
         </header>
         {/* form and graphic */}
-        <div className="flex h-full max-w-[1440px] mx-auto">
-          {/* form */}
+        <div className="flex h-full max-w-[1440px] mx-auto overflow-y-scroll bg-white">
+  
+
+        
           <AnimatePresence mode="wait">
+
+            
             {step === 1 && (
               <RegisterOrg
                 key="register_org"
@@ -683,21 +701,23 @@ const Register = () => {
                 formSetter={setRegForm}
               />
             )}
-
-            {/* Removed from flow */}
-            {/* {step === 4 && (
-            <VerifyEmail
-              key="verify_email"
-              stepSetter={setStep}
-              step={step}
-              direction={direction}
-              setDirection={setDirection}
-              form={regForm}
-              formSetter={setRegForm}
-            />
-          )} */}
-
-            {/* graphic */}
+            <div className="mt-40  max-[300px]:mt-0 md:mt-0 sm:hidden absolute bg-white bottom-0 top-[500px] right-0 left-0">
+              <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
+                <div className="flex items-center justify-center gap-1">
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center gap-1">
+                      <span>A product of</span>
+                      <img src={escro_tech} alt="logo" className=" w-4 h-4" />
+                      <span>Escrow-Tech</span>
+                    </div>
+                    <span>
+                      {" "}
+                      Copyright &copy; {currentYear}. All Rights Reserved.
+                    </span>
+                  </div>
+                </div>
+              </p>
+            </div>
           </AnimatePresence>
           <Illustration
             title="Join Forward-Thinking Organizations That Care About Our Planet's Future."
@@ -708,23 +728,7 @@ const Register = () => {
             step={step}
           />
         </div>
-      <div className="mt-60 max-[300px]:mt-0 md:mt-0 sm:hidden">
-        <p className="bottom-0 left-0 z-30 text-sm right-0 p-3 text-center gap-10 text-primary-black mx-auto">
-          <div className="flex items-center justify-center gap-1">
-            <div className="flex flex-col items-center">
-              <div className="flex items-center gap-1">
-                <span>A product of</span>
-                <img src={escro_tech} alt="logo" className=" w-4 h-4" />
-                <span>Escrow-Tech</span>
-              </div>
-              <span> Copyright &copy; {currentYear}. All Rights Reserved.</span>
-            </div>
-          </div>
-        </p>
-      </div>
       </main>
-
-
     </>
   );
 };
